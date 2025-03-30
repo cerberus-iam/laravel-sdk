@@ -15,8 +15,6 @@ class CerberusServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/cerberus.php', 'cerberus');
-
         $this->app->singleton(Cerberus::class, function (Application $app) {
             $http = new ClientHandler(null, [
                 'base_uri' => rtrim(sprintf(
@@ -28,8 +26,8 @@ class CerberusServiceProvider extends ServiceProvider
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
-                    Cerberus::API_KEY_NAME => $app['config']->get('cerberus.key'),
-                    Cerberus::API_SECRET_NAME => $app['config']->get('cerberus.secret'),
+                    Cerberus::HEADER_CLIENT_ID => $app['config']->get('services.cerberus.key'),
+                    Cerberus::HEADER_CLIENT_SECRET => $app['config']->get('services.cerberus.secret'),
                 ],
             ]);
 
@@ -55,9 +53,5 @@ class CerberusServiceProvider extends ServiceProvider
                 fn ($guard) => $app->refresh('request', $guard, 'setRequest')
             );
         });
-
-        $this->publishes([
-            __DIR__.'/../config/cerberus.php' => config_path('cerberus.php'),
-        ], 'cerberus-config');
     }
 }

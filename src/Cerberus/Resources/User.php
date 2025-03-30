@@ -22,17 +22,9 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     protected string $resource = 'users';
 
     /**
-     * Check a plaintext password against the stored hash remotely.
+     * The access token for the user.
      */
-    public function checkPassword(string $plain): bool
-    {
-        $response = $this->getConnection()->post('/auth/check-password', [
-            'password' => $plain,
-            'hash' => $this->getAuthPassword(),
-        ]);
-
-        return $response['valid'] ?? false;
-    }
+    protected string $accessToken;
 
     /**
      * Get the password hash for the user.
@@ -48,6 +40,19 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     public function getRememberTokenName(): string
     {
         return 'remember_token';
+    }
+
+    /**
+     * Assign a role to the user.
+     */
+    public function assignRole(Role $role): self
+    {
+        $this->getConnection()
+            ->post('/users/'.$this->uid.'/roles', [
+                'role' => $role->name,
+            ]);
+
+        return $this;
     }
 
     /**
@@ -111,5 +116,23 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     {
         // Optional: send via Cerberus or throw an exception if not supported
         throw new Exception('Notifications are not supported in Cerberus SDK yet.');
+    }
+
+    /**
+     * Get the access token for the user.
+     */
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Set the access token for the user.
+     */
+    public function withToken(string $token): self
+    {
+        $this->accessToken = $token;
+
+        return $this;
     }
 }

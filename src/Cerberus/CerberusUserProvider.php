@@ -21,7 +21,7 @@ class CerberusUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        return $this->cerberus->users->find($identifier);
+        return $this->cerberus->users()->find($identifier);
     }
 
     /**
@@ -31,7 +31,7 @@ class CerberusUserProvider implements UserProvider
     {
         $this->cerberus->getHttpClient()->withToken($token);
 
-        return $this->retrieveById($identifier);
+        return $this->cerberus->auth()->findByToken($token);
     }
 
     /**
@@ -39,11 +39,11 @@ class CerberusUserProvider implements UserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        // No implementation needed for Cerberus
-        // This method is required by the UserProvider interface
-        // but Cerberus does not use remember tokens.
-        // You can leave it empty or throw an exception if you prefer.
-        throw new \Exception('Cerberus does not support remember tokens.');
+        $this->cerberus
+            ->users()
+            ->where($user->getAuthIdentifierName(), $user->getEmailForPasswordReset())
+            ->first()
+            ->update(['remember_token' => $token]);
     }
 
     /**
@@ -64,7 +64,7 @@ class CerberusUserProvider implements UserProvider
         // First we will add each credential element to the query as a where clause.
         // Then we can execute the query and, if we found a user, return it in a
         // Cerberus User "model" that will be utilized by the Guard instances.
-        $query = $this->cerberus->users;
+        $query = $this->cerberus->users();
 
         foreach ($credentials as $key => $value) {
             if (is_array($value) || $value instanceof Arrayable) {
@@ -84,36 +84,35 @@ class CerberusUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        if (is_null($plain = $credentials['password'])) {
+        if (is_null($credentials['password'])) {
             return false;
         }
 
-        if (is_null($hashed = $user->getAuthPassword())) {
-            return false;
-        }
-
-        return $this->cerberus->users->check($plain, $hashed);
+        return $this->cerberus
+            ->auth()
+            ->user($user)
+            ->checkPassword($credentials);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false)
-    {
-        // No implementation needed for Cerberus
-        // This method is required by the UserProvider interface
-        // but Cerberus does not use password hashing.
-        // You can leave it empty or throw an exception if you prefer.
-        throw new \Exception('Cerberus does not support password rehashing.');
+    public function rehashPasswordIfRequired(
+        Authenticatable $user,
+        array $credentials,
+        bool $force = false
+    ) {
+        return $this->cerberus
+            ->auth()
+            ->user($user)
+            ->rehashPasswordIfRequired($credentials, $force);
     }
 
     /**
-     * Get the name of the user provider.
-     *
-     * @return string
+     * Get the Cerberus client instance.
      */
-    public function getProviderName()
+    public function getConnection(): Cerberus
     {
-        return $this->providerName;
+        return $this->cerberus;
     }
 }

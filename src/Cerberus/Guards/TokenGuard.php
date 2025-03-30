@@ -14,14 +14,17 @@ class TokenGuard implements Guard
     use GuardHelpers, Macroable;
 
     /**
+     * The HTTP request instance.
+     */
+    protected ?Request $request;
+
+    /**
      * Create a new token guard instance.
      *
      * @return void
      */
-    public function __construct(
-        protected UserProvider $provider,
-        protected Request $request
-    ) {
+    public function __construct(UserProvider $provider, Request $request)
+    {
         $this->provider = $provider;
         $this->request = $request;
     }
@@ -31,20 +34,28 @@ class TokenGuard implements Guard
      */
     public function user(): ?Authenticatable
     {
-        if ($this->user) {
+        if (! is_null($this->user)) {
             return $this->user;
         }
 
         $token = $this->request->bearerToken();
 
-        if ($token) {
-            $this->user = $this->provider->retrieveByToken(
-                identifier: null,
-                token: $token
-            );
+        if (! $token) {
+            return null;
         }
 
-        return $this->user;
+        $user = $this->provider->retrieveByToken(
+            identifier: null,
+            token: $token
+        );
+
+        if ($user) {
+            $this->setUser($user);
+
+            return $this->user;
+        }
+
+        return null;
     }
 
     /**
@@ -65,10 +76,8 @@ class TokenGuard implements Guard
 
     /**
      * Set the current request instance.
-     *
-     * @return $this
      */
-    public function setRequest(Request $request): static
+    public function setRequest(Request $request): self
     {
         $this->request = $request;
 

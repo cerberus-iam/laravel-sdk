@@ -36,7 +36,12 @@ abstract class Resource implements Arrayable, ArrayAccess
     /**
      * The primary key of the resource.
      */
-    protected string $primaryKey = 'id';
+    protected string $primaryKey = 'uid';
+
+    /**
+     * The parameters for the resource.
+     */
+    protected array $parameters = [];
 
     /**
      * Create new instance of the resource.
@@ -77,7 +82,7 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function getKey(): mixed
     {
-        return $this->attributes['id'] ?? null;
+        return $this->attributes['uid'] ?? null;
     }
 
     /**
@@ -121,9 +126,13 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function get(): array
     {
-        $response = $this->connection->get("/{$this->resource}", ['query' => $this->filters]);
+        $response = $this->connection
+            ->withQueryParameters($this->filters)
+            ->get("/{$this->resource}");
 
-        return collect($response['data'] ?? [])->map(fn ($item) => new static($this->connection, $item))->all();
+        return collect($response->json()['data'] ?? [])
+            ->map(fn ($item) => new static($this->connection, $item))
+            ->all();
     }
 
     /**
@@ -143,7 +152,7 @@ abstract class Resource implements Arrayable, ArrayAccess
     {
         $response = $this->connection->get("/{$this->resource}/{$id}");
 
-        return isset($response['data']) ? new static($this->connection, $response['data']) : null;
+        return isset($response->json()['data']) ? new static($this->connection, $response->json()['data']) : null;
     }
 
     /**
@@ -155,7 +164,7 @@ abstract class Resource implements Arrayable, ArrayAccess
     {
         $response = $this->connection->post("/{$this->resource}", $data);
 
-        return new static($this->connection, $response['data']);
+        return new static($this->connection, $response->json());
     }
 
     /**
@@ -168,7 +177,7 @@ abstract class Resource implements Arrayable, ArrayAccess
         $id = $this->getKey();
         $response = $this->connection->put("/{$this->resource}/{$id}", $data);
 
-        return new static($this->connection, $response['data']);
+        return new static($this->connection, $response->json());
     }
 
     /**
@@ -187,7 +196,7 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function exists(): bool
     {
-        return isset($this->attributes['id']);
+        return isset($this->attributes['uid']);
     }
 
     /**
@@ -196,6 +205,16 @@ abstract class Resource implements Arrayable, ArrayAccess
     public function save(): static
     {
         return $this->exists() ? $this->update($this->attributes) : $this->create($this->attributes);
+    }
+
+    /**
+     * Get the primary key for the model.
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        return $this->primaryKey;
     }
 
     /**

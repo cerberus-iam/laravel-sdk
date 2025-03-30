@@ -1,6 +1,6 @@
 <?php
 
-namespace Cerberus;
+namespace Cerberus\Resources;
 
 class TransientToken
 {
