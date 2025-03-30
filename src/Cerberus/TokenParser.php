@@ -16,7 +16,7 @@ class TokenParser
      * Parse a raw JWT string and return a Token object.
      *
      *
-     * @throws \UnexpectedValueException
+     * @throws UnexpectedValueException
      */
     public static function parse(string $token): Token
     {

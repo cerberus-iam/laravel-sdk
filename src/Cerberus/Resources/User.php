@@ -2,6 +2,7 @@
 
 namespace Cerberus\Resources;
 
+use BackedEnum;
 use Exception;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
@@ -58,7 +59,7 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     /**
      * Determine if the entity has the given abilities.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|BackedEnum|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -73,7 +74,7 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     /**
      * Determine if the entity has any of the given abilities.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|BackedEnum|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -88,7 +89,7 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     /**
      * Determine if the entity does not have the given abilities.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|BackedEnum|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -100,7 +101,7 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     /**
      * Determine if the entity does not have the given abilities.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|BackedEnum|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */

@@ -3,16 +3,14 @@
 namespace Cerberus\Concerns;
 
 use BadMethodCallException;
-use Cerberus\Resources\{
-    Auth,
-    Invitation,
-    Organisation,
-    Permission,
-    Role,
-    Team,
-    TeamMember,
-    User
-};
+use Cerberus\Resources\Auth;
+use Cerberus\Resources\Invitation;
+use Cerberus\Resources\Organisation;
+use Cerberus\Resources\Permission;
+use Cerberus\Resources\Role;
+use Cerberus\Resources\Team;
+use Cerberus\Resources\TeamMember;
+use Cerberus\Resources\User;
 use Illuminate\Container\Container;
 
 trait ResolvesResources
@@ -36,7 +34,7 @@ trait ResolvesResources
     /**
      * Dynamically resolve a resource.
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call(string $method, array $args): mixed
     {

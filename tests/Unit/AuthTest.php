@@ -7,6 +7,7 @@ use Cerberus\Resources\User;
 use Fetch\Interfaces\ClientHandler as ClientHandlerInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class AuthTest extends TestCase
 {
@@ -28,7 +29,10 @@ class AuthTest extends TestCase
         Mockery::close();
     }
 
-    public function test_user_can_be_set_and_retrieved()
+    /**
+     * @test
+     */
+    public function user_can_be_set_and_retrieved()
     {
         $user = Mockery::mock(User::class);
 
@@ -38,7 +42,7 @@ class AuthTest extends TestCase
         $this->assertSame($this->auth, $result);
 
         // Use Reflection to access protected property for assertion (if you *really* want to)
-        $reflection = new \ReflectionClass($this->auth);
+        $reflection = new ReflectionClass($this->auth);
         $property = $reflection->getProperty('user');
         $property->setAccessible(true);
         $storedUser = $property->getValue($this->auth);
@@ -46,7 +50,10 @@ class AuthTest extends TestCase
         $this->assertSame($user, $storedUser);
     }
 
-    public function test_authenticate_via_credentials_returns_token_response()
+    /**
+     * @test
+     */
+    public function authenticate_via_credentials_returns_token_response()
     {
         $credentials = ['email' => 'test@example.com', 'password' => 'secret'];
         $expected = ['access_token' => 'fake-token'];
@@ -63,7 +70,10 @@ class AuthTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function test_find_by_token_returns_user_when_successful()
+    /**
+     * @test
+     */
+    public function find_by_token_returns_user_when_successful()
     {
         $userData = ['id' => 1, 'email' => 'test@example.com'];
         $responseMock = Mockery::mock([
@@ -82,7 +92,10 @@ class AuthTest extends TestCase
         $this->assertEquals($userData['email'], $result->email);
     }
 
-    public function test_find_by_token_returns_null_when_response_is_not_ok()
+    /**
+     * @test
+     */
+    public function find_by_token_returns_null_when_response_is_not_ok()
     {
         $this->connection->shouldReceive('get')
             ->with('/user')
@@ -94,7 +107,10 @@ class AuthTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function test_check_password_sends_correct_payload_with_user_set()
+    /**
+     * @test
+     */
+    public function check_password_sends_correct_payload_with_user_set()
     {
         $user = Mockery::mock(User::class);
         $user->shouldReceive('getAuthPasswordName')->andReturn('password');
@@ -114,7 +130,10 @@ class AuthTest extends TestCase
         $this->assertTrue($this->auth->checkPassword($credentials));
     }
 
-    public function test_rehash_password_if_required_sends_correct_payload()
+    /**
+     * @test
+     */
+    public function rehash_password_if_required_sends_correct_payload()
     {
         $credentials = ['email' => 'test@example.com', 'password' => 'newpassword'];
 
@@ -133,7 +152,10 @@ class AuthTest extends TestCase
         $this->assertTrue(true); // Just verifying no exception
     }
 
-    public function test_reset_password_sends_correct_payload()
+    /**
+     * @test
+     */
+    public function reset_password_sends_correct_payload()
     {
         $email = 'test@example.com';
         $password = 'newpassword';

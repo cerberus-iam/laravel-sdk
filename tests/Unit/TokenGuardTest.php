@@ -10,7 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class TokenGuardTest extends TestCase
 {
-    public function test_user_returns_authenticated_user()
+    /**
+     * @test
+     */
+    public function user_returns_authenticated_user()
     {
         $user = $this->createMock(Authenticatable::class);
         $provider = $this->createMock(UserProvider::class);
@@ -29,7 +32,10 @@ class TokenGuardTest extends TestCase
         $this->assertSame($user, $guard->user());
     }
 
-    public function test_user_returns_null_when_no_token_provided()
+    /**
+     * @test
+     */
+    public function user_returns_null_when_no_token_provided()
     {
         $provider = $this->createMock(UserProvider::class);
 
@@ -44,7 +50,10 @@ class TokenGuardTest extends TestCase
         $this->assertNull($guard->user());
     }
 
-    public function test_validate_returns_true_for_valid_credentials()
+    /**
+     * @test
+     */
+    public function validate_returns_true_for_valid_credentials()
     {
         $user = $this->createMock(Authenticatable::class);
         $provider = $this->createMock(UserProvider::class);
@@ -61,7 +70,10 @@ class TokenGuardTest extends TestCase
         $this->assertTrue($guard->validate(['email' => 'test@example.com']));
     }
 
-    public function test_validate_returns_false_for_invalid_credentials()
+    /**
+     * @test
+     */
+    public function validate_returns_false_for_invalid_credentials()
     {
         $provider = $this->createMock(UserProvider::class);
 
@@ -77,7 +89,10 @@ class TokenGuardTest extends TestCase
         $this->assertFalse($guard->validate(['email' => 'test@example.com']));
     }
 
-    public function test_set_request_updates_request_instance()
+    /**
+     * @test
+     */
+    public function set_request_updates_request_instance()
     {
         $user = $this->createMock(Authenticatable::class);
         $provider = $this->createMock(UserProvider::class);

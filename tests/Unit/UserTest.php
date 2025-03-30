@@ -36,7 +36,10 @@ class UserTest extends TestCase
         $this->cerberus = new Cerberus($this->http);
     }
 
-    public function test_fetch_all_users(): void
+    /**
+     * @test
+     */
+    public function fetch_all_users(): void
     {
         $payload = [
             [
@@ -72,7 +75,10 @@ class UserTest extends TestCase
         $this->assertInstanceOf(User::class, $users[0]);
     }
 
-    public function test_create_new_user(): void
+    /**
+     * @test
+     */
+    public function create_new_user(): void
     {
         $data = [
             'first_name' => $this->faker->firstName(),

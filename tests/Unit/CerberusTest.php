@@ -2,6 +2,7 @@
 
 namespace Cerberus\Tests\Unit;
 
+use BadMethodCallException;
 use Cerberus\Cerberus;
 use Cerberus\Resources\Auth;
 use Cerberus\Resources\User;
@@ -42,24 +43,17 @@ class CerberusTest extends TestCase
     }
 
     /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     * @test
      */
-    protected function defineEnvironment($app)
-    {
-        // Setup default configuration
-        $app['config']->set('services.cerberus.key', 'test-client-id');
-        $app['config']->set('services.cerberus.secret', 'test-client-secret');
-    }
-
-    public function test_get_http_client()
+    public function get_http_client()
     {
         $this->assertSame($this->http, $this->cerberus->getHttpClient());
     }
 
-    public function test_testing_mode()
+    /**
+     * @test
+     */
+    public function testing_mode()
     {
         $this->http->shouldReceive('withHeaders')
             ->once()
@@ -71,7 +65,10 @@ class CerberusTest extends TestCase
         $this->assertSame($this->cerberus, $result);
     }
 
-    public function test_configure_access_token_when_authorization_header_is_already_set()
+    /**
+     * @test
+     */
+    public function configure_access_token_when_authorization_header_is_already_set()
     {
         $this->http->shouldReceive('hasHeader')
             ->once()
@@ -86,7 +83,10 @@ class CerberusTest extends TestCase
         $this->assertSame($this->cerberus, $result);
     }
 
-    public function test_configure_access_token_when_authorization_header_is_not_set()
+    /**
+     * @test
+     */
+    public function configure_access_token_when_authorization_header_is_not_set()
     {
         $accessToken = $this->faker->uuid;
 
@@ -128,7 +128,10 @@ class CerberusTest extends TestCase
         $this->assertSame($cerberus, $result);
     }
 
-    public function test_get_access_token_from_cache()
+    /**
+     * @test
+     */
+    public function get_access_token_from_cache()
     {
         $accessToken = $this->faker->uuid;
         $expiresIn = 3600;
@@ -158,7 +161,10 @@ class CerberusTest extends TestCase
         ], $result);
     }
 
-    public function test_get_access_token_from_api()
+    /**
+     * @test
+     */
+    public function get_access_token_from_api()
     {
         $accessToken = $this->faker->uuid;
         $expiresIn = 3600;
@@ -228,7 +234,10 @@ class CerberusTest extends TestCase
         ], $result);
     }
 
-    public function test_get_access_token_from_api_fails_with_bad_response()
+    /**
+     * @test
+     */
+    public function get_access_token_from_api_fails_with_bad_response()
     {
         // Mock Cache to return no cached token
         Cache::shouldReceive('get')
@@ -269,7 +278,10 @@ class CerberusTest extends TestCase
         $cerberus->getAccessTokenPublic();
     }
 
-    public function test_get_access_token_from_api_fails_with_incomplete_response()
+    /**
+     * @test
+     */
+    public function get_access_token_from_api_fails_with_incomplete_response()
     {
         // Mock Cache to return no cached token
         Cache::shouldReceive('get')
@@ -317,7 +329,10 @@ class CerberusTest extends TestCase
         $cerberus->getAccessTokenPublic();
     }
 
-    public function test_magic_call_with_existing_resource()
+    /**
+     * @test
+     */
+    public function magic_call_with_existing_resource()
     {
         $resourceName = 'users';
         $resourceClass = User::class;
@@ -337,7 +352,10 @@ class CerberusTest extends TestCase
         Container::setInstance($originalContainer);
     }
 
-    public function test_magic_call_with_cached_resource()
+    /**
+     * @test
+     */
+    public function magic_call_with_cached_resource()
     {
         $resourceName = 'auth';
         $resourceClass = Auth::class;
@@ -361,11 +379,27 @@ class CerberusTest extends TestCase
         Container::setInstance($originalContainer);
     }
 
-    public function test_magic_call_with_non_existent_resource()
+    /**
+     * @test
+     */
+    public function magic_call_with_non_existent_resource()
     {
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Resource [nonexistent] does not exist.');
 
         $this->cerberus->nonexistent();
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected function defineEnvironment($app)
+    {
+        // Setup default configuration
+        $app['config']->set('services.cerberus.key', 'test-client-id');
+        $app['config']->set('services.cerberus.secret', 'test-client-secret');
     }
 }

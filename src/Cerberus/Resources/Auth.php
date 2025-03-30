@@ -44,7 +44,7 @@ class Auth extends Resource
 
         return $this->user($user)->user;
     }
- 
+
     /**
      * Check a plaintext password against the stored hash remotely.
      */

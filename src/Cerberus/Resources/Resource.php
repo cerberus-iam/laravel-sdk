@@ -56,6 +56,16 @@ abstract class Resource implements Arrayable, ArrayAccess
     }
 
     /**
+     * Create a new instance of the resource.
+     *
+     * @param  ClientHandler  $connection  The client connection handler.
+     */
+    public static function make(ClientHandler $connection): static
+    {
+        return new static($connection);
+    }
+
+    /**
      * Forcefully fill the resource attributes.
      *
      * @param  array<string, mixed>  $attributes  Attributes to fill.
@@ -83,16 +93,6 @@ abstract class Resource implements Arrayable, ArrayAccess
     public function getKey(): mixed
     {
         return $this->attributes['uid'] ?? null;
-    }
-
-    /**
-     * Create a new instance of the resource.
-     *
-     * @param  ClientHandler  $connection  The client connection handler.
-     */
-    public static function make(ClientHandler $connection): static
-    {
-        return new static($connection);
     }
 
     /**
@@ -226,39 +226,6 @@ abstract class Resource implements Arrayable, ArrayAccess
     }
 
     /**
-     * Magic getter for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->attributes[$key] ?? null;
-    }
-
-    /**
-     * Magic setter for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @param  mixed  $value  The attribute value.
-     */
-    public function __set($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    /**
-     * Magic isset for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        return isset($this->attributes[$key]);
-    }
-
-    /**
      * Check if an offset exists in the attributes.
      *
      * @param  mixed  $offset  The offset key.
@@ -305,5 +272,38 @@ abstract class Resource implements Arrayable, ArrayAccess
     public function getConnection(): ClientHandler
     {
         return $this->connection;
+    }
+
+    /**
+     * Magic getter for resource attributes.
+     *
+     * @param  string  $key  The attribute key.
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
+     * Magic setter for resource attributes.
+     *
+     * @param  string  $key  The attribute key.
+     * @param  mixed  $value  The attribute value.
+     */
+    public function __set($key, $value)
+    {
+        $this->attributes[$key] = $value;
+    }
+
+    /**
+     * Magic isset for resource attributes.
+     *
+     * @param  string  $key  The attribute key.
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return isset($this->attributes[$key]);
     }
 }

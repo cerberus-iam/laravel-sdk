@@ -36,10 +36,12 @@
         "symfony/psr-http-message-bridge": "7.3.x-dev"
     },
     "require-dev": {
+        "laravel/pint": "^1.21",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^10.0",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^11.0"
+        "phpunit/phpunit": "^11.0",
+        "tightenco/duster": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -63,8 +65,12 @@
         "sort-packages": true
     },
     "scripts": {
-        "post-autoload-dump": "@prepare",
-        "prepare": "@php artisan package:discover --ansi"
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "phpunit --coverage-html coverage",
+        "analyse": "chmod +x bin/analysis.sh && ./bin/analysis.sh",
+        "analyse:static": "vendor/bin/phpstan analyse",
+        "lint": "chmod +x bin/lint.sh && ./bin/lint.sh",
+        "fix": "chmod +x bin/fix.sh && ./bin/fix.sh"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
