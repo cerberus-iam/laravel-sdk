@@ -19,7 +19,7 @@ cd "$PROJECT_ROOT"
 # Default configuration
 DUSTER_PACKAGE="tightenco/duster"
 DUSTER_PATH="vendor/bin/duster"
-DIRECTORIES_TO_ANALYSE="app"
+DIRECTORIES_TO_ANALYSE="src"
 FIX_MODE=0
 AUTO_INSTALL=1
 LINT_ONLY=0

@@ -38,8 +38,5 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Ensure test script is executable
-        run: chmod +x ./bin/test.sh
-
       - name: Run Lint and PHP syntax checks
-        run: ./bin/test.sh --lint-only
+        run: composer lint

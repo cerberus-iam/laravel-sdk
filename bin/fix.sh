@@ -12,7 +12,7 @@ is_composer_package_installed() {
 # Constants
 DUSTER_PACKAGE="tightenco/duster"
 DUSTER_PATH="vendor/bin/duster"
-SRC_DIR="./app"
+SRC_DIR="./src"
 ADDITIONAL_DIRS=("./tests" "./database" "./resources/views")
 
 # Check if Duster is installed

@@ -47,7 +47,7 @@ jobs:
           php artisan key:generate || true
 
       - name: Run test suite
-        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        run: composer test
 
       - name: Upload coverage report
         if: success() && always()
