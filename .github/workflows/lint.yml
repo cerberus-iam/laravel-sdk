@@ -1,0 +1,45 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+      - development
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - development
+      - 'feature/**'
+
+jobs:
+  lint:
+    name: Lint Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            composer-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Ensure test script is executable
+        run: chmod +x ./bin/test.sh
+
+      - name: Run Lint and PHP syntax checks
+        run: ./bin/test.sh --lint-only

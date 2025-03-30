@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth\Guards;
+namespace Cerberus\Guards;
 
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;

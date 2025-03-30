@@ -63,7 +63,7 @@ class CerberusTest extends TestCase
     {
         $this->http->shouldReceive('withHeaders')
             ->once()
-            ->with([Cerberus::HEADER_TESTING => 'true'])
+            ->with([Cerberus::API_TESTING_MODE => 'true'])
             ->andReturnSelf();
 
         $result = $this->cerberus->testing();
