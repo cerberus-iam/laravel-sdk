@@ -21,7 +21,7 @@ class TokenParser
 
         return new Token(app(ClientHandler::class), [
             'access_token' => $jwt,
-            'client_id' => $claims->get('aud'),
+            'client_id' => self::convertSingleRecordAudToString($claims->get('aud')),
             'user_id' => $claims->has('sub') ? (int) $claims->get('sub') : null,
             'scopes' => $claims->get('scopes', []),
             'expires_in' => $claims->get('exp'),
@@ -58,5 +58,17 @@ class TokenParser
         }
 
         return $parsed;
+    }
+
+    /**
+     * Convert single record arrays into strings to ensure backwards compatibility between v4 and v3.x of lcobucci/jwt
+     */
+    protected static function convertSingleRecordAudToString(mixed $aud): array|string
+    {
+        if (is_null($aud)) {
+            return '';
+        }
+
+        return \is_array($aud) && \count($aud) === 1 ? $aud[0] : $aud;
     }
 }
