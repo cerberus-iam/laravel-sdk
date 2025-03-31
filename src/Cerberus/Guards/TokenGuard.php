@@ -2,6 +2,7 @@
 
 namespace Cerberus\Guards;
 
+use Cerberus\Exceptions\AuthenticationException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -20,8 +21,6 @@ class TokenGuard implements Guard
 
     /**
      * Create a new token guard instance.
-     *
-     * @return void
      */
     public function __construct(UserProvider $provider, Request $request)
     {
@@ -31,6 +30,8 @@ class TokenGuard implements Guard
 
     /**
      * Get the currently authenticated user.
+     *
+     * @throws \Cerberus\Exceptions\AuthenticationException
      */
     public function user(): ?Authenticatable
     {
@@ -44,18 +45,15 @@ class TokenGuard implements Guard
             return null;
         }
 
-        $user = $this->provider->retrieveByToken(
-            identifier: null,
-            token: $token
-        );
+        $user = $this->provider->retrieveByToken(null, $token);
 
-        if ($user) {
-            $this->setUser($user);
-
-            return $this->user;
+        if (! $user) {
+            throw new AuthenticationException('Invalid or expired access token.');
         }
 
-        return null;
+        $this->setUser($user);
+
+        return $this->user;
     }
 
     /**

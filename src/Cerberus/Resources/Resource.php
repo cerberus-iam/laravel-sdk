@@ -66,6 +66,14 @@ abstract class Resource implements Arrayable, ArrayAccess
     }
 
     /**
+     * Get an attribute from the resource.
+     */
+    public function getAttribute(string $attribute): mixed
+    {
+        return $this->attributes[$attribute] ?? null;
+    }
+
+    /**
      * Forcefully fill the resource attributes.
      *
      * @param  array<string, mixed>  $attributes  Attributes to fill.

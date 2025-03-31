@@ -4,13 +4,14 @@ namespace Cerberus\Tests\Unit;
 
 use BadMethodCallException;
 use Cerberus\Cerberus;
+use Cerberus\Contracts\TokenStorage;
 use Cerberus\Resources\Auth;
 use Cerberus\Resources\User;
+use Cerberus\Token;
+use Fetch\Http\Response;
 use Fetch\Interfaces\ClientHandler;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 use RuntimeException;
@@ -23,41 +24,77 @@ class CerberusTest extends TestCase
 
     protected $cerberus;
 
+    protected $storage;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->http = Mockery::mock(ClientHandler::class);
+        $this->app->bind(ClientHandler::class, function () {
+            $mock = Mockery::mock(ClientHandler::class);
 
-        // Set up the default behavior for the HTTP client
+            // These are safe defaults for any internal token resource interaction
+            $mock->shouldReceive('post')->zeroOrMoreTimes()->andReturn(
+                Mockery::mock(Response::class, function ($m) {
+                    $m->shouldReceive('json')->andReturn([]);
+                })
+            );
+            $mock->shouldReceive('get')->zeroOrMoreTimes()->andReturn(
+                Mockery::mock(Response::class, function ($m) {
+                    $m->shouldReceive('json')->andReturn([]);
+                })
+            );
+            $mock->shouldReceive('withQueryParameters')->zeroOrMoreTimes()->andReturnSelf();
+
+            return $mock;
+        });
+
+        $this->http = Mockery::mock(ClientHandler::class);
+        $this->storage = Mockery::mock(TokenStorage::class);
+
         $this->http->shouldReceive('hasHeader')->with('Authorization')->andReturn(true)->byDefault();
         $this->http->shouldReceive('withToken')->andReturnSelf()->byDefault();
 
-        $this->cerberus = new Cerberus($this->http);
+        $this->cerberus = new class($this->http) extends Cerberus
+        {
+            public function __construct($http)
+            {
+                $this->http = $http;
+            }
+
+            protected function parseAccessToken(string $token): Token
+            {
+                $mock = Mockery::mock(Token::class);
+                $mock->shouldReceive('getTokenId')->andReturn('mocked-token-id');
+                $mock->shouldReceive('getUserId')->andReturn('mocked-user-id');
+                $mock->shouldReceive('getClientId')->andReturn('mocked-client-id');
+                $mock->shouldReceive('isExpired')->andReturn(false);
+
+                return $mock;
+            }
+        };
+
+        $this->cerberus->setTokenStorage($this->storage);
     }
 
     protected function tearDown(): void
     {
+        restore_error_handler();
+        restore_exception_handler();
         Mockery::close();
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function get_http_client()
+    public function test_can_get_http_client(): void
     {
         $this->assertSame($this->http, $this->cerberus->getHttpClient());
     }
 
-    /**
-     * @test
-     */
-    public function testing_mode()
+    public function test_should_enable_testing_mode(): void
     {
-        $this->http->shouldReceive('withHeaders')
+        $this->http->shouldReceive('withHeader')
             ->once()
-            ->with([Cerberus::API_TESTING_MODE => 'true'])
+            ->with(Cerberus::API_TESTING_MODE, 'true')
             ->andReturnSelf();
 
         $result = $this->cerberus->testing();
@@ -65,17 +102,13 @@ class CerberusTest extends TestCase
         $this->assertSame($this->cerberus, $result);
     }
 
-    /**
-     * @test
-     */
-    public function configure_access_token_when_authorization_header_is_already_set()
+    public function test_should_not_configure_access_token_when_authorization_header_is_already_set(): void
     {
         $this->http->shouldReceive('hasHeader')
             ->once()
             ->with('Authorization')
             ->andReturn(true);
 
-        // Should not attempt to get access token
         $this->http->shouldNotReceive('withToken');
 
         $result = $this->cerberus->configureAccessToken();
@@ -83,77 +116,84 @@ class CerberusTest extends TestCase
         $this->assertSame($this->cerberus, $result);
     }
 
-    /**
-     * @test
-     */
-    public function configure_access_token_when_authorization_header_is_not_set()
+    public function test_should_configure_access_token_when_authorization_header_is_not_set(): void
     {
-        $accessToken = $this->faker->uuid;
+        $accessToken = $this->validJwt();
 
-        // Create a new HTTP mock specifically for this test
-        $httpMock = Mockery::mock(ClientHandler::class);
+        $http = Mockery::mock(ClientHandler::class);
+        $storage = Mockery::mock(TokenStorage::class);
 
-        // Set up expectations for HTTP mock
-        $httpMock->shouldReceive('hasHeader')
-            ->with('Authorization')
-            ->andReturn(false);
+        $http->shouldReceive('hasHeader')->with('Authorization')->andReturn(false);
+        $http->shouldReceive('withToken')->with($accessToken)->once()->andReturnSelf();
 
-        $httpMock->shouldReceive('withToken')
-            ->once()
-            ->with($accessToken)
-            ->andReturnSelf();
-
-        // Mock cache to provide a token
-        Cache::shouldReceive('get')
-            ->once()
-            ->with(Cerberus::CACHE_KEY_TOKEN)
-            ->andReturn([
+        $http->shouldReceive('post')->zeroOrMoreTimes()->andReturn(
+            Mockery::mock(Response::class, fn ($m) => $m->shouldReceive('json')->andReturn([
                 'access_token' => $accessToken,
                 'expires_in' => 3600,
-            ]);
+            ]))
+        );
 
-        // Create a new instance with our mocks to avoid the constructor call
-        $cerberus = new class($httpMock) extends Cerberus
+        $storage->shouldReceive('get')->once()->andReturn([
+            'access_token' => $accessToken,
+            'expires_in' => 3600,
+        ]);
+        $storage->shouldReceive('put')
+            ->once()
+            ->with([
+                'access_token' => $accessToken,
+                'expires_in' => 3600,
+            ], 3600);
+
+        $cerberus = new class($http) extends Cerberus
         {
-            // Override constructor to prevent calling configureAccessToken
             public function __construct($http)
             {
                 $this->http = $http;
-                // Not calling parent::__construct to avoid configureAccessToken call
+            }
+
+            protected function parseAccessToken(string $token): Token
+            {
+                $mock = Mockery::mock(Token::class);
+                $mock->shouldReceive('getTokenId')->andReturn('token-id');
+                $mock->shouldReceive('getUserId')->andReturn('user-id');
+                $mock->shouldReceive('getClientId')->andReturn('client-id');
+                $mock->shouldReceive('isExpired')->andReturn(false);
+
+                return $mock;
             }
         };
+
+        $cerberus->setTokenStorage($storage);
 
         $result = $cerberus->configureAccessToken();
 
         $this->assertSame($cerberus, $result);
     }
 
-    /**
-     * @test
-     */
-    public function get_access_token_from_cache()
+    public function test_should_get_access_token_from_cache(): void
     {
-        $accessToken = $this->faker->uuid;
+        $accessToken = $this->validJwt();
         $expiresIn = 3600;
 
-        Cache::shouldReceive('get')
+        $this->http->shouldReceive('post')->zeroOrMoreTimes()->andReturn(
+            Mockery::mock(Response::class, fn ($m) => $m->shouldReceive('json')->andReturn([
+                'access_token' => $accessToken,
+                'expires_in' => $expiresIn,
+            ]))
+        );
+
+        $this->storage->shouldReceive('get')
             ->once()
-            ->with(Cerberus::CACHE_KEY_TOKEN)
             ->andReturn([
                 'access_token' => $accessToken,
                 'expires_in' => $expiresIn,
             ]);
+        $this->storage->shouldReceive('put')->once()->with([
+            'access_token' => $accessToken,
+            'expires_in' => $expiresIn,
+        ], $expiresIn);
 
-        // Create a test subclass that exposes the protected method
-        $cerberus = new class($this->http) extends Cerberus
-        {
-            public function getAccessTokenPublic(): array
-            {
-                return $this->getAccessToken();
-            }
-        };
-
-        $result = $cerberus->getAccessTokenPublic();
+        $result = $this->cerberus->getAccessToken();
 
         $this->assertEquals([
             'access_token' => $accessToken,
@@ -161,72 +201,34 @@ class CerberusTest extends TestCase
         ], $result);
     }
 
-    /**
-     * @test
-     */
-    public function get_access_token_from_api()
+    public function test_should_get_access_token_from_api(): void
     {
-        $accessToken = $this->faker->uuid;
+        $accessToken = $this->validJwt();
         $expiresIn = 3600;
 
-        // Mock Cache to return no cached token
-        Cache::shouldReceive('get')
-            ->once()
-            ->with(Cerberus::CACHE_KEY_TOKEN)
-            ->andReturn(null);
-
-        // Mock HTTP response
-        $response = Mockery::mock(Response::class);
-        $response->shouldReceive('ok')
-            ->once()
-            ->andReturn(true);
-
-        $response->shouldReceive('json')
-            ->once()
-            ->andReturn([
+        $this->storage->shouldReceive('get')->once()->andReturn(null);
+        $this->storage->shouldReceive('put')->once()->with(
+            [
                 'access_token' => $accessToken,
                 'expires_in' => $expiresIn,
-            ]);
+            ],
+            $expiresIn
+        );
 
-        $this->http->shouldReceive('post')
-            ->once()
-            ->with('/oauth/token', [
-                'grant_type' => Cerberus::GRANT_TYPE,
-                'client_id' => config('services.cerberus.key'),
-                'client_secret' => config('services.cerberus.secret'),
-                'scope' => '*',
-            ])
-            ->andReturn($response);
+        $response = Mockery::mock(Response::class);
+        $response->shouldReceive('json')->once()->andReturn([
+            'access_token' => $accessToken,
+            'expires_in' => $expiresIn,
+        ]);
 
-        // Mock Cache::put with any third argument instead of specific type
-        Cache::shouldReceive('put')
-            ->once()
-            ->with(
-                Cerberus::CACHE_KEY_TOKEN,
-                [
-                    'access_token' => $accessToken,
-                    'expires_in' => $expiresIn,
-                ],
-                Mockery::any()  // Accept any value for the TTL parameter
-            );
+        $this->http->shouldReceive('post')->once()->with('/oauth/token', [
+            'grant_type' => Cerberus::GRANT_TYPE,
+            'client_id' => config('services.cerberus.key'),
+            'client_secret' => config('services.cerberus.secret'),
+            'scope' => '*',
+        ])->andReturn($response);
 
-        // Create a test subclass that exposes the protected method
-        $cerberus = new class($this->http) extends Cerberus
-        {
-            public function getAccessTokenPublic(): array
-            {
-                return $this->getAccessToken();
-            }
-
-            // Override constructor to prevent calling configureAccessToken
-            public function __construct($http)
-            {
-                $this->http = $http;
-                // Not calling parent::__construct to avoid configureAccessToken call
-            }
-        };
-
-        $result = $cerberus->getAccessTokenPublic();
+        $result = $this->cerberus->getAccessToken();
 
         $this->assertEquals([
             'access_token' => $accessToken,
@@ -234,155 +236,72 @@ class CerberusTest extends TestCase
         ], $result);
     }
 
-    /**
-     * @test
-     */
-    public function get_access_token_from_api_fails_with_bad_response()
+    public function test_should_throw_exception_when_access_token_api_response_is_not_ok(): void
     {
-        // Mock Cache to return no cached token
-        Cache::shouldReceive('get')
-            ->once()
-            ->with(Cerberus::CACHE_KEY_TOKEN)
-            ->andReturn(null);
+        $this->storage->shouldReceive('get')->once()->andReturn(null);
 
-        // Mock HTTP response
         $response = Mockery::mock(Response::class);
-        $response->shouldReceive('ok')
-            ->once()
-            ->andReturn(false);
+        $response->shouldReceive('json')->once()->andReturn([
+            'error' => 'invalid_client',
+        ]);
 
-        $this->http->shouldReceive('post')
-            ->once()
-            ->with('/oauth/token', Mockery::type('array'))
-            ->andReturn($response);
+        $this->http->shouldReceive('post')->once()->andReturn($response);
 
-        // Create a test subclass that exposes the protected method
-        $cerberus = new class($this->http) extends Cerberus
-        {
-            public function getAccessTokenPublic(): array
-            {
-                return $this->getAccessToken();
-            }
-
-            // Override constructor to prevent calling configureAccessToken
-            public function __construct($http)
-            {
-                $this->http = $http;
-                // Not calling parent::__construct to avoid configureAccessToken call
-            }
-        };
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Failed to fetch Cerberus client access token.');
-
-        $cerberus->getAccessTokenPublic();
-    }
-
-    /**
-     * @test
-     */
-    public function get_access_token_from_api_fails_with_incomplete_response()
-    {
-        // Mock Cache to return no cached token
-        Cache::shouldReceive('get')
-            ->once()
-            ->with(Cerberus::CACHE_KEY_TOKEN)
-            ->andReturn(null);
-
-        // Mock HTTP response
-        $response = Mockery::mock(Response::class);
-        $response->shouldReceive('ok')
-            ->once()
-            ->andReturn(true);
-
-        $response->shouldReceive('json')
-            ->once()
-            ->andReturn([
-                // Missing required fields
-                'token_type' => 'Bearer',
-            ]);
-
-        $this->http->shouldReceive('post')
-            ->once()
-            ->with('/oauth/token', Mockery::type('array'))
-            ->andReturn($response);
-
-        // Create a test subclass that exposes the protected method
-        $cerberus = new class($this->http) extends Cerberus
-        {
-            public function getAccessTokenPublic(): array
-            {
-                return $this->getAccessToken();
-            }
-
-            // Override constructor to prevent calling configureAccessToken
-            public function __construct($http)
-            {
-                $this->http = $http;
-                // Not calling parent::__construct to avoid configureAccessToken call
-            }
-        };
-
+        $cerberus = $this->cerberus;
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid access token response from Cerberus.');
 
-        $cerberus->getAccessTokenPublic();
+        $cerberus->getAccessToken();
     }
 
-    /**
-     * @test
-     */
-    public function magic_call_with_existing_resource()
+    public function test_should_throw_exception_when_access_token_api_response_is_incomplete(): void
     {
-        $resourceName = 'users';
-        $resourceClass = User::class;
+        $this->storage->shouldReceive('get')->once()->andReturn(null);
 
-        // Swap Container for testing
+        $response = Mockery::mock(Response::class);
+        $response->shouldReceive('json')->once()->andReturn([
+            'token_type' => 'Bearer',
+        ]);
+
+        $this->http->shouldReceive('post')->once()->andReturn($response);
+
+        $cerberus = $this->cerberus;
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Invalid access token response from Cerberus.');
+
+        $cerberus->getAccessToken();
+    }
+
+    public function test_should_resolve_existing_resource_via_magic_call(): void
+    {
         $originalContainer = Container::getInstance();
         $container = new Container;
         Container::setInstance($container);
 
-        // Call the method
         $result = $this->cerberus->users();
 
-        // Verify result
         $this->assertInstanceOf(User::class, $result);
 
-        // Reset container
         Container::setInstance($originalContainer);
     }
 
-    /**
-     * @test
-     */
-    public function magic_call_with_cached_resource()
+    public function test_should_return_cached_resource_via_magic_call(): void
     {
-        $resourceName = 'auth';
-        $resourceClass = Auth::class;
-
-        // Create a resource instance to return
         $resourceInstance = new Auth($this->http);
 
-        // Swap Container for testing
         $originalContainer = Container::getInstance();
         $container = new Container;
-        $container->instance($resourceClass, $resourceInstance);
+        $container->instance(Auth::class, $resourceInstance);
         Container::setInstance($container);
 
-        // Call the method
         $result = $this->cerberus->auth();
 
-        // Verify result
         $this->assertSame($resourceInstance, $result);
 
-        // Reset container
         Container::setInstance($originalContainer);
     }
 
-    /**
-     * @test
-     */
-    public function magic_call_with_non_existent_resource()
+    public function test_should_throw_exception_for_non_existent_resource(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Resource [nonexistent] does not exist.');
@@ -390,16 +309,16 @@ class CerberusTest extends TestCase
         $this->cerberus->nonexistent();
     }
 
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
     protected function defineEnvironment($app)
     {
-        // Setup default configuration
         $app['config']->set('services.cerberus.key', 'test-client-id');
         $app['config']->set('services.cerberus.secret', 'test-client-secret');
+    }
+
+    protected function validJwt(): string
+    {
+        return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
+             .'eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvZSIsImlhdCI6MTUxNjIzOTAyMn0.'
+             .'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
     }
 }

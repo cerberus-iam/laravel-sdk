@@ -2,14 +2,21 @@
 
 namespace Cerberus\Concerns;
 
-use Cerberus\Cerberus;
+use Cerberus\Contracts\TokenStorage;
+use Cerberus\Events\AccessTokenCreated;
+use Cerberus\Events\RefreshTokenCreated;
 use Cerberus\Resources\Token;
 use Cerberus\TokenParser;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use RuntimeException;
 
 trait HandlesAccessToken
 {
+    /**
+     * The token storage implementation.
+     */
+    protected TokenStorage $storage;
+
     /**
      * Configure the access token on the HTTP client.
      */
@@ -23,38 +30,23 @@ trait HandlesAccessToken
     }
 
     /**
-     * Get the access token from cache or request a new one.
+     * Get the access token from storage or request a new one.
      *
-     * @return array{access_token: string, expires_in: int}
+     * @return array{access_token: string, expires_in: int, refresh_token?: string}
      */
     public function getAccessToken(): array
     {
-        $cached = Cache::get(Cerberus::CACHE_KEY_TOKEN);
+        $cached = $this->storage->get();
 
         if (is_array($cached) && isset($cached['access_token'], $cached['expires_in'])) {
+            if ($this->isTokenExpired($cached)) {
+                return $this->refreshAccessToken($cached['refresh_token'] ?? null);
+            }
+
             return $cached;
         }
 
-        $response = $this->http->post('/oauth/token', [
-            'grant_type' => Cerberus::GRANT_TYPE,
-            'client_id' => config('services.cerberus.key'),
-            'client_secret' => config('services.cerberus.secret'),
-            'scope' => '*',
-        ]);
-
-        if (! $response->ok()) {
-            throw new RuntimeException('Failed to fetch Cerberus client access token.');
-        }
-
-        $data = $response->json();
-
-        if (! isset($data['access_token'], $data['expires_in'])) {
-            throw new RuntimeException('Invalid access token response from Cerberus.');
-        }
-
-        Cache::put(Cerberus::CACHE_KEY_TOKEN, $data, now()->addSeconds($data['expires_in']));
-
-        return $data;
+        return $this->requestNewAccessToken();
     }
 
     /**
@@ -62,6 +54,88 @@ trait HandlesAccessToken
      */
     public function parsedToken(): Token
     {
-        return TokenParser::parse($this->getAccessToken()['access_token']);
+        return TokenParser::parseAccessToken($this->getAccessToken()['access_token']);
+    }
+
+    /**
+     * Inject a token storage implementation.
+     */
+    public function setTokenStorage(TokenStorage $storage): void
+    {
+        $this->storage = $storage;
+    }
+
+    /**
+     * Request a new access token using client credentials.
+     */
+    protected function requestNewAccessToken(): array
+    {
+        $response = $this->http->post('/oauth/token', [
+            'grant_type' => self::GRANT_TYPE,
+            'client_id' => config('services.cerberus.key'),
+            'client_secret' => config('services.cerberus.secret'),
+            'scope' => '*',
+        ]);
+
+        return $this->storeAccessTokenResponse($response->json());
+    }
+
+    /**
+     * Refresh an access token using a refresh token.
+     */
+    protected function refreshAccessToken(?string $refreshToken = null): array
+    {
+        if (! $refreshToken) {
+            return $this->requestNewAccessToken();
+        }
+
+        $response = $this->http->post('/oauth/token', [
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'client_id' => config('services.cerberus.key'),
+            'client_secret' => config('services.cerberus.secret'),
+            'scope' => '*',
+        ]);
+
+        return $this->storeAccessTokenResponse($response->json(), isRefresh: true);
+    }
+
+    /**
+     * Store token data and fire appropriate events.
+     */
+    protected function storeAccessTokenResponse(array $data, bool $isRefresh = false): array
+    {
+        if (! isset($data['access_token'], $data['expires_in'])) {
+            throw new RuntimeException('Invalid access token response from Cerberus.');
+        }
+
+        $this->storage->put($data, $data['expires_in']);
+
+        $token = TokenParser::parseAccessToken($data['access_token']);
+
+        Event::dispatch(new AccessTokenCreated(
+            tokenId: $token->getTokenId(),
+            userId: $token->getUserId(),
+            clientId: $token->getClientId()
+        ));
+
+        if ($isRefresh && isset($data['refresh_token'])) {
+            $refresh = TokenParser::parseRefreshToken($data['refresh_token'], $token->getTokenId());
+
+            Event::dispatch(new RefreshTokenCreated(
+                refreshTokenId: $refresh->getTokenId(),
+                accessTokenId: $token->getTokenId()
+            ));
+        }
+
+        return $data;
+    }
+
+    /**
+     * Determine if the token is expired.
+     */
+    protected function isTokenExpired(array $token): bool
+    {
+        return TokenParser::parseAccessToken($token['access_token'])->isExpired();
     }
 }

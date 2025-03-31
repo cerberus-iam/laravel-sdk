@@ -10,7 +10,7 @@
         "issues": "https://github.com/cerberus-iam/laravel-sdk/issues",
         "source": "https://github.com/cerberus-iam/laravel-sdk"
     },
-    "version": "1.0.0",
+    "version": "0.0.1",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -30,15 +30,16 @@
         "illuminate/http": "*",
         "illuminate/support": "^12.0",
         "jerome/fetch-php": "^2.0.5",
-        "lcobucci/jwt": "6.0.x-dev",
+        "lcobucci/jwt": "^5.0",
         "league/oauth2-server": "^3.2",
-        "nyholm/psr7": "^1.8@dev",
-        "symfony/psr-http-message-bridge": "7.3.x-dev"
+        "nesbot/carbon": "^3.8",
+        "nyholm/psr7": "^1.8",
+        "symfony/psr-http-message-bridge": "^7.2"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
         "mockery/mockery": "^1.6",
-        "orchestra/testbench": "^10.0",
+        "orchestra/testbench": "^10.1",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^11.0",
         "tightenco/duster": "^3.2"

@@ -82,9 +82,7 @@ class Cerberus
      */
     public function testing(): static
     {
-        $this->http->withHeaders([
-            self::API_TESTING_MODE => 'true',
-        ]);
+        $this->http->withHeader(self::API_TESTING_MODE, true);
 
         return $this;
     }
