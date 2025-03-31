@@ -15,7 +15,7 @@ class Cerberus
      *
      * @var string
      */
-    public const API_URI = 'http://127.0.0.1:8000';
+    public const API_URI = 'https://dev.cerberus-iam.com';
 
     /**
      * The version of the Cerberus API.
