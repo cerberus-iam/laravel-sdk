@@ -30,16 +30,6 @@ trait HandlesAccessToken
     }
 
     /**
-     * Initialise the token storage implementation.
-     *
-     * @throws RuntimeException
-     */
-    protected function initialiseStorage(): void
-    {
-        $this->storage = app(TokenStorage::class);
-    }
-
-    /**
      * Get the access token from storage or request a new one.
      *
      * @return array{access_token: string, expires_in: int, refresh_token?: string}
@@ -87,6 +77,16 @@ trait HandlesAccessToken
     public function setTokenStorage(TokenStorage $storage): void
     {
         $this->storage = $storage;
+    }
+
+    /**
+     * Initialise the token storage implementation.
+     *
+     * @throws RuntimeException
+     */
+    protected function initialiseStorage(): void
+    {
+        $this->storage = app(TokenStorage::class);
     }
 
     /**
