@@ -2,9 +2,11 @@
 
 namespace Cerberus;
 
-use App\Auth\Guards\TokenGuard;
+use Cerberus\Contracts\TokenStorage;
+use Cerberus\Guards\TokenGuard;
 use Fetch\Http\ClientHandler;
 use Fetch\Interfaces\ClientHandler as ClientHandlerInterface;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -17,6 +19,7 @@ class CerberusServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerHttpClient();
+        $this->registerTokenStorage();
         $this->registerCerberusSingleton();
     }
 
@@ -47,7 +50,22 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerCerberusSingleton(): void
     {
-        $this->app->singleton(Cerberus::class, fn (Application $app) => $this->createCerberusInstance($app));
+        $this->app->singleton(Cerberus::class, fn (
+            Application $app
+        ) => $this->createCerberusInstance($app));
+    }
+
+    /**
+     * Register the token storage implementation.
+     *
+     * @throws \RuntimeException
+     */
+    protected function registerTokenStorage(): void
+    {
+        $this->app->singleton(
+            TokenStorage::class,
+            fn (Application $app) => new CacheTokenStorage
+        );
     }
 
     /**
@@ -84,7 +102,10 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerAuthProvider(): void
     {
-        Auth::provider('cerberus', fn (Application $app, array $config) => $this->createUserProvider($app));
+        Auth::provider('cerberus', fn (
+            Application $app,
+            array $config
+        ) => $this->createUserProvider($app));
     }
 
     /**
@@ -100,13 +121,17 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerAuthGuard(): void
     {
-        Auth::extend('cerberus', fn (Application $app, string $name, array $config) => $this->createAuthGuard($app, $config));
+        Auth::extend('cerberus', fn (
+            Application $app,
+            string $name,
+            array $config
+        ) => $this->createAuthGuard($app, $config));
     }
 
     /**
      * Create the TokenGuard instance.
      */
-    protected function createAuthGuard(Application $app, array $config): TokenGuard
+    protected function createAuthGuard(Application $app, array $config): Guard
     {
         return tap(
             new TokenGuard(

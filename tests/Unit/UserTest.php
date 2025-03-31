@@ -3,6 +3,7 @@
 namespace Cerberus\Tests\Unit;
 
 use Cerberus\Cerberus;
+use Cerberus\Contracts\TokenStorage;
 use Cerberus\Resources\User;
 use Cerberus\Tests\TestCase;
 use Fetch\Interfaces\ClientHandler;
@@ -21,6 +22,16 @@ class UserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->app->bind(TokenStorage::class, function () {
+            return Mockery::mock(TokenStorage::class, function ($mock) {
+                $mock->shouldReceive('get')->andReturn([
+                    'access_token' => 'mock.token.jwt',
+                    'expires_in' => 3600,
+                ]);
+                $mock->shouldReceive('put')->andReturnNull();
+            });
+        });
 
         $this->http = Mockery::mock(ClientHandler::class);
 

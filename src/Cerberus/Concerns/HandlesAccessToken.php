@@ -30,13 +30,23 @@ trait HandlesAccessToken
     }
 
     /**
+     * Initialise the token storage implementation.
+     *
+     * @throws RuntimeException
+     */
+    protected function initialiseStorage(): void
+    {
+        $this->storage = app(TokenStorage::class);
+    }
+
+    /**
      * Get the access token from storage or request a new one.
      *
      * @return array{access_token: string, expires_in: int, refresh_token?: string}
      */
     public function getAccessToken(): array
     {
-        $cached = $this->storage->get();
+        $cached = $this->getTokenStorage()->get();
 
         if (is_array($cached) && isset($cached['access_token'], $cached['expires_in'])) {
             if ($this->isTokenExpired($cached)) {
@@ -55,6 +65,20 @@ trait HandlesAccessToken
     public function parsedToken(): Token
     {
         return TokenParser::parseAccessToken($this->getAccessToken()['access_token']);
+    }
+
+    /**
+     * Get the token storage implementation.
+     *
+     * @throws RuntimeException
+     */
+    public function getTokenStorage(): TokenStorage
+    {
+        if (! $this->storage) {
+            $this->initialiseStorage();
+        }
+
+        return $this->storage;
     }
 
     /**
@@ -109,7 +133,7 @@ trait HandlesAccessToken
             throw new RuntimeException('Invalid access token response from Cerberus.');
         }
 
-        $this->storage->put($data, $data['expires_in']);
+        $this->getTokenStorage()->put($data, $data['expires_in']);
 
         $token = TokenParser::parseAccessToken($data['access_token']);
 
