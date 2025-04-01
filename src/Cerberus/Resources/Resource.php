@@ -158,9 +158,17 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function find(string $id): ?static
     {
-        $response = $this->connection->get("/{$this->resource}/{$id}");
+        $response = $this->connection
+            ->get("/{$this->resource}/{$id}")
+            ->json();
 
-        return isset($response->json()['data']) ? new static($this->connection, $response->json()['data']) : null;
+        $data = $response['data'] ?? $response;
+
+        if (blank($data)) {
+            return null;
+        }
+
+        return new static($this->connection, $data);
     }
 
     /**
