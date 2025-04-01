@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.2...0.0.x)
 
+## [v0.0.5](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.5...v0.0.6) - 2025-04-02
+
+* Refactor resource model to closely match Laravel's Eloquent model
+
 ## [v0.0.5](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.4...v0.0.5) - 2025-04-01
 
 * Fix `Resource` `find` method to set attributes from response data properly.

@@ -102,10 +102,9 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerAuthProvider(): void
     {
-        Auth::provider('cerberus', fn (
-            Application $app,
-            array $config
-        ) => $this->createUserProvider($app));
+        Auth::provider('cerberus', function (Application $app, array $config) {
+            return $this->createUserProvider($app);
+        });
     }
 
     /**

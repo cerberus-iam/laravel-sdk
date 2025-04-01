@@ -3,7 +3,6 @@
 namespace Cerberus\Tests;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
@@ -21,9 +20,19 @@ abstract class TestCase extends BaseTestCase
         $config = $app->make(Repository::class);
 
         $config->set([
+            'auth.defaults.guard' => 'cerberus',
             'auth.defaults.provider' => 'cerberus',
-            'auth.providers.users.model' => User::class,
-            'auth.guards.api' => ['driver' => 'cerberus', 'provider' => 'cerberus'],
+
+            'auth.guards.cerberus' => [
+                'driver' => 'cerberus',
+                'provider' => 'cerberus',
+            ],
+
+            'auth.providers.cerberus' => [
+                'driver' => 'cerberus',
+                'model' => \Cerberus\Resources\User::class, // or your mock/fake class
+            ],
+
             'database.default' => 'testing',
         ]);
     }
@@ -37,5 +46,15 @@ abstract class TestCase extends BaseTestCase
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
 
         parent::getEnvironmentSetUp($app);
+    }
+
+    /**
+     * Define the package providers for the test.
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Cerberus\CerberusServiceProvider::class,
+        ];
     }
 }

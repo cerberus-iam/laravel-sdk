@@ -5,14 +5,20 @@ namespace Cerberus\Resources;
 use ArrayAccess;
 use Fetch\Interfaces\ClientHandler;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use Stringable;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 
-/**
- * Abstract class representing a resource.
- * Provides methods for interacting with API resources.
- */
-abstract class Resource implements Arrayable, ArrayAccess
+abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, Stringable
 {
+    /**
+     * Indicates if the resource exists.
+     */
+    public $exists = false;
+
     /**
      * The resource name.
      */
@@ -44,6 +50,13 @@ abstract class Resource implements Arrayable, ArrayAccess
     protected array $parameters = [];
 
     /**
+     * Indicates that the object's string representation should be escaped when __toString is invoked.
+     *
+     * @var bool
+     */
+    protected $escapeWhenCastingToString = false;
+
+    /**
      * Create new instance of the resource.
      *
      * @return void
@@ -56,13 +69,11 @@ abstract class Resource implements Arrayable, ArrayAccess
     }
 
     /**
-     * Create a new instance of the resource.
-     *
-     * @param  ClientHandler  $connection  The client connection handler.
+     * Create a new instance of the resource with the given attributes.
      */
-    public static function make(ClientHandler $connection): static
+    public static function make(ClientHandler $connection, array $attributes = []): static
     {
-        return new static($connection);
+        return new static($connection, $attributes);
     }
 
     /**
@@ -100,7 +111,7 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function getKey(): mixed
     {
-        return $this->attributes['uid'] ?? null;
+        return $this->getAttribute($this->getKeyName());
     }
 
     /**
@@ -212,7 +223,7 @@ abstract class Resource implements Arrayable, ArrayAccess
      */
     public function exists(): bool
     {
-        return isset($this->attributes['uid']);
+        return isset($this->attributes[$this->getKeyName()]);
     }
 
     /**
@@ -224,7 +235,19 @@ abstract class Resource implements Arrayable, ArrayAccess
     }
 
     /**
-     * Get the primary key for the model.
+     * Create a new instance of the given resource.
+     */
+    public function newInstance(array $attributes = [], bool $exists = false): static
+    {
+        $instance = new static($this->connection, $attributes);
+
+        $instance->exists = $exists;
+
+        return $instance;
+    }
+
+    /**
+     * Get the primary key for the resource.
      *
      * @return string
      */
@@ -239,6 +262,43 @@ abstract class Resource implements Arrayable, ArrayAccess
     public function toArray(): array
     {
         return $this->attributes;
+    }
+
+    /**
+     * Convert the resource instance to JSON.
+     *
+     * @param  int  $options
+     * @return string
+     *
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     */
+    public function toJson($options = 0)
+    {
+        try {
+            $json = json_encode($this->jsonSerialize(), $options | JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw JsonEncodingException::forModel($this, $e->getMessage());
+        }
+
+        return $json;
+    }
+
+    /**
+     * Convert the object into something JSON serializable.
+     */
+    public function jsonSerialize(): mixed
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Indicate that the object's string representation should be escaped when __toString is invoked.
+     */
+    public function escapeWhenCastingToString(bool $escape = true): static
+    {
+        $this->escapeWhenCastingToString = $escape;
+
+        return $this;
     }
 
     /**
@@ -288,6 +348,18 @@ abstract class Resource implements Arrayable, ArrayAccess
     public function getConnection(): ClientHandler
     {
         return $this->connection;
+    }
+
+    /**
+     * Convert the resource to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->escapeWhenCastingToString
+            ? e($this->toJson())
+            : $this->toJson();
     }
 
     /**
