@@ -5,9 +5,22 @@ namespace Cerberus;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Facades\Cache;
 
 class CerberusUserProvider implements UserProvider
 {
+    /**
+     * In-memory cache of users for the request lifecycle.
+     *
+     * @var array<string, \Illuminate\Contracts\Auth\Authenticatable>
+     */
+    protected array $cachedUsers = [];
+
+    /**
+     * Cache lifetime for persistent user cache (in seconds).
+     */
+    protected int $cacheTtl = 300; // 5 minutes
+
     /**
      * Create a new class instance.
      */
@@ -17,25 +30,43 @@ class CerberusUserProvider implements UserProvider
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve a user by their unique identifier.
      */
     public function retrieveById($identifier)
     {
-        return $this->cerberus->users()->find($identifier);
+        // In-memory cache
+        if (isset($this->cachedUsers[$identifier])) {
+            return $this->cachedUsers[$identifier];
+        }
+
+        // Persistent cache
+        $cacheKey = $this->getCacheKey($identifier);
+        $user = Cache::remember($cacheKey, $this->cacheTtl, function () use ($identifier) {
+            return $this->cerberus->users()->find($identifier);
+        });
+
+        return $this->cachedUsers[$identifier] = $user;
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve a user by their token.
      */
     public function retrieveByToken($identifier, $token)
     {
+        // In-memory cache
+        if (isset($this->cachedUsers[$token])) {
+            return $this->cachedUsers[$token];
+        }
+
         $this->cerberus->getHttpClient()->withToken($token);
 
-        return $this->cerberus->auth()->findByToken($token);
+        $user = $this->cerberus->auth()->findByToken($token);
+
+        return $this->cachedUsers[$token] = $user;
     }
 
     /**
-     * {@inheritdoc}
+     * Update the "remember me" token for the user.
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
@@ -44,10 +75,16 @@ class CerberusUserProvider implements UserProvider
             ->where($user->getAuthIdentifierName(), $user->getEmailForPasswordReset())
             ->first()
             ->update(['remember_token' => $token]);
+
+        // Also update cached user if present
+        $this->cachedUsers[$user->getAuthIdentifier()]?->remember_token = $token;
+
+        // Optionally clear persistent cache
+        Cache::forget($this->getCacheKey($user->getAuthIdentifier()));
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve a user by the given credentials.
      */
     public function retrieveByCredentials(array $credentials)
     {
@@ -58,16 +95,13 @@ class CerberusUserProvider implements UserProvider
         );
 
         if (empty($credentials)) {
-            return;
+            return null;
         }
 
-        // First we will add each credential element to the query as a where clause.
-        // Then we can execute the query and, if we found a user, return it in a
-        // Cerberus User "model" that will be utilized by the Guard instances.
         $query = $this->cerberus->users();
 
         foreach ($credentials as $key => $value) {
-            if (is_array($value) || $value instanceof Arrayable) {
+            if (is_array($value)) {
                 $query->whereIn($key, $value);
             } elseif ($value instanceof Closure) {
                 $value($query);
@@ -80,11 +114,11 @@ class CerberusUserProvider implements UserProvider
     }
 
     /**
-     * {@inheritdoc}
+     * Validate a user against the given credentials.
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        if (is_null($credentials['password'])) {
+        if (is_null($credentials['password'] ?? null)) {
             return false;
         }
 
@@ -95,7 +129,7 @@ class CerberusUserProvider implements UserProvider
     }
 
     /**
-     * {@inheritdoc}
+     * Optionally rehash password if required (e.g., algorithm update).
      */
     public function rehashPasswordIfRequired(
         Authenticatable $user,
@@ -114,5 +148,13 @@ class CerberusUserProvider implements UserProvider
     public function getConnection(): Cerberus
     {
         return $this->cerberus;
+    }
+
+    /**
+     * Generate the cache key for storing a user by identifier.
+     */
+    protected function getCacheKey(string $identifier): string
+    {
+        return 'cerberus:user:'.$identifier;
     }
 }

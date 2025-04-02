@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.2...0.0.x)
 
+## [v0.0.6](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.6...v0.0.7) - 2025-04-02
+
+* Add caching mechanism to store and retrieve authenticated user
+
 ## [v0.0.6](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.5...v0.0.6) - 2025-04-02
 
 * Refactor resource model to closely match Laravel's Eloquent model
