@@ -4,9 +4,10 @@ namespace Tests\Unit;
 
 use Cerberus\Cerberus;
 use Cerberus\CerberusUserProvider;
+use Cerberus\Tests\TestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Mockery;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Cache;
+use Mockery as m;
 
 class CerberusUserProviderTest extends TestCase
 {
@@ -18,22 +19,29 @@ class CerberusUserProviderTest extends TestCase
     {
         parent::setUp();
 
-        $this->cerberus = Mockery::mock(Cerberus::class);
+        Cache::shouldReceive('remember')
+            ->andReturnUsing(function ($key, $ttl, $callback) {
+                return $callback();
+            });
+
+        Cache::shouldReceive('forget');
+
+        $this->cerberus = m::mock(Cerberus::class);
         $this->userProvider = new CerberusUserProvider($this->cerberus);
     }
 
     protected function tearDown(): void
     {
-        Mockery::close();
+        m::close();
+
+        restore_error_handler();
+        restore_exception_handler();
     }
 
-    /**
-     * @test
-     */
-    public function retrieve_by_id()
+    public function test_retrieve_by_id(): void
     {
         $userId = 1;
-        $userMock = Mockery::mock(Authenticatable::class);
+        $userMock = m::mock(Authenticatable::class);
 
         $this->cerberus->shouldReceive('users->find')
             ->with($userId)
@@ -44,17 +52,15 @@ class CerberusUserProviderTest extends TestCase
         $this->assertSame($userMock, $result);
     }
 
-    /**
-     * @test
-     */
-    public function retrieve_by_token()
+    public function test_retrieve_by_token(): void
     {
         $identifier = 1;
         $token = 'test-token';
-        $userMock = Mockery::mock(Authenticatable::class);
+        $userMock = m::mock(Authenticatable::class);
 
         $this->cerberus->shouldReceive('getHttpClient->withToken')
             ->with($token);
+
         $this->cerberus->shouldReceive('auth->findByToken')
             ->with($token)
             ->andReturn($userMock);
@@ -64,35 +70,28 @@ class CerberusUserProviderTest extends TestCase
         $this->assertSame($userMock, $result);
     }
 
-    /**
-     * @test
-     */
-    public function update_remember_token()
+    public function test_update_remember_token(): void
     {
-        $userMock = Mockery::mock(Authenticatable::class);
+        $userMock = m::mock(Authenticatable::class);
         $token = 'new-token';
 
-        $userMock->shouldReceive('getAuthIdentifierName')
-            ->andReturn('email');
-        $userMock->shouldReceive('getEmailForPasswordReset')
-            ->andReturn('user@example.com');
+        $userMock->shouldReceive('getAuthIdentifierName')->andReturn('email');
+        $userMock->shouldReceive('getEmailForPasswordReset')->andReturn('user@example.com');
+        $userMock->shouldReceive('getAuthIdentifier')->andReturn('user@example.com');
 
         $this->cerberus->shouldReceive('users->where->first->update')
             ->with(['remember_token' => $token]);
 
         $this->userProvider->updateRememberToken($userMock, $token);
 
-        $this->assertTrue(true); // No exception means success
+        $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
-    public function retrieve_by_credentials()
+    public function test_retrieve_by_credentials(): void
     {
         $credentials = ['email' => 'user@example.com'];
-        $userMock = Mockery::mock(Authenticatable::class);
-        $queryBuilderMock = Mockery::mock();
+        $userMock = m::mock(Authenticatable::class);
+        $queryBuilderMock = m::mock();
 
         $this->cerberus->shouldReceive('users')
             ->andReturn($queryBuilderMock);
@@ -109,12 +108,9 @@ class CerberusUserProviderTest extends TestCase
         $this->assertSame($userMock, $result);
     }
 
-    /**
-     * @test
-     */
-    public function validate_credentials()
+    public function test_validate_credentials(): void
     {
-        $userMock = Mockery::mock(Authenticatable::class);
+        $userMock = m::mock(Authenticatable::class);
         $credentials = ['password' => 'secret'];
 
         $this->cerberus->shouldReceive('auth->user->checkPassword')
@@ -126,12 +122,9 @@ class CerberusUserProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @test
-     */
-    public function rehash_password_if_required()
+    public function test_rehash_password_if_required(): void
     {
-        $userMock = Mockery::mock(Authenticatable::class);
+        $userMock = m::mock(Authenticatable::class);
         $credentials = ['password' => 'secret'];
         $force = false;
 
@@ -144,10 +137,7 @@ class CerberusUserProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @test
-     */
-    public function get_connection()
+    public function test_get_connection(): void
     {
         $result = $this->userProvider->getConnection();
 

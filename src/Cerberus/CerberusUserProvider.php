@@ -77,7 +77,9 @@ class CerberusUserProvider implements UserProvider
             ->update(['remember_token' => $token]);
 
         // Also update cached user if present
-        $this->cachedUsers[$user->getAuthIdentifier()]?->remember_token = $token;
+        if (isset($this->cachedUsers[$user->getAuthIdentifier()])) {
+            $this->cachedUsers[$user->getAuthIdentifier()]->remember_token = $token;
+        }
 
         // Optionally clear persistent cache
         Cache::forget($this->getCacheKey($user->getAuthIdentifier()));
