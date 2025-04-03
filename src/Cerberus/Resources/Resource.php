@@ -229,7 +229,9 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         if ($this->exists()) {
             $dirty = $this->getDirty();
 
-            return blank($dirty) ? $this : $this->update($dirty);
+            return blank($dirty)
+                ? $this
+                : $this->update($this->attributes);
         }
 
         return $this->create($this->attributes);
