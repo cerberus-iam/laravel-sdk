@@ -34,18 +34,23 @@ class CerberusUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        // In-memory cache
         if (isset($this->cachedUsers[$identifier])) {
             return $this->cachedUsers[$identifier];
         }
 
-        // Persistent cache
         $cacheKey = $this->getCacheKey($identifier);
-        $user = Cache::remember($cacheKey, $this->cacheTtl, function () use ($identifier) {
-            return $this->cerberus->users()->find($identifier);
-        });
+
+        $user = Cache::remember($cacheKey, $this->cacheTtl, fn () => $this->findUserById($identifier));
 
         return $this->cachedUsers[$identifier] = $user;
+    }
+
+    /**
+     * Helper method to isolate user lookup (avoids closure serialization issues).
+     */
+    protected function findUserById($identifier)
+    {
+        return $this->cerberus->users()->find($identifier);
     }
 
     /**
