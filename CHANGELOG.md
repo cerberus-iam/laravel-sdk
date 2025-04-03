@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.2...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.8...0.0.x)
+
+## [v0.0.8](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.7...v0.0.8) - 2025-04-03
+
+* Add `hasRoles` method to check if the authenticated user has specific roles
 
 ## [v0.0.7](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.6...v0.0.7) - 2025-04-02
 

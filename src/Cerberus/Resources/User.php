@@ -50,10 +50,28 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     {
         $this->getConnection()
             ->post('/users/'.$this->uid.'/roles', [
-                'role' => $role->name,
+                'roles' => [$role->name],
             ]);
 
         return $this;
+    }
+
+    /**
+     * Determine if the user has the given role[s].
+     */
+    public function hasRoles(array $roles): bool
+    {
+        $userRoles = $this->getConnection()
+            ->get('/users/'.$this->uid.'/roles')
+            ->json('data');
+
+        foreach ($userRoles as $userRole) {
+            if (in_array($userRole['name'], $roles)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
