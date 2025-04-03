@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.10...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.11...0.0.x)
+
+## [v0.0.12](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.11...v0.0.12) - 2025-04-03
+
+* Change `exists` method to properly detect if a resource exists in the API database.
 
 ## [v0.0.11](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.10...v0.0.11) - 2025-04-03
 

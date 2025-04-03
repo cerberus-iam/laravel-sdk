@@ -168,13 +168,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
      */
     public function first(): ?static
     {
-        $result = $this->get()[0] ?? null;
-
-        if ($result) {
-            $result->markAsExists();
-        }
-
-        return $result;
+        return value($this->get()[0] ?? null)?->markAsExists();
     }
 
     /**
@@ -235,7 +229,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         if ($this->exists()) {
             $dirty = $this->getDirty();
 
-            return empty($dirty) ? $this : $this->update($dirty);
+            return blank($dirty) ? $this : $this->update($dirty);
         }
 
         return $this->create($this->attributes);
