@@ -5,22 +5,9 @@ namespace Cerberus;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Support\Facades\Cache;
 
 class CerberusUserProvider implements UserProvider
 {
-    /**
-     * In-memory cache of users for the request lifecycle.
-     *
-     * @var array<string, \Illuminate\Contracts\Auth\Authenticatable>
-     */
-    protected array $cachedUsers = [];
-
-    /**
-     * Cache lifetime for persistent user cache (in seconds).
-     */
-    protected int $cacheTtl = 300; // 5 minutes
-
     /**
      * Create a new class instance.
      */
@@ -34,22 +21,6 @@ class CerberusUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        if (isset($this->cachedUsers[$identifier])) {
-            return $this->cachedUsers[$identifier];
-        }
-
-        $cacheKey = $this->getCacheKey($identifier);
-
-        $user = Cache::remember($cacheKey, $this->cacheTtl, fn () => $this->findUserById($identifier));
-
-        return $this->cachedUsers[$identifier] = $user;
-    }
-
-    /**
-     * Helper method to isolate user lookup (avoids closure serialization issues).
-     */
-    protected function findUserById($identifier)
-    {
         return $this->cerberus->users()->find($identifier);
     }
 
@@ -58,16 +29,9 @@ class CerberusUserProvider implements UserProvider
      */
     public function retrieveByToken($identifier, $token)
     {
-        // In-memory cache
-        if (isset($this->cachedUsers[$token])) {
-            return $this->cachedUsers[$token];
-        }
-
         $this->cerberus->getHttpClient()->withToken($token);
 
-        $user = $this->cerberus->auth()->findByToken($token);
-
-        return $this->cachedUsers[$token] = $user;
+        return $this->cerberus->auth()->findByToken($token);
     }
 
     /**
@@ -80,14 +44,6 @@ class CerberusUserProvider implements UserProvider
             ->where($user->getAuthIdentifierName(), $user->getEmailForPasswordReset())
             ->first()
             ->update(['remember_token' => $token]);
-
-        // Also update cached user if present
-        if (isset($this->cachedUsers[$user->getAuthIdentifier()])) {
-            $this->cachedUsers[$user->getAuthIdentifier()]->remember_token = $token;
-        }
-
-        // Optionally clear persistent cache
-        Cache::forget($this->getCacheKey($user->getAuthIdentifier()));
     }
 
     /**
@@ -155,13 +111,5 @@ class CerberusUserProvider implements UserProvider
     public function getConnection(): Cerberus
     {
         return $this->cerberus;
-    }
-
-    /**
-     * Generate the cache key for storing a user by identifier.
-     */
-    protected function getCacheKey(string $identifier): string
-    {
-        return 'cerberus:user:'.$identifier;
     }
 }
