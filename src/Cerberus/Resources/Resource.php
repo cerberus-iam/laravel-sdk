@@ -12,12 +12,15 @@ use JsonSerializable;
 use Stringable;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 
+/**
+ * @mixin \Illuminate\Support\Traits\ForwardsCalls
+ */
 abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, Stringable
 {
     /**
      * Indicates if the resource exists.
      */
-    public $exists = false;
+    public bool $exists = false;
 
     /**
      * The resource name.
@@ -50,26 +53,22 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     protected array $parameters = [];
 
     /**
-     * Indicates that the object's string representation should be escaped when __toString is invoked.
-     *
-     * @var bool
+     * Indicates if string output should be escaped.
      */
-    protected $escapeWhenCastingToString = false;
+    protected bool $escapeWhenCastingToString = false;
 
     /**
-     * Create new instance of the resource.
-     *
-     * @return void
+     * Create a new resource instance.
      */
     public function __construct(protected ClientHandler $connection, array $attributes = [])
     {
         $this->resource = $this->resource ?? Str::plural(Str::snake(class_basename($this)));
         $this->fill($attributes);
-        $this->original = $this->attributes;
+        $this->syncOriginal();
     }
 
     /**
-     * Create a new instance of the resource with the given attributes.
+     * Create a new instance.
      */
     public static function make(ClientHandler $connection, array $attributes = []): static
     {
@@ -77,7 +76,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get an attribute from the resource.
+     * Get an attribute.
      */
     public function getAttribute(string $attribute): mixed
     {
@@ -85,29 +84,37 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Forcefully fill the resource attributes.
-     *
-     * @param  array<string, mixed>  $attributes  Attributes to fill.
+     * Set an attribute.
      */
-    public function forceFill(array $attributes): static
+    public function setAttribute(string $key, mixed $value): static
     {
-        return $this->fill($attributes); // no guard logic yet
-    }
-
-    /**
-     * Fill the resource attributes.
-     *
-     * @param  array  $attributes  Attributes to fill.
-     */
-    public function fill(array $attributes): static
-    {
-        $this->attributes = array_merge($this->attributes, $attributes);
+        $this->attributes[$key] = $value;
 
         return $this;
     }
 
     /**
-     * Get the primary key value of the resource.
+     * Fill attributes bypassing protection.
+     */
+    public function forceFill(array $attributes): static
+    {
+        return $this->fill($attributes);
+    }
+
+    /**
+     * Fill attributes.
+     */
+    public function fill(array $attributes): static
+    {
+        foreach ($attributes as $key => $value) {
+            $this->setAttribute($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the primary key value.
      */
     public function getKey(): mixed
     {
@@ -115,10 +122,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Add a filter condition to the resource query.
-     *
-     * @param  string  $key  The filter key.
-     * @param  mixed  $value  The filter value.
+     * Get the primary key name.
+     */
+    public function getKeyName(): string
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * Add a filter condition.
      */
     public function where(string $key, mixed $value): static
     {
@@ -128,10 +140,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Add a "where in" filter condition to the resource query.
-     *
-     * @param  string  $key  The filter key.
-     * @param  array  $values  The filter values.
+     * Add a where-in filter condition.
      */
     public function whereIn(string $key, array $values): static
     {
@@ -141,7 +150,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Retrieve all resources matching the filters.
+     * Retrieve all matching resources.
      */
     public function get(): array
     {
@@ -150,67 +159,53 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             ->get("/{$this->resource}");
 
         return collect($response->json()['data'] ?? [])
-            ->map(fn ($item) => new static($this->connection, $item))
+            ->map(fn ($item) => (new static($this->connection, $item))->markAsExists())
             ->all();
     }
 
     /**
-     * Retrieve the first resource matching the filters.
+     * Retrieve the first matching resource.
      */
     public function first(): ?static
     {
-        return $this->get()[0] ?? null;
+        $result = $this->get()[0] ?? null;
+
+        if ($result) {
+            $result->markAsExists();
+        }
+
+        return $result;
     }
 
     /**
-     * Find a resource by its ID.
-     *
-     * @param  string  $id  The resource ID.
+     * Find a resource by ID.
      */
     public function find(string $id): ?static
     {
-        $response = $this->connection
-            ->get("/{$this->resource}/{$id}")
-            ->json();
-
+        $response = $this->connection->get("/{$this->resource}/{$id}")->json();
         $data = $response['data'] ?? $response;
 
-        if (blank($data)) {
-            return null;
-        }
-
-        return new static($this->connection, $data);
+        return blank($data) ? null : (new static($this->connection, $data))->markAsExists();
     }
 
     /**
-     * Create a new resource.
-     *
-     * @param  array  $data  The data for the new resource.
+     * Create the resource.
      */
     public function create(array $data): static
     {
         $response = $this->connection->post("/{$this->resource}", $data);
-        $instance = new static($this->connection, $response->json());
-        $instance->original = $instance->attributes;
-        $instance->exists = true;
 
-        return $instance;
+        return (new static($this->connection, $response->json()))->markAsExists();
     }
 
     /**
-     * Update the resource with new data.
-     *
-     * @param  array  $data  The data to update the resource with.
+     * Update the resource.
      */
     public function update(array $data): static
     {
-        $id = $this->getKey();
-        $response = $this->connection->put("/{$this->resource}/{$id}", $data);
-        $instance = new static($this->connection, $response->json());
-        $instance->original = $instance->attributes;
-        $instance->exists = true;
+        $response = $this->connection->put("/{$this->resource}/{$this->getKey()}", $data);
 
-        return $instance;
+        return (new static($this->connection, $response->json()))->markAsExists();
     }
 
     /**
@@ -218,80 +213,53 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
      */
     public function delete(): bool
     {
-        $id = $this->getKey();
-        $this->connection->delete("/{$this->resource}/{$id}");
+        $this->connection->delete("/{$this->resource}/{$this->getKey()}");
+        $this->exists = false;
 
         return true;
     }
 
     /**
-     * Check if the resource exists (has a primary key).
+     * Check if the resource exists.
      */
     public function exists(): bool
     {
-        return isset($this->attributes[$this->getKeyName()]);
+        return $this->exists;
     }
 
     /**
-     * Save the resource (create or update).
+     * Save the resource.
      */
     public function save(): static
     {
         if ($this->exists()) {
             $dirty = $this->getDirty();
 
-            if (empty($dirty)) {
-                return $this; // Nothing to update
-            }
-
-            return $this->update($dirty);
+            return empty($dirty) ? $this : $this->update($dirty);
         }
 
         return $this->create($this->attributes);
     }
 
     /**
-     * Create a new instance of the given resource.
-     */
-    public function newInstance(array $attributes = [], bool $exists = false): static
-    {
-        $instance = new static($this->connection, $attributes);
-
-        $instance->exists = $exists;
-
-        return $instance;
-    }
-
-    /**
-     * Determine if the given attribute(s) have been modified.
+     * Determine if attributes are dirty.
      */
     public function isDirty(null|string|array $attributes = null): bool
     {
-        if (is_null($attributes)) {
-            return $this->attributes !== $this->original;
-        }
-
-        $attributes = is_array($attributes) ? $attributes : [$attributes];
-
-        foreach ($attributes as $key) {
-            if (! array_key_exists($key, $this->original) || $this->attributes[$key] !== $this->original[$key]) {
-                return true;
-            }
-        }
-
-        return false;
+        return count($this->getDirty($attributes)) > 0;
     }
 
     /**
-     * Get the attributes that have been changed since last sync.
+     * Get dirty attributes.
      */
-    public function getDirty(): array
+    public function getDirty(null|string|array $attributes = null): array
     {
         $dirty = [];
+        $attributes = is_null($attributes) ? array_keys($this->attributes) : (array) $attributes;
 
-        foreach ($this->attributes as $key => $value) {
-            if (! array_key_exists($key, $this->original) || $value !== $this->original[$key]) {
-                $dirty[$key] = $value;
+        foreach ($attributes as $key) {
+            if (! array_key_exists($key, $this->original) || $this->attributes[$key] !== $this->original[$key]) {
+                $dirty[$key] = $this->attributes[$key] ?? null;
             }
         }
 
@@ -299,17 +267,26 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the primary key for the resource.
-     *
-     * @return string
+     * Sync original attributes with current.
      */
-    public function getKeyName()
+    public function syncOriginal(): void
     {
-        return $this->primaryKey;
+        $this->original = $this->attributes;
     }
 
     /**
-     * Convert the resource to an array.
+     * Mark the model as existing.
+     */
+    public function markAsExists(): static
+    {
+        $this->exists = true;
+        $this->syncOriginal();
+
+        return $this;
+    }
+
+    /**
+     * Convert the resource to array.
      */
     public function toArray(): array
     {
@@ -317,26 +294,21 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Convert the resource instance to JSON.
-     *
-     * @param  int  $options
-     * @return string
+     * Convert the resource to JSON.
      *
      * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
-    public function toJson($options = 0)
+    public function toJson($options = 0): string
     {
         try {
-            $json = json_encode($this->jsonSerialize(), $options | JSON_THROW_ON_ERROR);
+            return json_encode($this->jsonSerialize(), $options | JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             throw JsonEncodingException::forModel($this, $e->getMessage());
         }
-
-        return $json;
     }
 
     /**
-     * Convert the object into something JSON serializable.
+     * Serialize for JSON.
      */
     public function jsonSerialize(): mixed
     {
@@ -344,7 +316,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Indicate that the object's string representation should be escaped when __toString is invoked.
+     * Escape when casting to string.
      */
     public function escapeWhenCastingToString(bool $escape = true): static
     {
@@ -354,9 +326,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Check if an offset exists in the attributes.
-     *
-     * @param  mixed  $offset  The offset key.
+     * Check if offset exists.
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -364,9 +334,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get an offset value from the attributes.
-     *
-     * @param  mixed  $offset  The offset key.
+     * Get offset.
      */
     public function offsetGet(mixed $offset): mixed
     {
@@ -374,20 +342,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Set an offset value in the attributes.
-     *
-     * @param  mixed  $offset  The offset key.
-     * @param  mixed  $value  The value to set.
+     * Set offset.
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->attributes[$offset] = $value;
+        $this->setAttribute($offset, $value);
     }
 
     /**
-     * Unset an offset in the attributes.
-     *
-     * @param  mixed  $offset  The offset key.
+     * Unset offset.
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -395,7 +358,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the client connection handler.
+     * Get the client connection.
      */
     public function getConnection(): ClientHandler
     {
@@ -403,46 +366,33 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Convert the resource to its string representation.
-     *
-     * @return string
+     * String representation.
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->escapeWhenCastingToString
-            ? e($this->toJson())
-            : $this->toJson();
+        return $this->escapeWhenCastingToString ? e($this->toJson()) : $this->toJson();
     }
 
     /**
-     * Magic getter for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @return mixed
+     * Get attribute dynamically.
      */
-    public function __get($key)
+    public function __get($key): mixed
     {
-        return $this->attributes[$key] ?? null;
+        return $this->getAttribute($key);
     }
 
     /**
-     * Magic setter for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @param  mixed  $value  The attribute value.
+     * Set attribute dynamically.
      */
-    public function __set($key, $value)
+    public function __set($key, $value): void
     {
-        $this->attributes[$key] = $value;
+        $this->setAttribute($key, $value);
     }
 
     /**
-     * Magic isset for resource attributes.
-     *
-     * @param  string  $key  The attribute key.
-     * @return bool
+     * Check if attribute is set.
      */
-    public function __isset($key)
+    public function __isset($key): bool
     {
         return isset($this->attributes[$key]);
     }

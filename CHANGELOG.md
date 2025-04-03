@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.10...0.0.x)
 
+## [v0.0.11](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.10...v0.0.11) - 2025-04-03
+
+* Refactor the `Resource` class to more closely emulate Laravel's Eloquent model behavior.
+
 ## [v0.0.10](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.9...v0.0.10) - 2025-04-03
 
 * Refactor `Resource` class to act more like Laravel's Eloquent model

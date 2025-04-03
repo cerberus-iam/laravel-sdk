@@ -261,6 +261,9 @@ class ResourceTest extends TestCase
         $this->assertFalse($resource->exists());
 
         $resource = new TestResource($this->connection, ['uid' => '123']);
+        $this->assertFalse($resource->exists());
+
+        $resource->markAsExists();
         $this->assertTrue($resource->exists());
     }
 
