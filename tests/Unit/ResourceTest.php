@@ -283,17 +283,24 @@ class ResourceTest extends TestCase
         $this->assertEquals('123', $result->getKey());
     }
 
-    public function test_save_updates_existing_resource()
+    public function test_save_updates_only_dirty_attributes()
     {
-        $resource = new TestResource($this->connection, ['uid' => '123', 'name' => 'Old Name']);
-        $resource->fill(['name' => 'Updated Name']);
-
+        $originalData = ['uid' => '123', 'name' => 'Old Name'];
+        $updatedData = ['name' => 'Updated Name'];
         $responseData = ['uid' => '123', 'name' => 'Updated Name'];
+
+        $resource = new TestResource($this->connection, $originalData);
+        $resource->exists = true;
+
+        // Mutate the name
+        $resource->name = 'Updated Name';
+
         $response = m::mock(Response::class);
         $response->shouldReceive('json')->andReturn($responseData);
 
         $this->connection->shouldReceive('put')
-            ->with('/test_resources/123', ['uid' => '123', 'name' => 'Updated Name'])
+            ->with('/test_resources/123', $updatedData)
+            ->once()
             ->andReturn($response);
 
         $result = $resource->save();

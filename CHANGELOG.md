@@ -1,10 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.9...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.10...0.0.x)
 
-## [v0.0.9](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.8...v0.0.9) - 2025-04-03
+## [v0.0.10](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.9...v0.0.10) - 2025-04-03
 
-* Remove database caching from auth user provider
+* Refactor `Resource` class to act more like Laravel's Eloquent model
 
 ## [v0.0.8](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.7...v0.0.8) - 2025-04-03
 

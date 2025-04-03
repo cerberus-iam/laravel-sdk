@@ -190,8 +190,11 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     public function create(array $data): static
     {
         $response = $this->connection->post("/{$this->resource}", $data);
+        $instance = new static($this->connection, $response->json());
+        $instance->original = $instance->attributes;
+        $instance->exists = true;
 
-        return new static($this->connection, $response->json());
+        return $instance;
     }
 
     /**
@@ -203,8 +206,11 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     {
         $id = $this->getKey();
         $response = $this->connection->put("/{$this->resource}/{$id}", $data);
+        $instance = new static($this->connection, $response->json());
+        $instance->original = $instance->attributes;
+        $instance->exists = true;
 
-        return new static($this->connection, $response->json());
+        return $instance;
     }
 
     /**
@@ -231,7 +237,17 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
      */
     public function save(): static
     {
-        return $this->exists() ? $this->update($this->attributes) : $this->create($this->attributes);
+        if ($this->exists()) {
+            $dirty = $this->getDirty();
+
+            if (empty($dirty)) {
+                return $this; // Nothing to update
+            }
+
+            return $this->update($dirty);
+        }
+
+        return $this->create($this->attributes);
     }
 
     /**
@@ -244,6 +260,42 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         $instance->exists = $exists;
 
         return $instance;
+    }
+
+    /**
+     * Determine if the given attribute(s) have been modified.
+     */
+    public function isDirty(null|string|array $attributes = null): bool
+    {
+        if (is_null($attributes)) {
+            return $this->attributes !== $this->original;
+        }
+
+        $attributes = is_array($attributes) ? $attributes : [$attributes];
+
+        foreach ($attributes as $key) {
+            if (! array_key_exists($key, $this->original) || $this->attributes[$key] !== $this->original[$key]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the attributes that have been changed since last sync.
+     */
+    public function getDirty(): array
+    {
+        $dirty = [];
+
+        foreach ($this->attributes as $key => $value) {
+            if (! array_key_exists($key, $this->original) || $value !== $this->original[$key]) {
+                $dirty[$key] = $value;
+            }
+        }
+
+        return $dirty;
     }
 
     /**

@@ -10,7 +10,7 @@
         "issues": "https://github.com/cerberus-iam/laravel-sdk/issues",
         "source": "https://github.com/cerberus-iam/laravel-sdk"
     },
-    "version": "0.0.9",
+    "version": "0.0.10",
     "type": "library",
     "license": "MIT",
     "authors": [
