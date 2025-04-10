@@ -5,9 +5,15 @@ namespace Cerberus\Tests\Stubs;
 use Cerberus\Resources\Resource;
 
 /**
- * Concrete implementation of Resource for testing
+ * Test implementation of the abstract Resource class
  */
 class TestResource extends Resource
 {
-    // Using the default implementation for testing
+    public string $resource = 'test/resources';
+
+    protected string $primaryKey = 'id';
+
+    protected array $fillable = ['id', 'name', 'email', 'status'];
+
+    protected array $hidden = ['secret_field'];
 }

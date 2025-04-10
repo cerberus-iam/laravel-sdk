@@ -7,5 +7,5 @@ class Role extends Resource
     /**
      * Name of the resource.
      */
-    protected string $resource = 'roles';
+    public string $resource = 'roles';
 }

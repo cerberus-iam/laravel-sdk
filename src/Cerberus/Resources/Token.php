@@ -2,7 +2,6 @@
 
 namespace Cerberus\Resources;
 
-use Fetch\Interfaces\ClientHandler;
 use Illuminate\Support\Carbon;
 
 class Token extends Resource
@@ -10,7 +9,7 @@ class Token extends Resource
     /**
      * The resource name.
      */
-    protected string $resource = 'tokens';
+    public string $resource = 'tokens';
 
     /**
      * The primary key for this resource.
@@ -18,15 +17,30 @@ class Token extends Resource
     protected string $primaryKey = 'access_token';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected array $fillable = [
+        'access_token',
+        'client_id',
+        'user_id',
+        'scopes',
+        'expires_in',
+        'expires_at',
+        'token_id',
+    ];
+
+    /**
      * Create a new Token resource instance.
      */
-    public function __construct(ClientHandler $connection, array $attributes = [])
+    public function __construct(array $attributes = [])
     {
         if (isset($attributes['expires_in']) && ! isset($attributes['expires_at'])) {
             $attributes['expires_at'] = now()->addSeconds($attributes['expires_in']);
         }
 
-        parent::__construct($connection, $attributes);
+        parent::__construct($attributes);
     }
 
     /**

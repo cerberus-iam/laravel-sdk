@@ -7,5 +7,5 @@ class Permission extends Resource
     /**
      * Name of the resource.
      */
-    protected string $resource = 'permissions';
+    public string $resource = 'permissions';
 }

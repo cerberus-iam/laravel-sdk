@@ -4,7 +4,6 @@ namespace Cerberus;
 
 use Cerberus\Resources\RefreshToken;
 use Cerberus\Resources\Token;
-use Fetch\Interfaces\ClientHandler;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
 use Lcobucci\JWT\Token\Plain;
@@ -19,7 +18,7 @@ class TokenParser
     {
         $claims = self::parseJWT($jwt)->claims();
 
-        return new Token(app(ClientHandler::class), [
+        return new Token([
             'access_token' => $jwt,
             'client_id' => self::convertSingleRecordAudToString($claims->get('aud')),
             'user_id' => $claims->has('sub') ? (int) $claims->get('sub') : null,
@@ -36,7 +35,7 @@ class TokenParser
         string $token,
         ?string $accessTokenId = null
     ): RefreshToken {
-        return new RefreshToken(app(ClientHandler::class), [
+        return new RefreshToken([
             'refresh_token' => $token,
             'access_token_id' => $accessTokenId,
             'token_id' => hash('sha256', $token),

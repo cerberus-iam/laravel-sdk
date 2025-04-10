@@ -20,12 +20,32 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     /**
      * Name of the resource.
      */
-    protected string $resource = 'users';
+    public string $resource = 'users';
 
     /**
      * The access token for the user.
      */
     protected string $accessToken;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected array $fillable = [
+        'uid',
+        'email',
+        'first_name',
+        'last_name',
+        'username',
+        'phone',
+        'password',
+        'remember_token',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * Get the password hash for the user.

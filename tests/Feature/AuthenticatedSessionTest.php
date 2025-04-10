@@ -51,15 +51,16 @@ class AuthenticatedSessionTest extends TestCase
              'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
         $mockHandler = m::mock(ClientHandlerInterface::class);
+        app()->bind(ClientHandlerInterface::class, fn () => $mockHandler);
         $mockHandler->shouldReceive('hasHeader')->with('Authorization')->andReturn(false);
         $mockHandler->shouldReceive('getCurrentAccessToken')->andReturn($mockToken);
         $mockHandler->shouldReceive('withToken')->with($mockToken)->andReturnSelf();
         $mockHandler->shouldReceive('get')
             ->with('/user')
             ->andReturn(new Response(200, [], json_encode([
-                'id' => 1,
+                'uid' => 1,
                 'email' => 'test@example.com',
-                'name' => 'Test User',
+                'first_name' => 'Test',
             ])));
 
         $mockStorage = m::mock(TokenStorage::class);
@@ -87,14 +88,11 @@ class AuthenticatedSessionTest extends TestCase
                 'token_type' => 'Bearer',
             ])));
 
-        $mockUser = new User(
-            $mockHandler,
-            [
-                'id' => 1,
-                'email' => 'test@example.com',
-                'name' => 'Test User',
-            ]
-        );
+        $mockUser = new User([
+            'uid' => 1,
+            'email' => 'test@example.com',
+            'first_name' => 'Test',
+        ]);
 
         $mockHandler->shouldReceive('getAuthenticatedUser')->andReturn($mockUser);
 
@@ -133,9 +131,9 @@ class AuthenticatedSessionTest extends TestCase
         $response->assertOk();
         $response->assertJson([
             'user' => [
-                'id' => 1,
+                'uid' => 1,
                 'email' => 'test@example.com',
-                'name' => 'Test User',
+                'first_name' => 'Test',
             ],
         ]);
     }

@@ -2,10 +2,10 @@
 
 namespace Cerberus\Resources;
 
-class Team extends Resource
+class Client extends Resource
 {
     /**
      * Name of the resource.
      */
-    public string $resource = 'teams';
+    public string $resource = 'clients';
 }

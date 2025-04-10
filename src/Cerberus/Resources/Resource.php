@@ -3,11 +3,19 @@
 namespace Cerberus\Resources;
 
 use ArrayAccess;
+use Cerberus\Exceptions\MassAssignmentException;
+use Cerberus\Exceptions\ResourceCreationException;
+use Cerberus\Exceptions\ResourceDeleteException;
+use Cerberus\Exceptions\ResourceException;
+use Cerberus\Exceptions\ResourceNotFoundException;
+use Cerberus\Exceptions\ResourceUpdateException;
 use Fetch\Interfaces\ClientHandler;
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
 use Stringable;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
@@ -17,15 +25,17 @@ use Symfony\Component\HttpFoundation\Exception\JsonException;
  */
 abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, Stringable
 {
+    use ForwardsCalls;
+
     /**
      * Indicates if the resource exists.
      */
     public bool $exists = false;
 
     /**
-     * The resource name.
+     * The resource endpoint name.
      */
-    protected string $resource;
+    public string $resource;
 
     /**
      * The filters applied to the resource.
@@ -34,11 +44,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
 
     /**
      * The attributes of the resource.
+     *
+     * @var array<string, mixed>
      */
     protected array $attributes = [];
 
     /**
      * The original attributes of the resource.
+     *
+     * @var array<string, mixed>
      */
     protected array $original = [];
 
@@ -48,9 +62,30 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     protected string $primaryKey = 'uid';
 
     /**
-     * The parameters for the resource.
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
-    protected array $parameters = [];
+    protected array $fillable = [];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected array $guarded = ['*'];
+
+    /**
+     * Indicates which attributes should be hidden when serializing to array/JSON.
+     *
+     * @var array<int, string>
+     */
+    protected array $hidden = [];
+
+    /**
+     * The client connection instance.
+     */
+    protected ?ClientHandler $connection = null;
 
     /**
      * Indicates if string output should be escaped.
@@ -59,8 +94,10 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
 
     /**
      * Create a new resource instance.
+     *
+     * @param  array<string, mixed>  $attributes
      */
-    public function __construct(protected ClientHandler $connection, array $attributes = [])
+    public function __construct(array $attributes = [])
     {
         $this->resource = $this->resource ?? Str::plural(Str::snake(class_basename($this)));
         $this->fill($attributes);
@@ -69,22 +106,215 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
 
     /**
      * Create a new instance.
+     *
+     * @param  array<string, mixed>  $attributes
      */
-    public static function make(ClientHandler $connection, array $attributes = []): static
+    public static function make(array $attributes = []): static
     {
-        return new static($connection, $attributes);
+        return new static($attributes);
     }
 
     /**
-     * Get an attribute.
+     * Get a new query builder for the model's table.
      */
-    public function getAttribute(string $attribute): mixed
+    public static function query(): ResourceBuilder
     {
-        return $this->attributes[$attribute] ?? null;
+        return (new static)->newQuery();
     }
 
     /**
-     * Set an attribute.
+     * Begin querying the model.
+     */
+    public static function where($column, $operator = null, $value = null): ResourceBuilder
+    {
+        return static::query()->where($column, $operator, $value);
+    }
+
+    /**
+     * Add a where-in condition to the query.
+     */
+    public static function whereIn(string $column, array $values): ResourceBuilder
+    {
+        return static::query()->whereIn($column, $values);
+    }
+
+    /**
+     * Find a model by its primary key.
+     *
+     * @throws ResourceNotFoundException If the resource cannot be found.
+     */
+    public static function find(mixed $id): mixed
+    {
+        if ($id === null) {
+            return null;
+        }
+
+        // Check if the ID is an array and handle accordingly
+        if (is_array($id)) {
+            return static::findMany($id);
+        }
+
+        // Attempt to find the model by its primary key
+        return static::query()->find($id);
+    }
+
+    /**
+     * Find a model by its primary key or throw an exception.
+     *
+     * @throws ResourceNotFoundException If the resource cannot be found.
+     */
+    public static function findOrFail(mixed $id): static
+    {
+        $result = static::find($id);
+
+        if ($result === null) {
+            throw new ResourceNotFoundException("Resource with ID {$id} not found.");
+        }
+
+        return $result;
+    }
+
+    /**
+     * Find multiple models by their primary keys.
+     *
+     * @return array<int, static>
+     */
+    public static function findMany(array $ids): array
+    {
+        return static::query()->findMany($ids);
+    }
+
+    /**
+     * Execute the query and get the first result.
+     */
+    public static function first(): ?static
+    {
+        return static::query()->first();
+    }
+
+    /**
+     * Execute the query and get the first result or throw an exception.
+     *
+     * @throws ResourceNotFoundException If no resource is found.
+     */
+    public static function firstOrFail(): static
+    {
+        $result = static::first();
+
+        if ($result === null) {
+            throw new ResourceNotFoundException('No resource found matching the criteria.');
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get all of the models from the database.
+     *
+     * @return array<int, static>
+     */
+    public static function all(): array
+    {
+        return static::query()->get();
+    }
+
+    /**
+     * Create a new model and persist it to the database.
+     *
+     * @param  array<string, mixed>  $attributes
+     *
+     * @throws ResourceCreationException If the resource cannot be created.
+     */
+    public static function create(array $attributes): static
+    {
+        $model = new static($attributes);
+
+        if (! $model->save()) {
+            throw new ResourceCreationException('Failed to create resource.');
+        }
+
+        return $model;
+    }
+
+    /**
+     * Destroy the models for the given IDs.
+     *
+     * @param  array|int|string  $ids
+     * @return int Number of resources successfully deleted
+     */
+    public static function destroy($ids): int
+    {
+        $count = 0;
+
+        if (! is_array($ids)) {
+            $ids = [$ids];
+        }
+
+        foreach ($ids as $id) {
+            try {
+                if ($model = static::find($id)) {
+                    if ($model->delete()) {
+                        $count++;
+                    }
+                }
+            } catch (\Exception $e) {
+                // Continue processing other IDs even if one fails
+                continue;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Create a new model instance that is existing.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function newFromBuilder($attributes = [], ?ClientHandler $connection = null): static
+    {
+        $model = $this->newInstance([], true);
+
+        $model->setRawAttributes((array) $attributes, true);
+
+        if ($connection) {
+            $model->setConnection($connection);
+        }
+
+        return $model;
+    }
+
+    /**
+     * Create a new instance of the given model.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function newInstance(array $attributes = [], bool $exists = false): static
+    {
+        $model = new static($attributes);
+
+        $model->exists = $exists;
+
+        // Transfer the connection if it exists
+        if ($this->connection !== null) {
+            $model->setConnection($this->connection);
+        }
+
+        return $model;
+    }
+
+    /**
+     * Get an attribute from the model.
+     */
+    public function getAttribute(string $key): mixed
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
+     * Set a given attribute on the model.
+     *
+     * @return $this
      */
     public function setAttribute(string $key, mixed $value): static
     {
@@ -94,17 +324,58 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Fill attributes bypassing protection.
+     * Set the array of model attributes. No checking is done.
+     *
+     * @param  array<string, mixed>  $attributes
+     * @return $this
      */
-    public function forceFill(array $attributes): static
+    public function setRawAttributes(array $attributes, bool $sync = false): static
     {
-        return $this->fill($attributes);
+        $this->attributes = $attributes;
+
+        if ($sync) {
+            $this->syncOriginal();
+        }
+
+        return $this;
     }
 
     /**
-     * Fill attributes.
+     * Fill the model with an array of attributes.
+     *
+     * @param  array<string, mixed>  $attributes
+     * @return $this
+     *
+     * @throws MassAssignmentException
      */
     public function fill(array $attributes): static
+    {
+        $fillable = $this->fillableFromArray($attributes);
+
+        if ($this->totallyGuarded() && ! empty($fillable)) {
+            throw new MassAssignmentException(
+                sprintf(
+                    'Add [%s] to fillable property to allow mass assignment on [%s].',
+                    implode(', ', array_keys($fillable)),
+                    static::class
+                )
+            );
+        }
+
+        foreach ($fillable as $key => $value) {
+            $this->setAttribute($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Fill the model with an array of attributes. Force mass assignment.
+     *
+     * @param  array<string, mixed>  $attributes
+     * @return $this
+     */
+    public function forceFill(array $attributes): static
     {
         foreach ($attributes as $key => $value) {
             $this->setAttribute($key, $value);
@@ -114,15 +385,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the primary key value.
+     * Determine if the model is totally guarded.
      */
-    public function getKey(): mixed
+    public function totallyGuarded(): bool
     {
-        return $this->getAttribute($this->getKeyName());
+        return count($this->fillable) === 0 && $this->guarded === ['*'];
     }
 
     /**
-     * Get the primary key name.
+     * Get the primary key for the model.
      */
     public function getKeyName(): string
     {
@@ -130,132 +401,200 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Add a filter condition.
+     * Set the primary key for the model.
+     *
+     * @return $this
      */
-    public function where(string $key, mixed $value): static
+    public function setKeyName(string $key): static
     {
-        $this->filters[$key] = $value;
+        $this->primaryKey = $key;
 
         return $this;
     }
 
     /**
-     * Add a where-in filter condition.
+     * Get the value of the model's primary key.
      */
-    public function whereIn(string $key, array $values): static
+    public function getKey(): mixed
     {
-        $this->filters[$key] = ['in' => $values];
-
-        return $this;
+        return $this->getAttribute($this->getKeyName());
     }
 
     /**
-     * Retrieve all matching resources.
+     * Get the resource endpoint name.
      */
-    public function get(): array
+    public function getResourceName(): string
     {
-        $response = $this->connection
-            ->withQueryParameters($this->filters)
-            ->get("/{$this->resource}");
-
-        return collect($response->json()['data'] ?? [])
-            ->map(fn ($item) => (new static($this->connection, $item))->markAsExists())
-            ->all();
+        return $this->resource;
     }
 
     /**
-     * Retrieve the first matching resource.
+     * Create a new Eloquent query builder for the model.
      */
-    public function first(): ?static
+    public function newQuery(): ResourceBuilder
     {
-        return value($this->get()[0] ?? null)?->markAsExists();
+        return new ResourceBuilder($this);
     }
 
     /**
-     * Find a resource by ID.
+     * Save the model to the database.
+     *
+     * @throws ResourceUpdateException|ResourceCreationException When the save operation fails.
      */
-    public function find(string $id): ?static
+    public function save(): bool
     {
-        $response = $this->connection->get("/{$this->resource}/{$id}")->json();
-        $data = $response['data'] ?? $response;
+        try {
+            if ($this->exists) {
+                if (! $this->isDirty()) {
+                    return true;
+                }
 
-        return blank($data) ? null : (new static($this->connection, $data))->markAsExists();
+                $dirty = $this->getDirty();
+                $this->performUpdate($dirty);
+            } else {
+                $this->performInsert();
+            }
+
+            return true;
+        } catch (ResourceException $e) {
+            // Re-throw our custom exceptions
+            throw $e;
+        } catch (\Exception $e) {
+            // Convert general exceptions to our custom exceptions
+            if ($this->exists) {
+                throw new ResourceUpdateException('Failed to update resource: '.$e->getMessage(), 0, $e);
+            } else {
+                throw new ResourceCreationException('Failed to create resource: '.$e->getMessage(), 0, $e);
+            }
+        }
     }
 
     /**
-     * Create the resource.
+     * Update the model in the database.
+     *
+     * @param  array<string, mixed>  $attributes
+     *
+     * @throws ResourceUpdateException If the update fails.
      */
-    public function create(array $data): static
+    public function update(array $attributes = []): bool
     {
-        $response = $this->connection->post("/{$this->resource}", $data);
+        if (! $this->exists) {
+            throw new ResourceUpdateException("Cannot update a resource that doesn't exist");
+        }
 
-        return (new static($this->connection, $response->json()))->markAsExists();
+        $this->fill($attributes);
+
+        return $this->save();
     }
 
     /**
-     * Update the resource.
-     */
-    public function update(array $data): static
-    {
-        $response = $this->connection->put("/{$this->resource}/{$this->getKey()}", $data);
-
-        return (new static($this->connection, $response->json()))->markAsExists();
-    }
-
-    /**
-     * Delete the resource.
+     * Delete the model from the database.
+     *
+     * @throws ResourceDeleteException If the deletion fails.
      */
     public function delete(): bool
     {
-        $this->connection->delete("/{$this->resource}/{$this->getKey()}");
-        $this->exists = false;
-
-        return true;
-    }
-
-    /**
-     * Check if the resource exists.
-     */
-    public function exists(): bool
-    {
-        return $this->exists;
-    }
-
-    /**
-     * Save the resource.
-     */
-    public function save(): static
-    {
-        if ($this->exists()) {
-            $dirty = $this->getDirty();
-
-            return blank($dirty)
-                ? $this
-                : $this->update($this->attributes);
+        if (! $this->exists) {
+            return true; // Already doesn't exist, so technically successful
         }
 
-        return $this->create($this->attributes);
+        $key = $this->getKey();
+
+        if ($key === null) {
+            throw new ResourceDeleteException('Cannot delete a resource without a primary key');
+        }
+
+        try {
+            $response = $this->getConnection()->delete("/{$this->resource}/{$key}");
+
+            if (! $response->successful()) {
+                throw new ResourceDeleteException('API returned status code: '.$response->status());
+            }
+
+            $this->exists = false;
+
+            return true;
+        } catch (ResourceDeleteException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            throw new ResourceDeleteException('Failed to delete resource: '.$e->getMessage(), 0, $e);
+        }
     }
 
     /**
-     * Determine if attributes are dirty.
+     * Force a hard delete on a soft deleted model.
+     *
+     * @throws ResourceDeleteException If the deletion fails.
      */
-    public function isDirty(null|string|array $attributes = null): bool
+    public function forceDelete(): bool
+    {
+        return $this->delete();
+    }
+
+    /**
+     * Determine if the model instance has been soft-deleted.
+     */
+    public function trashed(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine if two models have the same ID and belong to the same table.
+     */
+    public function is(?Resource $model): bool
+    {
+        return $model !== null &&
+               $model->getKey() == $this->getKey() &&
+               $model->getResourceName() === $this->getResourceName();
+    }
+
+    /**
+     * Determine if two models are not the same.
+     */
+    public function isNot(?Resource $model): bool
+    {
+        return ! $this->is($model);
+    }
+
+    /**
+     * Determine if the model has been modified since last sync.
+     *
+     * @param  array<string>|string|null  $attributes
+     */
+    public function isDirty(array|string|null $attributes = null): bool
     {
         return count($this->getDirty($attributes)) > 0;
     }
 
     /**
-     * Get dirty attributes.
+     * Get the attributes that have been changed since last sync.
+     *
+     * @param  array<string>|string|null  $attributes
+     * @return array<string, mixed>
      */
-    public function getDirty(null|string|array $attributes = null): array
+    public function getDirty(array|string|null $attributes = null): array
     {
         $dirty = [];
-        $attributes = is_null($attributes) ? array_keys($this->attributes) : (array) $attributes;
+
+        if (is_null($attributes)) {
+            $attributes = array_keys($this->attributes);
+        }
+
+        $attributes = is_array($attributes) ? $attributes : [$attributes];
 
         foreach ($attributes as $key) {
-            if (! array_key_exists($key, $this->original) || $this->attributes[$key] !== $this->original[$key]) {
-                $dirty[$key] = $this->attributes[$key] ?? null;
+            if (! array_key_exists($key, $this->original) ||
+                $this->attributes[$key] !== $this->original[$key]) {
+                $dirty[$key] = $this->attributes[$key];
+            }
+
+            if (! array_key_exists($key, $this->original)) {
+                continue; // was never known, don't assume it's dirty
+            }
+
+            if ($this->attributes[$key] !== $this->original[$key]) {
+                $dirty[$key] = $this->attributes[$key];
             }
         }
 
@@ -263,34 +602,46 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Sync original attributes with current.
+     * Determine if the model has any dirty attributes.
      */
-    public function syncOriginal(): void
+    public function wasChanged(): bool
     {
-        $this->original = $this->attributes;
+        return ! empty($this->getDirty());
     }
 
     /**
-     * Mark the model as existing.
+     * Sync the original attributes with the current.
+     *
+     * @return $this
      */
-    public function markAsExists(): static
+    public function syncOriginal(): static
     {
-        $this->exists = true;
-        $this->syncOriginal();
+        $this->original = $this->attributes;
 
         return $this;
     }
 
     /**
-     * Convert the resource to array.
+     * Convert the model instance to an array.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
-        return $this->attributes;
+        $attributes = $this->attributes;
+
+        // Remove hidden attributes
+        if (! empty($this->hidden)) {
+            $attributes = array_diff_key($attributes, array_flip($this->hidden));
+        }
+
+        return $attributes;
     }
 
     /**
-     * Convert the resource to JSON.
+     * Convert the model instance to JSON.
+     *
+     * @param  int  $options
      *
      * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
@@ -304,7 +655,9 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Serialize for JSON.
+     * Convert the object into something JSON serializable.
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): mixed
     {
@@ -312,17 +665,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Escape when casting to string.
-     */
-    public function escapeWhenCastingToString(bool $escape = true): static
-    {
-        $this->escapeWhenCastingToString = $escape;
-
-        return $this;
-    }
-
-    /**
-     * Check if offset exists.
+     * Determine if the given attribute exists.
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -330,15 +673,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get offset.
+     * Get the value for a given offset.
      */
     public function offsetGet(mixed $offset): mixed
     {
-        return $this->attributes[$offset] ?? null;
+        return $this->getAttribute($offset);
     }
 
     /**
-     * Set offset.
+     * Set the value for a given offset.
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -346,7 +689,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Unset offset.
+     * Unset the value for a given offset.
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -358,38 +701,188 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
      */
     public function getConnection(): ClientHandler
     {
+        if ($this->connection === null) {
+            $this->connection = Container::getInstance()->make(ClientHandler::class);
+        }
+
         return $this->connection;
     }
 
     /**
-     * String representation.
+     * Set the client connection.
+     *
+     * @return $this
      */
-    public function __toString(): string
+    public function setConnection(ClientHandler $connection): static
     {
-        return $this->escapeWhenCastingToString ? e($this->toJson()) : $this->toJson();
+        $this->connection = $connection;
+
+        return $this;
     }
 
     /**
-     * Get attribute dynamically.
+     * Get the fillable attributes of a given array.
+     *
+     * @param  array<string, mixed>  $attributes
+     * @return array<string, mixed>
      */
-    public function __get($key): mixed
+    protected function fillableFromArray(array $attributes): array
+    {
+        if (count($this->fillable) > 0 && ! $this->totallyGuarded()) {
+            return array_intersect_key($attributes, array_flip($this->fillable));
+        }
+
+        if (count($this->guarded) > 0 && $this->guarded[0] !== '*') {
+            return array_diff_key($attributes, array_flip($this->guarded));
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Create a new model instance using attributes from the API response.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    protected function newModelFromBuilder(array $attributes): static
+    {
+        $model = $this->newInstance([], true);
+        $model->setRawAttributes($attributes, true);
+
+        return $model;
+    }
+
+    /**
+     * Perform a model insert operation.
+     *
+     * @throws ResourceCreationException If the creation fails or returns invalid data.
+     */
+    protected function performInsert(): void
+    {
+        $response = $this->getConnection()->post("/{$this->resource}", $this->attributes);
+
+        if (! $response->successful()) {
+            throw new ResourceCreationException('API returned status code: '.$response->status());
+        }
+
+        $data = $this->parseResponseData($response);
+
+        // Update the model with the returned data
+        if (is_array($data)) {
+            $this->fill($data);
+        } else {
+            throw new ResourceCreationException('API response did not contain valid resource data');
+        }
+
+        $this->exists = true;
+        $this->syncOriginal();
+    }
+
+    /**
+     * Perform a model update operation.
+     *
+     * @param  array<string, mixed>  $attributes
+     *
+     * @throws ResourceUpdateException If the update fails or returns invalid data.
+     */
+    protected function performUpdate(array $attributes): void
+    {
+        $key = $this->getKey();
+
+        if ($key === null) {
+            throw new ResourceUpdateException('Cannot update a resource without a primary key.');
+        }
+
+        $response = $this->getConnection()->put("/{$this->resource}/{$key}", $attributes);
+
+        if (! $response->successful()) {
+            throw new ResourceUpdateException('API returned status code: '.$response->status());
+        }
+
+        $data = $this->parseResponseData($response);
+
+        // Update the model with the returned data
+        if (is_array($data)) {
+            $this->fill($data);
+        }
+
+        $this->syncOriginal();
+    }
+
+    /**
+     * Parse response data from API responses.
+     *
+     * @return array<string, mixed>
+     */
+    protected function parseResponseData($response): array
+    {
+        $json = $response->json();
+
+        if (! is_array($json)) {
+            throw new ResourceException('API response is not valid JSON');
+        }
+
+        // Check if the response has a 'data' wrapper
+        return $json['data'] ?? $json;
+    }
+
+    /**
+     * Dynamically retrieve attributes on the model.
+     */
+    public function __get(string $key): mixed
     {
         return $this->getAttribute($key);
     }
 
     /**
-     * Set attribute dynamically.
+     * Dynamically set attributes on the model.
      */
-    public function __set($key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->setAttribute($key, $value);
     }
 
     /**
-     * Check if attribute is set.
+     * Determine if an attribute or relation exists on the model.
      */
-    public function __isset($key): bool
+    public function __isset(string $key): bool
     {
         return isset($this->attributes[$key]);
+    }
+
+    /**
+     * Unset an attribute on the model.
+     */
+    public function __unset(string $key): void
+    {
+        unset($this->attributes[$key]);
+    }
+
+    /**
+     * Convert the model to its string representation.
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * Handle dynamic static method calls into the model.
+     */
+    public static function __callStatic(string $method, array $parameters): mixed
+    {
+        return (new static)->$method(...$parameters);
+    }
+
+    /**
+     * Handle dynamic method calls into the model.
+     */
+    public function __call(string $method, array $parameters): mixed
+    {
+        if (method_exists($this, $method)) {
+            return $this->{$method}(...$parameters);
+        }
+
+        return $this->newQuery()->$method(...$parameters);
     }
 }

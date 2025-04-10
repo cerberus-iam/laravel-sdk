@@ -2,7 +2,6 @@
 
 namespace Cerberus\Resources;
 
-use Fetch\Interfaces\ClientHandler;
 use Illuminate\Support\Carbon;
 
 class RefreshToken extends Resource
@@ -10,7 +9,7 @@ class RefreshToken extends Resource
     /**
      * The resource name.
      */
-    protected string $resource = 'refresh_tokens';
+    public string $resource = 'refresh_tokens';
 
     /**
      * The primary key for this resource.
@@ -20,13 +19,13 @@ class RefreshToken extends Resource
     /**
      * Create a new RefreshToken resource instance.
      */
-    public function __construct(ClientHandler $connection, array $attributes = [])
+    public function __construct(array $attributes = [])
     {
         if (isset($attributes['expires_in']) && ! isset($attributes['expires_at'])) {
             $attributes['expires_at'] = now()->addSeconds($attributes['expires_in']);
         }
 
-        parent::__construct($connection, $attributes);
+        parent::__construct($attributes);
     }
 
     /**

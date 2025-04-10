@@ -7,5 +7,5 @@ class TeamMember extends Resource
     /**
      * Name of the resource.
      */
-    protected string $resource = 'members';
+    public string $resource = 'members';
 }

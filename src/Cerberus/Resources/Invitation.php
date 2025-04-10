@@ -7,5 +7,5 @@ class Invitation extends Resource
     /**
      * Name of the resource.
      */
-    protected string $resource = 'invitations';
+    public string $resource = 'invitations';
 }

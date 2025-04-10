@@ -48,7 +48,7 @@ trait ResolvesResources
         return $container->bound($resourceClass)
             ? $container->make($resourceClass)
             : tap(
-                new $resourceClass($this->http, ...$args),
+                new $resourceClass(...$args),
                 fn ($instance) => $container->instance($resourceClass, $instance)
             );
     }
