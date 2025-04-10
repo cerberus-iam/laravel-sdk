@@ -229,11 +229,11 @@ class ResourceBuilder
             $response = $connection->get("/{$this->model->getResourceName()}/{$id}");
 
             if (! $response->ok()) {
-                if ($response->status() === 404) {
+                if ($response->getStatusCode() === 404) {
                     return null;
                 }
 
-                throw new ResourceException('API returned status code: '.$response->status());
+                throw new ResourceException('API returned status code: '.$response->getStatusCode());
             }
 
             $data = $this->parseResponseData($response);
@@ -315,7 +315,7 @@ class ResourceBuilder
             $response = $connection->get("/{$this->model->getResourceName()}");
 
             if (! $response->ok()) {
-                throw new ResourceException('API returned status code: '.$response->status());
+                throw new ResourceException('API returned status code: '.$response->getStatusCode());
             }
 
             $responseData = $response->json();
@@ -407,7 +407,7 @@ class ResourceBuilder
             $response = $connection->get("/{$this->model->getResourceName()}");
 
             if (! $response->ok()) {
-                throw new ResourceException('API returned status code: '.$response->status());
+                throw new ResourceException('API returned status code: '.$response->getStatusCode());
             }
 
             $responseData = $response->json();

@@ -5,12 +5,11 @@ namespace Cerberus\Tests\Unit;
 use Cerberus\Exceptions\ResourceDeleteException;
 use Cerberus\Exceptions\ResourceNotFoundException;
 use Cerberus\Exceptions\ResourceUpdateException;
-use Cerberus\Resources\Resource;
 use Cerberus\Resources\ResourceBuilder;
 use Cerberus\Tests\Stubs\TestResource;
+use Fetch\Http\Response;
 use Fetch\Interfaces\ClientHandler;
 use Illuminate\Container\Container;
-use Illuminate\Http\Client\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -180,7 +179,7 @@ class ResourceTest extends TestCase
     public function test_save_creates_new_resource(): void
     {
         // Setup response mock
-        $this->mockResponse->method('successful')->willReturn(true);
+        $this->mockResponse->method('ok')->willReturn(true);
         $this->mockResponse->method('json')->willReturn([
             'id' => 123,
             'name' => 'Test User',
@@ -226,7 +225,7 @@ class ResourceTest extends TestCase
         $resource->name = 'Updated Name';
 
         // Setup response mock
-        $this->mockResponse->method('successful')->willReturn(true);
+        $this->mockResponse->method('ok')->willReturn(true);
         $this->mockResponse->method('json')->willReturn([
             'id' => 123,
             'name' => 'Updated Name',
@@ -257,7 +256,7 @@ class ResourceTest extends TestCase
         $resource->setConnection($this->mockClient);
 
         // Setup response mock
-        $this->mockResponse->method('successful')->willReturn(true);
+        $this->mockResponse->method('ok')->willReturn(true);
         $this->mockResponse->method('json')->willReturn([
             'id' => 123,
             'name' => 'Updated Name',
@@ -300,8 +299,8 @@ class ResourceTest extends TestCase
         $resource->setConnection($this->mockClient);
 
         // Setup response mock
-        $this->mockResponse->method('successful')->willReturn(true);
-        $this->mockResponse->method('status')->willReturn(200);
+        $this->mockResponse->method('ok')->willReturn(true);
+        $this->mockResponse->method('getStatusCode')->willReturn(200);
 
         // Setup client mock
         $this->mockClient->expects($this->once())
@@ -326,8 +325,8 @@ class ResourceTest extends TestCase
         $resource->setConnection($this->mockClient);
 
         // Setup response mock
-        $this->mockResponse->method('successful')->willReturn(false);
-        $this->mockResponse->method('status')->willReturn(404);
+        $this->mockResponse->method('ok')->willReturn(false);
+        $this->mockResponse->method('getStatusCode')->willReturn(404);
 
         // Setup client mock
         $this->mockClient->expects($this->once())
@@ -351,7 +350,7 @@ class ResourceTest extends TestCase
     public function test_find_returns_resource_by_id(): void
     {
         // Mock response
-        $this->mockResponse->method('successful')->willReturn(true);
+        $this->mockResponse->method('ok')->willReturn(true);
         $this->mockResponse->method('json')->willReturn([
             'id' => 123,
             'name' => 'Test User',
@@ -374,8 +373,8 @@ class ResourceTest extends TestCase
     public function test_find_or_fail_throws_exception_when_not_found(): void
     {
         // Mock response
-        $this->mockResponse->method('successful')->willReturn(false);
-        $this->mockResponse->method('status')->willReturn(404);
+        $this->mockResponse->method('ok')->willReturn(false);
+        $this->mockResponse->method('getStatusCode')->willReturn(404);
 
         // Mock client
         $this->mockClient->expects($this->once())
@@ -390,7 +389,7 @@ class ResourceTest extends TestCase
     public function test_create_static_method_creates_resource(): void
     {
         // Mock response
-        $this->mockResponse->method('successful')->willReturn(true);
+        $this->mockResponse->method('ok')->willReturn(true);
         $this->mockResponse->method('json')->willReturn([
             'id' => 123,
             'name' => 'Test User',

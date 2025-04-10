@@ -508,7 +508,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             $response = $this->getConnection()->delete("/{$this->resource}/{$key}");
 
             if (! $response->ok()) {
-                throw new ResourceDeleteException('API returned status code: '.$response->status());
+                throw new ResourceDeleteException('API returned status code: '.$response->getStatusCode());
             }
 
             $this->exists = false;
@@ -762,7 +762,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         $response = $this->getConnection()->post("/{$this->resource}", $this->attributes);
 
         if (! $response->ok()) {
-            throw new ResourceCreationException('API returned status code: '.$response->status());
+            throw new ResourceCreationException('API returned status code: '.$response->getStatusCode());
         }
 
         $data = $this->parseResponseData($response);
@@ -796,7 +796,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         $response = $this->getConnection()->put("/{$this->resource}/{$key}", $attributes);
 
         if (! $response->ok()) {
-            throw new ResourceUpdateException('API returned status code: '.$response->status());
+            throw new ResourceUpdateException('API returned status code: '.$response->getStatusCode());
         }
 
         $data = $this->parseResponseData($response);
