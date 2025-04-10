@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.14...0.0.x)
 
+## [v0.0.15](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.14...v0.0.15) - 2025-04-10
+
+- Fix invalid usage of Fetch\Response class
+
 ## [v0.0.14](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.13...v0.0.14) - 2025-04-10
 
 - Refactor `User` and `Organisation` fillable fields
