@@ -228,7 +228,7 @@ class ResourceBuilder
             $connection = $this->model->getConnection();
             $response = $connection->get("/{$this->model->getResourceName()}/{$id}");
 
-            if (! $response->successful()) {
+            if (! $response->ok()) {
                 if ($response->status() === 404) {
                     return null;
                 }
@@ -314,7 +314,7 @@ class ResourceBuilder
 
             $response = $connection->get("/{$this->model->getResourceName()}");
 
-            if (! $response->successful()) {
+            if (! $response->ok()) {
                 throw new ResourceException('API returned status code: '.$response->status());
             }
 
@@ -406,7 +406,7 @@ class ResourceBuilder
 
             $response = $connection->get("/{$this->model->getResourceName()}");
 
-            if (! $response->successful()) {
+            if (! $response->ok()) {
                 throw new ResourceException('API returned status code: '.$response->status());
             }
 
