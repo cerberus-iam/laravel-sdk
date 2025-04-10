@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.13...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.14...0.0.x)
+
+## [v0.0.14](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.13...v0.0.14) - 2025-04-10
+
+- Refactor `User` and `Organisation` fillable fields
 
 ## [v0.0.13](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.12...v0.0.13) - 2025-04-10
 
