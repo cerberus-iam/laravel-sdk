@@ -33,12 +33,18 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
      * @var array<int, string>
      */
     protected array $fillable = [
+        'id',
         'uid',
         'email',
         'first_name',
         'last_name',
         'username',
         'phone',
+        'current_team_id',
+        'organisation_id',
+        'about',
+        'date_of_birth',
+        'meta',
         'password',
         'remember_token',
         'email_verified_at',
