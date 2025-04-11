@@ -54,13 +54,12 @@ class Organisation extends Resource
                     'password' => $data['password'],
                     'password_confirmation' => $data['password_confirmation'],
                 ],
-            ])
-            ->json();
+            ]);
 
         if (! $result->ok()) {
             throw new Exception('Error onboarding organisation: '.$result['message']);
         }
 
-        return $result;
+        return $result->json();
     }
 }
