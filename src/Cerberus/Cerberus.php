@@ -60,6 +60,16 @@ class Cerberus
     public const CACHE_KEY_TOKEN = 'cerberus.client_access_token';
 
     /**
+     * The override for the client ID.
+     */
+    protected ?string $clientIdOverride = null;
+
+    /**
+     * The override for the client secret.
+     */
+    protected ?string $clientSecretOverride = null;
+
+    /**
      * Create a new Cerberus instance.
      *
      * @return void
@@ -85,6 +95,17 @@ class Cerberus
     public function testing(): static
     {
         $this->http->withHeader(self::API_TESTING_MODE, true);
+
+        return $this;
+    }
+
+    /**
+     * Set the client ID and secret for authentication.
+     */
+    public function useClientCredentials(string $id, string $secret): static
+    {
+        $this->clientIdOverride = $id;
+        $this->clientSecretOverride = $secret;
 
         return $this;
     }
