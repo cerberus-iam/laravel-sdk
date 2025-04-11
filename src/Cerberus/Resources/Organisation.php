@@ -2,6 +2,8 @@
 
 namespace Cerberus\Resources;
 
+use Exception;
+
 class Organisation extends Resource
 {
     /**
@@ -29,13 +31,14 @@ class Organisation extends Resource
     ];
 
     /**
-     * The attributes that are hidden from the response.
+     * Onboard a new organisation.
      *
-     * @var array<int, string>
+     * @param  array<int, string>  $data
+     * @return array<int, mixed>
      */
-    public static function onboard(array $data): bool
+    public static function onboard(array $data): array
     {
-        return self::newInstance()
+        $result = self::newInstance()
             ->getConnection()
             ->post('/onboarding', [
                 'organisation' => [
@@ -53,6 +56,12 @@ class Organisation extends Resource
                     'password_confirmation' => $data['password_confirmation'],
                 ],
             ])
-            ->ok();
+            ->json();
+
+        if (! $result->ok()) {
+            throw new Exception('Error onboarding organisation: '.$result['message']);
+        }
+
+        return $result;
     }
 }
