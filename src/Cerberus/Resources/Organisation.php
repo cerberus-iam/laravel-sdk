@@ -38,8 +38,7 @@ class Organisation extends Resource
      */
     public static function onboard(array $data): array
     {
-        $result = self::newInstance()
-            ->getConnection()
+        $result = (new self)->getConnection()
             ->post('/onboarding', [
                 'organisation' => [
                     'name' => $data['organisation'],
