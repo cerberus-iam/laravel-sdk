@@ -5,6 +5,7 @@ namespace Cerberus;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Throwable;
 
 class CerberusUserProvider implements UserProvider
 {
@@ -85,10 +86,14 @@ class CerberusUserProvider implements UserProvider
             return false;
         }
 
-        return $this->cerberus
-            ->auth()
-            ->user($user)
-            ->checkPassword($credentials);
+        try {
+            return $this->cerberus
+                ->auth()
+                ->user($user)
+                ->checkPassword($credentials);
+        } catch (Throwable $th) {
+            return false;
+        }
     }
 
     /**
