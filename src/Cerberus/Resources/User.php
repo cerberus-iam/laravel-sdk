@@ -54,6 +54,14 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     ];
 
     /**
+     * Find a user by their email address.
+     */
+    public static function findByEmail(string $email): static
+    {
+        return static::where('email', $email)->firstOrFail();
+    }
+
+    /**
      * Get the password hash for the user.
      */
     public function getAuthPasswordName(): string
