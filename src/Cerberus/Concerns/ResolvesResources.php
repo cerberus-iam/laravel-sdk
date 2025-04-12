@@ -55,8 +55,8 @@ trait ResolvesResources
         $https = $this->getHttpClient();
 
         if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
-            $https->withHeader(static::API_CLIENT_ID, $this->clientIdOverride);
-            $https->withHeader(static::API_CLIENT_SECRET, $this->clientSecretOverride);
+            $https->withHeader(static::API_KEY_NAME, $this->clientIdOverride);
+            $https->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
         }
 
         $resourceInstance->setConnection($https);
