@@ -4,6 +4,7 @@ namespace Cerberus\Concerns;
 
 use BadMethodCallException;
 use Cerberus\Resources\Auth;
+use Cerberus\Resources\Client;
 use Cerberus\Resources\Invitation;
 use Cerberus\Resources\Organisation;
 use Cerberus\Resources\Permission;
@@ -29,6 +30,7 @@ trait ResolvesResources
         'organisations' => Organisation::class,
         'invitations' => Invitation::class,
         'members' => TeamMember::class,
+        'clients' => Client::class,
     ];
 
     /**

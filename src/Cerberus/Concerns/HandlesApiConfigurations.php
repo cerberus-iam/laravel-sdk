@@ -2,6 +2,8 @@
 
 namespace Cerberus\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
+
 trait HandlesApiConfigurations
 {
     /**
@@ -37,6 +39,17 @@ trait HandlesApiConfigurations
             static::API_KEY_NAME => config()->get('services.cerberus.key'),
             static::API_SECRET_NAME => config()->get('services.cerberus.secret'),
         ];
+    }
+
+    /**
+     * Set the client ID and secret for authentication using a client model.
+     */
+    public function useClient(Model $client): self
+    {
+        return $this->useClientCredentials(
+            $client->getKey(),
+            $client->plainSecret ?? $client->secret
+        );
     }
 
     /**
