@@ -38,8 +38,8 @@ class CerberusServiceProvider extends ServiceProvider
     {
         $this->app->singleton(ClientHandlerInterface::class, function (Application $app) {
             return fetch(url: null, options: [
-                'base_uri' => $this->getBaseUri(),
-                'headers' => $this->getHttpHeaders($app),
+                'base_uri' => Cerberus::getBaseUri(),
+                'headers' => Cerberus::getHttpHeaders(),
             ]);
         });
     }
@@ -73,27 +73,6 @@ class CerberusServiceProvider extends ServiceProvider
     protected function createCerberusInstance(Application $app): Cerberus
     {
         return new Cerberus($app->make(ClientHandlerInterface::class));
-    }
-
-    /**
-     * Get the base URI for Cerberus API.
-     */
-    protected function getBaseUri(): string
-    {
-        return rtrim(sprintf('%s/%s', Cerberus::API_URI, Cerberus::API_VERSION), '/');
-    }
-
-    /**
-     * Get default HTTP headers for Cerberus client.
-     */
-    protected function getHttpHeaders(Application $app): array
-    {
-        return [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            Cerberus::API_KEY_NAME => $app['config']->get('services.cerberus.key'),
-            Cerberus::API_SECRET_NAME => $app['config']->get('services.cerberus.secret'),
-        ];
     }
 
     /**
