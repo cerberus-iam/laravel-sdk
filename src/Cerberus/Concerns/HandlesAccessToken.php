@@ -96,8 +96,8 @@ trait HandlesAccessToken
     {
         $response = $this->http->post('/oauth/token', [
             'grant_type' => self::GRANT_TYPE,
-            'client_id' => config('services.cerberus.key'),
-            'client_secret' => config('services.cerberus.secret'),
+            'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
+            'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
             'scope' => '*',
         ]);
 
@@ -116,8 +116,8 @@ trait HandlesAccessToken
         $response = $this->http->post('/oauth/token', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
-            'client_id' => config('services.cerberus.key'),
-            'client_secret' => config('services.cerberus.secret'),
+            'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
+            'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
             'scope' => '*',
         ]);
 

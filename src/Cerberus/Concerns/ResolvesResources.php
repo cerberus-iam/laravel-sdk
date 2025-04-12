@@ -45,11 +45,22 @@ trait ResolvesResources
         $container = Container::getInstance();
         $resourceClass = self::$resources[$method];
 
-        return $container->bound($resourceClass)
+        $resourceInstance = $container->bound($resourceClass)
             ? $container->make($resourceClass)
             : tap(
                 new $resourceClass(...$args),
                 fn ($instance) => $container->instance($resourceClass, $instance)
             );
+
+        $https = $this->getHttpClient();
+
+        if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
+            $https->withHeader(static::API_CLIENT_ID, $this->clientIdOverride);
+            $https->withHeader(static::API_CLIENT_SECRET, $this->clientSecretOverride);
+        }
+
+        $resourceInstance->setConnection($https);
+
+        return $resourceInstance;
     }
 }

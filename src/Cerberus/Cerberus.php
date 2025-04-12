@@ -102,7 +102,7 @@ class Cerberus
     /**
      * Set the client ID and secret for authentication.
      */
-    public function useClientCredentials(string $id, string $secret): static
+    public function useClientCredentials(string $id, string $secret): self
     {
         $this->clientIdOverride = $id;
         $this->clientSecretOverride = $secret;
