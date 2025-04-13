@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mockery as m;
 
-class AuthenticatedSessionTest extends TestCase
+class TokenAuthenticationTest extends TestCase
 {
     protected function setUp(): void
     {
