@@ -1,6 +1,31 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.14...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.16...0.0.x)
+
+## [v0.0.16](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.15...v0.0.16) - 2025-04-13
+
+### Added
+
+- Add primary key documentation for `Client` resource
+- Add method to set client ID and secret using a client model; include `Client` resource in `ResolvesResources`
+- Add client ID and secret override properties with setter method
+- Add method to find user by email address
+- Add error handling to `validateCredentials` method in `CerberusUserProvider`
+
+### Changed
+
+- Refactor `Client` class to define mass assignable attributes in `fillable` property
+- Refactor `Cerberus` class to handle API configurations
+- Refactor authentication to support client ID and secret overrides in access token requests
+- Update HTTP headers to use API key and secret names for client ID and secret overrides
+- Refactor onboarding method in `Organisation` resource to use new instance creation
+- Refactor onboarding method in `Organisation` resource to handle response and error checking
+- Refactor response handling in `Resource` and `ResourceBuilder` classes
+
+### Fixed
+
+- Fix onboarding method to return JSON response after successful organisation onboarding
+- Implement `revoke` method in `Client` class to handle client revocation by ID or instance
 
 ## [v0.0.15](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.14...v0.0.15) - 2025-04-10
 
