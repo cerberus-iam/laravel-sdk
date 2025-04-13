@@ -12,6 +12,11 @@ class Client extends Resource
     public string $resource = 'clients';
 
     /**
+     * The primary key of the resource.
+     */
+    protected string $primaryKey = 'id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
