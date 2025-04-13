@@ -12,6 +12,24 @@ class Client extends Resource
     public string $resource = 'clients';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected array $fillable = [
+        'id',
+        'name',
+        'secret',
+        'revoked',
+        'provider',
+        'redirect',
+        'personal_access_client',
+        'password_client',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * Revoke a client by its ID or the current instance.
      *
      * @throws InvalidArgumentException If no valid client can be found to revoke.
