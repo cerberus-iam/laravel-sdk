@@ -25,6 +25,7 @@ class Client extends Resource
         'id',
         'name',
         'secret',
+        'plainSecret',
         'revoked',
         'provider',
         'redirect',
