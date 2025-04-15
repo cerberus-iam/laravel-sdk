@@ -21,11 +21,17 @@ trait HandlesApiConfigurations
      */
     public static function getBaseUri(): string
     {
-        return rtrim(sprintf(
-            '%s/%s',
-            config('services.cerberus.url', self::API_URI),
-            self::API_VERSION
-        ), '/');
+        $baseUrl = config('services.cerberus.url');
+
+        // Ensure we have a valid base URL
+        if (empty($baseUrl) || $baseUrl === '/') {
+            $baseUrl = self::API_URI;
+        }
+
+        // Ensure baseUrl doesn't end with a slash
+        $baseUrl = rtrim($baseUrl, '/');
+
+        return sprintf('%s/%s', $baseUrl, self::API_VERSION);
     }
 
     /**
