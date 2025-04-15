@@ -36,8 +36,8 @@ trait HandlesApiConfigurations
         return [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            self::API_KEY_NAME => config()->get('services.cerberus.key'),
-            self::API_SECRET_NAME => config()->get('services.cerberus.secret'),
+            self::API_KEY_NAME => config('services.cerberus.key'),
+            self::API_SECRET_NAME => config('services.cerberus.secret'),
         ];
     }
 
@@ -46,9 +46,15 @@ trait HandlesApiConfigurations
      */
     public function useClient(Model $client): self
     {
+        $secret = $client->plainSecret ?? ($client->secret ?? null);
+
+        if (! $secret) {
+            throw new \RuntimeException('Client secret is missing.');
+        }
+
         return $this->useClientCredentials(
-            $client->getKey(),
-            $client->plainSecret ?? $client->secret
+            (string) $client->getKey(),
+            $secret
         );
     }
 

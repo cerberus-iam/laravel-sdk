@@ -67,8 +67,6 @@ class Cerberus
      */
     public function __construct(protected ClientHandler $http)
     {
-        $this->initialiseStorage();
-
         $this->configureAccessToken();
     }
 

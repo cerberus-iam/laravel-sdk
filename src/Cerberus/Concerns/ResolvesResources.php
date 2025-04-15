@@ -101,14 +101,14 @@ trait ResolvesResources
                 fn ($instance) => $container->instance($resourceClass, $instance)
             );
 
-        $https = $this->getHttpClient();
+        $http = $this->getHttpClient();
 
         if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
-            $https->withHeader(static::API_KEY_NAME, $this->clientIdOverride);
-            $https->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
+            $http->withHeader(static::API_KEY_NAME, $this->clientIdOverride);
+            $http->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
         }
 
-        $resourceInstance->setConnection($https);
+        $resourceInstance->setConnection($http);
 
         return $resourceInstance;
     }

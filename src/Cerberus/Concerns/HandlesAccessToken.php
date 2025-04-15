@@ -15,7 +15,17 @@ trait HandlesAccessToken
     /**
      * The token storage implementation.
      */
-    protected TokenStorage $storage;
+    protected ?TokenStorage $storage = null;
+
+    /**
+     * The override for the client ID.
+     */
+    protected ?string $clientIdOverride = null;
+
+    /**
+     * The override for the client secret.
+     */
+    protected ?string $clientSecretOverride = null;
 
     /**
      * Configure the access token on the HTTP client.
@@ -64,7 +74,7 @@ trait HandlesAccessToken
      */
     public function getTokenStorage(): TokenStorage
     {
-        if (! $this->storage) {
+        if (! isset($this->storage)) {
             $this->initialiseStorage();
         }
 
@@ -94,8 +104,10 @@ trait HandlesAccessToken
      */
     protected function requestNewAccessToken(): array
     {
+        $grantType = defined('static::GRANT_TYPE') ? static::GRANT_TYPE : 'client_credentials';
+
         $response = $this->http->post('/oauth/token', [
-            'grant_type' => self::GRANT_TYPE,
+            'grant_type' => $grantType,
             'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
             'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
             'scope' => '*',
