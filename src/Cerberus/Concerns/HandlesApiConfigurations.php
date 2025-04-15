@@ -23,8 +23,8 @@ trait HandlesApiConfigurations
     {
         return rtrim(sprintf(
             '%s/%s',
-            config('services.cerberus.url', static::API_URI),
-            static::API_VERSION
+            config('services.cerberus.url', self::API_URI),
+            self::API_VERSION
         ), '/');
     }
 
@@ -36,8 +36,8 @@ trait HandlesApiConfigurations
         return [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            static::API_KEY_NAME => config()->get('services.cerberus.key'),
-            static::API_SECRET_NAME => config()->get('services.cerberus.secret'),
+            self::API_KEY_NAME => config()->get('services.cerberus.key'),
+            self::API_SECRET_NAME => config()->get('services.cerberus.secret'),
         ];
     }
 
