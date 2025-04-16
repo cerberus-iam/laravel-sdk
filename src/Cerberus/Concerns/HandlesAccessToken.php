@@ -8,6 +8,7 @@ use Cerberus\Events\RefreshTokenCreated;
 use Cerberus\Resources\Token;
 use Cerberus\TokenParser;
 use Illuminate\Support\Facades\Event;
+use InvalidArgumentException;
 use RuntimeException;
 
 trait HandlesAccessToken
@@ -34,6 +35,34 @@ trait HandlesAccessToken
     {
         if (! $this->http->hasHeader('Authorization')) {
             $this->http->withToken($this->getAccessToken()['access_token']);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use a specific token for authentication instead of the client credentials flow.
+     *
+     * @param  string  $token  The JWT token to use for authentication
+     */
+    public function useToken(string $token): self
+    {
+        // Set the token on the HTTP client
+        $this->http->withToken($token);
+
+        try {
+            // Parse the token to get expiration information
+            $parsedToken = TokenParser::parseAccessToken($token);
+            $expiresIn = $parsedToken->getExpiresIn();
+
+            // Store this token in the token storage so it's available for future requests
+            $this->getTokenStorage()->put([
+                'access_token' => $token,
+                'expires_in' => $expiresIn,
+            ], $expiresIn);
+        } catch (\Throwable $e) {
+            // If we can't parse the token, still use it for this request
+            // but don't store it for future requests
         }
 
         return $this;
@@ -100,20 +129,61 @@ trait HandlesAccessToken
     }
 
     /**
-     * Request a new access token using client credentials.
+     * Request an access token using password grant.
+     *
+     * @param  array<string, string>  $credentials
+     * @return array<string, string|int>
+     *
+     * @throws InvalidArgumentException
      */
-    protected function requestNewAccessToken(): array
-    {
-        $grantType = defined('static::GRANT_TYPE') ? static::GRANT_TYPE : 'client_credentials';
+    public function requestAccessTokenWithPassword(
+        #[\SensitiveParameter]
+        array $credentials
+    ): array {
+        return $this->requestNewAccessToken('password', $credentials);
+    }
 
-        $response = $this->http->post('/oauth/token', [
+    /**
+     * Request a new access token using client credentials or password grant.
+     */
+    protected function requestNewAccessToken(
+        ?string $grantType = 'client_credentials',
+        #[\SensitiveParameter]
+        array $credentials = []
+    ): array {
+        if (is_null($grantType)) {
+            $grantType = static::GRANT_TYPE;
+        }
+
+        $basePayload = [
             'grant_type' => $grantType,
             'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
             'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
-            'scope' => '*',
-        ]);
+            'scope' => '',
+        ];
+
+        if ($grantType === 'password') {
+            $this->checkCredentials($credentials);
+
+            $basePayload['username'] = $credentials['email'];
+            $basePayload['password'] = $credentials['password'];
+        }
+
+        $response = $this->http->post('/oauth/token', $basePayload);
 
         return $this->storeAccessTokenResponse($response->json());
+    }
+
+    /**
+     * Check the credentials for the password grant.
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function checkCredentials(#[\SensitiveParameter] array $credentials = []): void
+    {
+        if (empty($credentials['email']) || empty($credentials['password'])) {
+            throw new InvalidArgumentException('Username and password are required for password grant.');
+        }
     }
 
     /**

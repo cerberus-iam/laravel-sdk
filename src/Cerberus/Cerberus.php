@@ -4,12 +4,16 @@ namespace Cerberus;
 
 use Cerberus\Concerns\HandlesAccessToken;
 use Cerberus\Concerns\HandlesApiConfigurations;
+use Cerberus\Concerns\HandlesImpersonation;
 use Cerberus\Concerns\ResolvesResources;
 use Fetch\Interfaces\ClientHandler;
 
 class Cerberus
 {
-    use HandlesAccessToken, HandlesApiConfigurations, ResolvesResources;
+    use HandlesAccessToken,
+        HandlesApiConfigurations,
+        HandlesImpersonation,
+        ResolvesResources;
 
     /**
      * The base URI for the Cerberus API.
