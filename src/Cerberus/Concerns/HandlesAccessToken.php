@@ -198,6 +198,8 @@ trait HandlesAccessToken
             return $this->requestNewAccessToken();
         }
 
+        $this->http->withToken('');
+
         $response = $this->http->post('/oauth/token', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
