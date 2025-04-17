@@ -162,7 +162,6 @@ trait HandlesAccessToken
             'grant_type' => $grantType,
             'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
             'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
-            'scope' => '',
         ];
 
         if ($grantType === 'password') {
@@ -205,7 +204,6 @@ trait HandlesAccessToken
             'refresh_token' => $refreshToken,
             'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
             'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
-            'scope' => '*',
         ]);
 
         return $this->storeAccessTokenResponse($response->json(), isRefresh: true);
