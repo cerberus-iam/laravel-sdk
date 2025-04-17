@@ -65,12 +65,19 @@ trait HandlesApiConfigurations
     }
 
     /**
-     * Set the client ID and secret for authentication.
+     * Override the client credentials used for token requests.
+     *
+     * @param  string  $clientId  The client ID to use
+     * @param  string  $clientSecret  The client secret to use
      */
-    public function useClientCredentials(string $id, string $secret): self
+    public function useClientCredentials(string $clientId, string $clientSecret): self
     {
-        $this->clientIdOverride = $id;
-        $this->clientSecretOverride = $secret;
+        $this->clientIdOverride = $clientId;
+        $this->clientSecretOverride = $clientSecret;
+
+        // Important: When client credentials change, we need to forget existing tokens
+        // as they were issued for different client credentials
+        $this->getTokenStorage()->forget();
 
         return $this;
     }
