@@ -27,7 +27,6 @@ class Token extends Resource
         'user_id',
         'scopes',
         'expires_in',
-        'expires_at',
         'token_id',
     ];
 
@@ -36,8 +35,8 @@ class Token extends Resource
      */
     public function __construct(array $attributes = [])
     {
-        if (isset($attributes['expires_in']) && ! isset($attributes['expires_at'])) {
-            $attributes['expires_at'] = now()->addSeconds($attributes['expires_in']);
+        if (isset($attributes['expires_in'])) {
+            $attributes['expires_in'] = now()->addSeconds($attributes['expires_in']);
         }
 
         parent::__construct($attributes);
@@ -82,7 +81,7 @@ class Token extends Resource
      */
     public function expiresAt(): ?Carbon
     {
-        $timestamp = $this->getAttribute('expires_at');
+        $timestamp = $this->getAttribute('expires_in');
 
         return $timestamp instanceof Carbon
             ? $timestamp
