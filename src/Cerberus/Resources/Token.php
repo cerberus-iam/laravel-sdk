@@ -77,6 +77,16 @@ class Token extends Resource
     }
 
     /**
+     * Set the proper expires in time.
+     */
+    public function setExpiresIn(int $expiresIn): self
+    {
+        $this->attributes['expires_in'] = now()->addSeconds($expiresIn);
+
+        return $this;
+    }
+
+    /**
      * Get the token expiration timestamp.
      */
     public function expiresAt(): ?Carbon

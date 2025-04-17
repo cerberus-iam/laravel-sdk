@@ -222,6 +222,8 @@ trait HandlesAccessToken
 
         $token = TokenParser::parseAccessToken($data['access_token']);
 
+        $token->setExpiresIn($data['expires_in']);
+
         Event::dispatch(new AccessTokenCreated(
             tokenId: $token->getTokenId(),
             userId: $token->getUserId(),
@@ -229,7 +231,12 @@ trait HandlesAccessToken
         ));
 
         if ($isRefresh && isset($data['refresh_token'])) {
-            $refresh = TokenParser::parseRefreshToken($data['refresh_token'], $token->getTokenId());
+            $refresh = TokenParser::parseRefreshToken(
+                $data['refresh_token'],
+                $token->getTokenId()
+            );
+
+            $refresh->setExpiresIn($data['expires_in']);
 
             Event::dispatch(new RefreshTokenCreated(
                 refreshTokenId: $refresh->getTokenId(),
@@ -251,14 +258,14 @@ trait HandlesAccessToken
     /**
      * Purge the current access token from storage.
      *
-     * @param bool $revokeOnServer Whether to also attempt revoking the token on the auth server
+     * @param  bool  $revokeOnServer  Whether to also attempt revoking the token on the auth server
      * @return bool Success indicator
      */
     public function purgeToken(bool $revokeOnServer = true): bool
     {
         $cached = $this->getTokenStorage()->get();
 
-        if (!is_array($cached) || !isset($cached['access_token'])) {
+        if (! is_array($cached) || ! isset($cached['access_token'])) {
             return false;
         }
 
@@ -298,7 +305,7 @@ trait HandlesAccessToken
     /**
      * Attempt to revoke a token on the authorization server.
      *
-     * @param string $token The token to revoke
+     * @param  string  $token  The token to revoke
      * @return bool Success indicator
      */
     protected function revokeTokenOnServer(string $token): bool
@@ -319,19 +326,20 @@ trait HandlesAccessToken
     /**
      * Force a new token to be requested by purging the current one and requesting a new one.
      *
-     * @param bool $revokeOnServer Whether to also attempt revoking the token on the auth server
+     * @param  bool  $revokeOnServer  Whether to also attempt revoking the token on the auth server
      * @return array The new access token data
      */
     public function forceNewToken(bool $revokeOnServer = true): array
     {
         $this->purgeToken($revokeOnServer);
+
         return $this->requestNewAccessToken();
     }
 
     /**
      * Purge all tokens from storage.
      *
-     * @param bool $revokeOnServer Whether to also attempt revoking tokens on the auth server
+     * @param  bool  $revokeOnServer  Whether to also attempt revoking tokens on the auth server
      * @return bool Success indicator
      */
     public function purgeAllTokens(bool $revokeOnServer = true): bool
@@ -351,7 +359,7 @@ trait HandlesAccessToken
                 ));
             } catch (Throwable $e) {
                 // If we can't parse the token, still dispatch a generic event
-                Event::dispatch(new TokensPurged());
+                Event::dispatch(new TokensPurged);
             }
         }
 
