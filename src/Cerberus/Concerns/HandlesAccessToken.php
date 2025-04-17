@@ -4,12 +4,15 @@ namespace Cerberus\Concerns;
 
 use Cerberus\Contracts\TokenStorage;
 use Cerberus\Events\AccessTokenCreated;
+use Cerberus\Events\AccessTokenPurged;
 use Cerberus\Events\RefreshTokenCreated;
+use Cerberus\Events\TokensPurged;
 use Cerberus\Resources\Token;
 use Cerberus\TokenParser;
 use Illuminate\Support\Facades\Event;
 use InvalidArgumentException;
 use RuntimeException;
+use Throwable;
 
 trait HandlesAccessToken
 {
@@ -60,7 +63,7 @@ trait HandlesAccessToken
                 'access_token' => $token,
                 'expires_in' => $expiresIn,
             ], $expiresIn);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // If we can't parse the token, still use it for this request
             // but don't store it for future requests
         }
@@ -243,5 +246,117 @@ trait HandlesAccessToken
     protected function isTokenExpired(array $token): bool
     {
         return TokenParser::parseAccessToken($token['access_token'])->isExpired();
+    }
+
+    /**
+     * Purge the current access token from storage.
+     *
+     * @param bool $revokeOnServer Whether to also attempt revoking the token on the auth server
+     * @return bool Success indicator
+     */
+    public function purgeToken(bool $revokeOnServer = true): bool
+    {
+        $cached = $this->getTokenStorage()->get();
+
+        if (!is_array($cached) || !isset($cached['access_token'])) {
+            return false;
+        }
+
+        $token = null;
+        try {
+            $token = TokenParser::parseAccessToken($cached['access_token']);
+
+            if ($revokeOnServer) {
+                $this->revokeTokenOnServer($cached['access_token']);
+            }
+
+            $this->getTokenStorage()->forget();
+
+            Event::dispatch(new AccessTokenPurged(
+                tokenId: $token->getTokenId(),
+                userId: $token->getUserId(),
+                clientId: $token->getClientId()
+            ));
+
+            return true;
+        } catch (Throwable $e) {
+            // Even if we can't parse the token, still try to forget it
+            $this->getTokenStorage()->forget();
+
+            if ($token) {
+                Event::dispatch(new AccessTokenPurged(
+                    tokenId: $token->getTokenId(),
+                    userId: $token->getUserId(),
+                    clientId: $token->getClientId()
+                ));
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * Attempt to revoke a token on the authorization server.
+     *
+     * @param string $token The token to revoke
+     * @return bool Success indicator
+     */
+    protected function revokeTokenOnServer(string $token): bool
+    {
+        try {
+            $response = $this->http->withoutToken()->post('/oauth/revoke', [
+                'token' => $token,
+                'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
+                'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
+            ]);
+
+            return $response->successful();
+        } catch (Throwable $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Force a new token to be requested by purging the current one and requesting a new one.
+     *
+     * @param bool $revokeOnServer Whether to also attempt revoking the token on the auth server
+     * @return array The new access token data
+     */
+    public function forceNewToken(bool $revokeOnServer = true): array
+    {
+        $this->purgeToken($revokeOnServer);
+        return $this->requestNewAccessToken();
+    }
+
+    /**
+     * Purge all tokens from storage.
+     *
+     * @param bool $revokeOnServer Whether to also attempt revoking tokens on the auth server
+     * @return bool Success indicator
+     */
+    public function purgeAllTokens(bool $revokeOnServer = true): bool
+    {
+        $cached = $this->getTokenStorage()->get();
+
+        if (is_array($cached) && isset($cached['access_token'])) {
+            if ($revokeOnServer) {
+                $this->revokeTokenOnServer($cached['access_token']);
+            }
+
+            try {
+                $token = TokenParser::parseAccessToken($cached['access_token']);
+
+                Event::dispatch(new TokensPurged(
+                    clientId: $token->getClientId()
+                ));
+            } catch (Throwable $e) {
+                // If we can't parse the token, still dispatch a generic event
+                Event::dispatch(new TokensPurged());
+            }
+        }
+
+        $this->getTokenStorage()->forget();
+
+        return true;
     }
 }
