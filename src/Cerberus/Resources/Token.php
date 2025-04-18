@@ -2,88 +2,19 @@
 
 namespace Cerberus\Resources;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
+use DateTimeImmutable;
 
 class Token extends Resource
 {
-    /**
-     * The resource name.
-     */
-    public string $resource = 'tokens';
-
-    /**
-     * The primary key for this resource.
-     */
-    protected string $primaryKey = 'access_token';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected array $fillable = [
-        'access_token',
-        'client_id',
-        'user_id',
-        'scopes',
-        'expires_in',
-        'token_id',
-    ];
-
     /**
      * Create a new Token resource instance.
      */
     public function __construct(array $attributes = [])
     {
-        if (isset($attributes['expires_in'])) {
-            $attributes['expires_in'] = now()->addSeconds($attributes['expires_in']);
-        }
+        $this->parseExpiresIn($attributes);
 
         parent::__construct($attributes);
-    }
-
-    /**
-     * Get the raw access token string.
-     */
-    public function getAccessToken(): string
-    {
-        return (string) $this->getAttribute('access_token');
-    }
-
-    /**
-     * Get the associated client ID.
-     */
-    public function getClientId(): ?string
-    {
-        return $this->getAttribute('client_id');
-    }
-
-    /**
-     * Get the associated user ID (if any).
-     */
-    public function getUserId(): ?int
-    {
-        $id = $this->getAttribute('user_id');
-
-        return is_null($id) ? null : (int) $id;
-    }
-
-    /**
-     * Get the token ID (e.g. JWT jti claim).
-     */
-    public function getTokenId(): ?string
-    {
-        return $this->getAttribute('token_id');
-    }
-
-    /**
-     * Set the proper expires in time.
-     */
-    public function setExpiresIn(int $expiresIn): self
-    {
-        $this->attributes['expires_in'] = now()->addSeconds($expiresIn);
-
-        return $this;
     }
 
     /**
@@ -107,44 +38,20 @@ class Token extends Resource
     }
 
     /**
-     * Get the scopes granted to this token.
+     * Parse the expires in attribute from date-time immutable to carbon instance.
      *
-     * @return array<string>
+     * @param  array<string, mixed>  $attributes
      */
-    public function scopes(): array
+    protected function parseExpiresIn(array &$attributes): void
     {
-        return (array) $this->getAttribute('scopes');
-    }
+        $expiresIn = $attributes['expires_in'] ?? null;
 
-    /**
-     * Check if the token has the given scope.
-     */
-    public function hasScope(string $scope): bool
-    {
-        return in_array($scope, $this->scopes(), true);
-    }
+        if (! $expiresIn) {
+            return;
+        }
 
-    /**
-     * Check if the token has any of the given scopes.
-     */
-    public function hasAnyScope(array $scopes): bool
-    {
-        return ! empty(array_intersect($this->scopes(), $scopes));
-    }
-
-    /**
-     * Determine if the token belongs to a user (Password Grant).
-     */
-    public function isUserToken(): bool
-    {
-        return ! is_null($this->getUserId());
-    }
-
-    /**
-     * Determine if the token is a Client Credentials token.
-     */
-    public function isClientToken(): bool
-    {
-        return ! $this->isUserToken();
+        if ($expiresIn instanceof DateTimeImmutable) {
+            $attribute['expires_in'] = Carbon::instance($expiresIn);
+        }
     }
 }

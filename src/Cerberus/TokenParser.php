@@ -2,8 +2,8 @@
 
 namespace Cerberus;
 
+use Cerberus\Resources\AccessToken;
 use Cerberus\Resources\RefreshToken;
-use Cerberus\Resources\Token;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
 use Lcobucci\JWT\Token\Plain;
@@ -14,11 +14,11 @@ class TokenParser
     /**
      * Parse an access token and return a Token resource.
      */
-    public static function parseAccessToken(string $jwt): Token
+    public static function parseAccessToken(string $jwt): AccessToken
     {
         $claims = self::parseJWT($jwt)->claims();
 
-        return new Token([
+        return new AccessToken([
             'access_token' => $jwt,
             'client_id' => self::convertSingleRecordAudToString($claims->get('aud')),
             'user_id' => $claims->has('sub') ? (int) $claims->get('sub') : null,

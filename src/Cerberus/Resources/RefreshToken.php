@@ -2,9 +2,7 @@
 
 namespace Cerberus\Resources;
 
-use Illuminate\Support\Carbon;
-
-class RefreshToken extends Resource
+class RefreshToken extends Token
 {
     /**
      * The resource name.
@@ -28,18 +26,6 @@ class RefreshToken extends Resource
     ];
 
     /**
-     * Create a new RefreshToken resource instance.
-     */
-    public function __construct(array $attributes = [])
-    {
-        if (isset($attributes['expires_in'])) {
-            $attributes['expires_in'] = now()->addSeconds($attributes['expires_in']);
-        }
-
-        parent::__construct($attributes);
-    }
-
-    /**
      * Get the raw refresh token string.
      */
     public function getRefreshToken(): string
@@ -61,31 +47,5 @@ class RefreshToken extends Resource
     public function getAccessTokenId(): ?string
     {
         return $this->getAttribute('access_token_id');
-    }
-
-    /**
-     * Set the proper expires in time.
-     */
-    public function setExpiresIn(int $expiresIn): self
-    {
-        $this->attributes['expires_in'] = now()->addSeconds($expiresIn);
-
-        return $this;
-    }
-
-    /**
-     * Get the expiration timestamp.
-     */
-    public function expiresAt(): ?Carbon
-    {
-        return $this->getAttribute('expires_in');
-    }
-
-    /**
-     * Check if the refresh token is expired.
-     */
-    public function isExpired(): bool
-    {
-        return $this->expiresAt()?->isPast() ?? true;
     }
 }
