@@ -22,6 +22,20 @@ use Throwable;
 trait HandlesAccessToken
 {
     /**
+     * The grant type for authentication.
+     *
+     * @var string
+     */
+    public const GRANT_TYPE = 'client_credentials';
+
+    /**
+     * The cache key for storing the client access token.
+     *
+     * @var string
+     */
+    public const CACHE_KEY_TOKEN = 'cerberus.client_access_token';
+
+    /**
      * Storage for access tokens.
      */
     protected ?TokenStorage $storage = null;
@@ -135,7 +149,7 @@ trait HandlesAccessToken
      * @throws InvalidArgumentException
      */
     protected function requestNewAccessToken(
-        string $grant = 'client_credentials',
+        ?string $grant = null,
         #[\SensitiveParameter]
         array $credentials = []
     ): array {
