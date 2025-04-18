@@ -17,9 +17,9 @@ use Illuminate\Container\Container;
 trait ResolvesResources
 {
     /**
-     * The default resources that can be resolved.
+     * Default resource mappings
      *
-     * @var array<string, string>
+     * @var array<string, class-string>
      */
     protected static array $defaultResources = [
         'auth' => Auth::class,
@@ -34,14 +34,14 @@ trait ResolvesResources
     ];
 
     /**
-     * The custom resources overrides.
+     * Overridden resource mappings
      *
      * @var array<string, string>
      */
     protected static array $resourceOverrides = [];
 
     /**
-     * Get all resources with overrides applied.
+     * Get merged list of resources.
      *
      * @return array<string, string>
      */
@@ -51,39 +51,41 @@ trait ResolvesResources
     }
 
     /**
-     * Override a specific resource.
+     * Override a single resource mapping.
      */
-    public static function useResource(string $key, string $resourceClass): void
+    public static function useResource(string $key, string $class): void
     {
-        self::$resourceOverrides[$key] = $resourceClass;
+        self::$resourceOverrides[$key] = $class;
     }
 
     /**
-     * Override multiple resources at once.
+     * Override multiple resource mappings.
      *
      * @param  array<string, string>  $resources
      */
     public static function useResources(array $resources): void
     {
-        foreach ($resources as $key => $resourceClass) {
-            self::useResource($key, $resourceClass);
+        foreach ($resources as $key => $class) {
+            self::useResource($key, $class);
         }
     }
 
     /**
-     * Use the specified model for user authentication.
+     * Set custom user resource model.
      */
-    public static function useUserModel(string $userModel): void
+    public static function useUserModel(string $model): void
     {
-        self::useResource('users', $userModel);
+        self::useResource('users', $model);
     }
 
     /**
-     * Dynamically resolve a resource.
+     * Magic method to resolve resource calls dynamically.
+     *
+     * @return mixed
      *
      * @throws BadMethodCallException
      */
-    public function __call(string $method, array $args): mixed
+    public function __call(string $method, array $args)
     {
         $resources = $this->getResources();
 
@@ -92,24 +94,20 @@ trait ResolvesResources
         }
 
         $container = Container::getInstance();
-        $resourceClass = $resources[$method];
-
-        $resourceInstance = $container->bound($resourceClass)
-            ? $container->make($resourceClass)
-            : tap(
-                new $resourceClass(...$args),
-                fn ($instance) => $container->instance($resourceClass, $instance)
-            );
+        $class = $resources[$method];
+        $instance = $container->bound($class)
+            ? $container->make($class)
+            : tap(new $class(...$args), fn ($i) => $container->instance($class, $i));
 
         $http = $this->getHttpClient();
 
         if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
-            $http->withHeader(static::API_KEY_NAME, $this->clientIdOverride);
-            $http->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
+            $http->withHeader(static::API_KEY_NAME, $this->clientIdOverride)
+                ->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
         }
 
-        $resourceInstance->setConnection($http);
+        $instance->setConnection($http);
 
-        return $resourceInstance;
+        return $instance;
     }
 }

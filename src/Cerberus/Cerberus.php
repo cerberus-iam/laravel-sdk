@@ -15,57 +15,23 @@ class Cerberus
         HandlesImpersonation,
         ResolvesResources;
 
-    /**
-     * The base URI for the Cerberus API.
-     *
-     * @var string
-     */
+    /** API base URI */
     public const API_URI = 'https://dev-api.cerberus-iam.com';
 
-    /**
-     * The version of the Cerberus API.
-     *
-     * @var string
-     */
+    /** API version */
     public const API_VERSION = 'v1';
 
-    /**
-     * The header name for the Cerberus client ID.
-     *
-     * @var string
-     */
+    /** Header: client ID */
     public const API_KEY_NAME = 'X-Cerberus-Client-Id';
 
-    /**
-     * The header name for the Cerberus client secret.
-     *
-     * @var string
-     */
+    /** Header: client secret */
     public const API_SECRET_NAME = 'X-Cerberus-Client-Secret';
 
-    /**
-     * The header name for enabling testing mode.
-     *
-     * @var string
-     */
+    /** Header: testing mode */
     public const API_TESTING_MODE = 'X-Cerberus-Testing';
 
     /**
-     * The grant type for authentication.
-     *
-     * @var string
-     */
-    public const GRANT_TYPE = 'client_credentials';
-
-    /**
-     * The cache key for storing the client access token.
-     *
-     * @var string
-     */
-    public const CACHE_KEY_TOKEN = 'cerberus.client_access_token';
-
-    /**
-     * Create a new Cerberus instance.
+     * Cerberus constructor.
      *
      * @return void
      */
@@ -83,7 +49,7 @@ class Cerberus
     }
 
     /**
-     * Enable testing mode for the Cerberus client.
+     * Enable testing mode via header.
      */
     public function testing(): static
     {

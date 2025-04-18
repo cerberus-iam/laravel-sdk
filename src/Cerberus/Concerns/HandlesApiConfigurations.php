@@ -7,35 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 trait HandlesApiConfigurations
 {
     /**
-     * The override for the client ID.
+     * Override for client ID.
      */
     protected ?string $clientIdOverride = null;
 
     /**
-     * The override for the client secret.
+     * Override for client secret.
      */
     protected ?string $clientSecretOverride = null;
 
     /**
-     * Get the base URI for Cerberus API.
+     * Get base URI for Cerberus API.
      */
     public static function getBaseUri(): string
     {
-        $baseUrl = config('services.cerberus.url');
+        $base = config('services.cerberus.url') ?: self::API_URI;
 
-        // Ensure we have a valid base URL
-        if (empty($baseUrl) || $baseUrl === '/') {
-            $baseUrl = self::API_URI;
-        }
-
-        // Ensure baseUrl doesn't end with a slash
-        $baseUrl = rtrim($baseUrl, '/');
-
-        return sprintf('%s/%s', $baseUrl, self::API_VERSION);
+        return rtrim($base, '/').'/'.self::API_VERSION;
     }
 
     /**
-     * Get default HTTP headers for Cerberus client.
+     * Get default HTTP headers.
+     *
+     * @return array<string, string>
      */
     public static function getHttpHeaders(): array
     {
@@ -48,35 +42,29 @@ trait HandlesApiConfigurations
     }
 
     /**
-     * Set the client ID and secret for authentication using a client model.
+     * Use a Laravel Model for client credentials.
+     *
+     * @throws \RuntimeException
      */
     public function useClient(Model $client): self
     {
-        $secret = $client->plainSecret ?? ($client->secret ?? null);
+        $secret = $client->plainSecret ?? $client->secret;
 
         if (! $secret) {
             throw new \RuntimeException('Client secret is missing.');
         }
 
-        return $this->useClientCredentials(
-            (string) $client->getKey(),
-            $secret
-        );
+        return $this->useClientCredentials((string) $client->getKey(), $secret);
     }
 
     /**
-     * Override the client credentials used for token requests.
-     *
-     * @param  string  $clientId  The client ID to use
-     * @param  string  $clientSecret  The client secret to use
+     * Override client credentials and purge existing token.
      */
-    public function useClientCredentials(string $clientId, string $clientSecret): self
+    public function useClientCredentials(string $id, string $secret): self
     {
-        $this->clientIdOverride = $clientId;
-        $this->clientSecretOverride = $clientSecret;
+        $this->clientIdOverride = $id;
+        $this->clientSecretOverride = $secret;
 
-        // Important: When client credentials change, we need to forget existing tokens
-        // as they were issued for different client credentials
         $this->getTokenStorage()->forget();
 
         return $this;
