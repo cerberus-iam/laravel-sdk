@@ -17,6 +17,20 @@ use Throwable;
 trait HandlesAccessToken
 {
     /**
+     * The grant type for authentication.
+     *
+     * @var string
+     */
+    public const GRANT_TYPE = 'client_credentials';
+
+    /**
+     * The cache key for storing the client access token.
+     *
+     * @var string
+     */
+    public const CACHE_KEY_TOKEN = 'cerberus.client_access_token';
+
+    /**
      * The token storage implementation.
      */
     protected ?TokenStorage $storage = null;
@@ -222,8 +236,6 @@ trait HandlesAccessToken
 
         $token = TokenParser::parseAccessToken($data['access_token']);
 
-        $token->setExpiresIn($data['expires_in']);
-
         Event::dispatch(new AccessTokenCreated(
             tokenId: $token->getTokenId(),
             userId: $token->getUserId(),
@@ -235,8 +247,6 @@ trait HandlesAccessToken
                 $data['refresh_token'],
                 $token->getTokenId()
             );
-
-            $refresh->setExpiresIn($data['expires_in']);
 
             Event::dispatch(new RefreshTokenCreated(
                 refreshTokenId: $refresh->getTokenId(),
