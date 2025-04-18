@@ -101,10 +101,9 @@ trait ResolvesResources
 
         $http = $this->getHttpClient();
 
-        if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
-            $http->withHeader(static::API_KEY_NAME, $this->clientIdOverride)
-                ->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
-        }
+        $this->applyClientOverrides($http);
+
+        $this->applyImpersonation($http);
 
         $instance->setConnection($http);
 

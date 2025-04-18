@@ -2,19 +2,24 @@
 
 namespace Cerberus\Concerns;
 
+use Fetch\Interfaces\ClientHandler;
 use Illuminate\Contracts\Auth\Authenticatable as User;
 
 trait HandlesImpersonation
 {
     /**
+     * The ID of the user the request to the API should be made on behalf of.
+     */
+    protected int|string|null $actor = null;
+
+    /**
      * Impersonate a user for subsequent API requests.
      */
-    public function impersonate(User|string|int $user): self
+    public function actingAs(User|string|int $user): self
     {
         $userId = $user instanceof User ? $user->getAuthIdentifier() : $user;
 
-        // Set impersonation header
-        $this->http->withHeader('X-Cerberus-Impersonate', $userId);
+        $this->actor = $userId;
 
         return $this;
     }
@@ -22,19 +27,12 @@ trait HandlesImpersonation
     /**
      * Stop impersonating a user.
      */
-    public function stopImpersonating(): self
+    protected function applyImpersonation(ClientHandler $http): self
     {
-        // Remove impersonation header
-        $this->http->withoutHeader('X-Cerberus-Impersonate');
+        if (! is_null($this->actor)) {
+            $http->withHeader('X-Cerberus-User', $this->actor);
+        }
 
         return $this;
-    }
-
-    /**
-     * Determine if the client is currently impersonating a user.
-     */
-    public function isImpersonating(): bool
-    {
-        return $this->http->hasHeader('X-Cerberus-Impersonate');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Cerberus\Concerns;
 
+use Fetch\Interfaces\ClientHandler;
 use Illuminate\Database\Eloquent\Model;
 
 trait HandlesApiConfigurations
@@ -68,5 +69,16 @@ trait HandlesApiConfigurations
         $this->getTokenStorage()->forget();
 
         return $this;
+    }
+
+    /**
+     * Add client overrides headers to the HTTP handler.
+     */
+    protected function applyClientOverrides(ClientHandler $http): void
+    {
+        if (! is_null($this->clientIdOverride) && ! is_null($this->clientSecretOverride)) {
+            $http->withHeader(static::API_KEY_NAME, $this->clientIdOverride)
+                ->withHeader(static::API_SECRET_NAME, $this->clientSecretOverride);
+        }
     }
 }
