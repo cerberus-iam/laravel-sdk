@@ -26,9 +26,6 @@ class CerberusUserProviderTest extends TestCase
 
         $this->cerberus = m::mock(Cerberus::class);
 
-        // The constructor now calls configureAccessToken()
-        $this->cerberus->shouldReceive('configureAccessToken')->once();
-
         $this->userProvider = new CerberusUserProvider($this->cerberus);
     }
 
@@ -44,8 +41,6 @@ class CerberusUserProviderTest extends TestCase
         $userId = 1;
         $userMock = m::mock(Authenticatable::class);
 
-        // retrieveById calls configureAccessToken() again
-        $this->cerberus->shouldReceive('configureAccessToken')->once();
         $this->cerberus->shouldReceive('users->find')
             ->with($userId)
             ->andReturn($userMock);
@@ -86,9 +81,6 @@ class CerberusUserProviderTest extends TestCase
         $userMock->shouldReceive('getAuthIdentifier')
             ->andReturn('user@example.com');
 
-        // ensure configureAccessToken() is called
-        $this->cerberus->shouldReceive('configureAccessToken')->once();
-
         $qb = m::mock();
         $this->cerberus->shouldReceive('users')
             ->andReturn($qb);
@@ -110,9 +102,6 @@ class CerberusUserProviderTest extends TestCase
         $credentials = ['email' => 'user@example.com'];
         $userMock = m::mock(Authenticatable::class);
         $qb = m::mock();
-
-        // since there's no password, it should call configureAccessToken()
-        $this->cerberus->shouldReceive('configureAccessToken')->once();
 
         $this->cerberus->shouldReceive('users')
             ->andReturn($qb);
