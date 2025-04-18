@@ -16,7 +16,7 @@ class CerberusUserProvider implements UserProvider
      */
     public function __construct(protected Cerberus $cerberus)
     {
-        $this->cerberus->configureAccessToken();
+        //
     }
 
     /**
@@ -27,8 +27,6 @@ class CerberusUserProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        $this->cerberus->configureAccessToken();
-
         return $this->cerberus->users()->find($identifier);
     }
 
@@ -53,8 +51,6 @@ class CerberusUserProvider implements UserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token): void
     {
-        $this->cerberus->configureAccessToken();
-
         $this->cerberus
             ->users()
             ->where($user->getAuthIdentifierName(), $user->getAuthIdentifier())
@@ -81,15 +77,6 @@ class CerberusUserProvider implements UserProvider
         }
 
         try {
-            if (isset($credentials['email'], $credentials['password'])) {
-                $this->cerberus->requestAccessTokenWithPassword([
-                    'email' => $credentials['email'],
-                    'password' => $credentials['password'],
-                ]);
-            } else {
-                $this->cerberus->configureAccessToken();
-            }
-
             $query = $this->cerberus->users();
 
             foreach ($filters as $key => $value) {

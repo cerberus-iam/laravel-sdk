@@ -15,19 +15,29 @@ class Cerberus
         HandlesImpersonation,
         ResolvesResources;
 
-    /** API base URI */
+    /**
+     * API base URI.
+     */
     public const API_URI = 'https://dev-api.cerberus-iam.com';
 
-    /** API version */
+    /**
+     * API version.
+     */
     public const API_VERSION = 'v1';
 
-    /** Header: client ID */
+    /**
+     * Header: client ID.
+     */
     public const API_KEY_NAME = 'X-Cerberus-Client-Id';
 
-    /** Header: client secret */
+    /**
+     * Header: client secret.
+     */
     public const API_SECRET_NAME = 'X-Cerberus-Client-Secret';
 
-    /** Header: testing mode */
+    /**
+     * Header: testing mode.
+     */
     public const API_TESTING_MODE = 'X-Cerberus-Testing';
 
     /**
