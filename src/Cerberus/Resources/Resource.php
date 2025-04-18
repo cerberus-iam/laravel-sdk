@@ -19,6 +19,7 @@ use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
 use Stringable;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
+use Throwable;
 
 /**
  * @mixin \Illuminate\Support\Traits\ForwardsCalls
@@ -257,7 +258,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
                         $count++;
                     }
                 }
-            } catch (\Exception $e) {
+            } catch (Throwable $e) {
                 // Continue processing other IDs even if one fails
                 continue;
             }
@@ -459,7 +460,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         } catch (ResourceException $e) {
             // Re-throw our custom exceptions
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             // Convert general exceptions to our custom exceptions
             if ($this->exists) {
                 throw new ResourceUpdateException('Failed to update resource: '.$e->getMessage(), 0, $e);
@@ -516,7 +517,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             return true;
         } catch (ResourceDeleteException $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             throw new ResourceDeleteException('Failed to delete resource: '.$e->getMessage(), 0, $e);
         }
     }

@@ -176,6 +176,7 @@ trait HandlesAccessToken
             'grant_type' => $grantType,
             'client_id' => $this->clientIdOverride ?? config('services.cerberus.key'),
             'client_secret' => $this->clientSecretOverride ?? config('services.cerberus.secret'),
+            'scope' => '*',
         ];
 
         if ($grantType === 'password') {
