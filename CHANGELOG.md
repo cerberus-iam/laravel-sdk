@@ -1,6 +1,39 @@
 # Release Notes
 
-## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.16...0.0.x)
+## [Unreleased](https://github.com/cerberus-iam/cerberus-iam-sdk/compare/v0.0.17...0.0.x)
+
+## [v0.0.17](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.16...v0.0.17) - 2025-04-20
+
+### Added
+
+- Support for access and refresh token expiration handling
+- `AccessToken` and `RefreshToken` resource classes for token introspection
+- Token purging functionality with related events (`AccessTokenPurged`, `TokensPurged`, etc.)
+- Impersonation support via headers
+- Scopes parameter to access token requests
+- Constants for `GRANT_TYPE` and `TOKEN_STORAGE_KEY` in `HandlesAccessToken` trait
+- `plainSecret` attribute in `Client` resource
+- `AUTH_MODEL` fallback using environment variable for user model resolution
+
+### Changed
+
+- Refactored Cerberus authentication system to simplify token and session handling
+- Updated and refactored tests for `CerberusUserProvider` and `SessionGuard`
+- Improved API client handling with support for dynamic client overrides and impersonation
+- Enhanced documentation throughout SDK classes and traits
+- Replaced `Exception` with `Throwable` for more robust error handling
+- Refactored `getBaseUri` for improved readability and validation
+- Improved method and parameter naming in token and API configuration concerns
+- Removed unnecessary access token configuration in `CerberusUserProvider`
+- Switched to `App::instance()` for better testability in service container usage
+
+### Fixed
+
+- Removed unnecessary `scope` parameter from token requests
+- Corrected handling of token expiration attributes in `Token` resource
+- Cleared HTTP Authorization token header before performing token refresh
+- Fixed usage of `static` keyword in `HandlesApiConfigurations` for consistency
+- Corrected API URI usage to ensure proper endpoint configuration
 
 ## [v0.0.16](https://github.com/cerberus-iam/laravel-sdk/compare/v0.0.15...v0.0.16) - 2025-04-13
 
