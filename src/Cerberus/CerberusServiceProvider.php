@@ -3,6 +3,7 @@
 namespace Cerberus;
 
 use Cerberus\Contracts\TokenStorage;
+use Cerberus\Guards\SessionGuard;
 use Cerberus\Guards\TokenGuard;
 use Fetch\Interfaces\ClientHandler as ClientHandlerInterface;
 use Illuminate\Contracts\Auth\Guard;
@@ -61,10 +62,12 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerTokenStorage(): void
     {
-        $this->app->singleton(
-            TokenStorage::class,
-            fn (Application $app) => new CacheTokenStorage
-        );
+        $this->app->singleton(TokenStorage::class, function (Application $app) {
+            return new SessionTokenStorage(
+                Cerberus::TOKEN_STORAGE_KEY,
+                $app['session.store']
+            );
+        });
     }
 
     /**
@@ -98,24 +101,31 @@ class CerberusServiceProvider extends ServiceProvider
      */
     protected function registerAuthGuard(): void
     {
-        Auth::extend('cerberus', fn (
-            Application $app,
-            string $name,
-            array $config
-        ) => $this->createAuthGuard($app, $config));
-    }
+        Auth::extend('session', function (Application $app, string $name, array $config) {
+            $guard = new SessionGuard(
+                name: $name,
+                provider: Auth::createUserProvider($config['provider']),
+                session: $this->app['session.store'],
+                rehashOnLogin: $this->app['config']->get('hashing.rehash_on_login', true),
+            );
 
-    /**
-     * Create the TokenGuard instance.
-     */
-    protected function createAuthGuard(Application $app, array $config): Guard
-    {
-        return tap(
-            new TokenGuard(
+            $guard->setCookieJar($this->app['cookie']);
+            $guard->setDispatcher($this->app['events']);
+            $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
+            $guard->setRememberDuration($config['remember'] ?? 1440);
+
+            return $guard;
+        });
+
+        Auth::extend('api', function (Application $app, string $name, array $config) {
+            $guard = new TokenGuard(
                 provider: Auth::createUserProvider($config['provider']),
                 request: $app['request']
-            ),
-            fn (TokenGuard $guard) => $app->refresh('request', $guard, 'setRequest')
-        );
+            );
+
+            $this->app->refresh('request', $guard, 'setRequest');
+
+            return $guard;
+        });
     }
 }

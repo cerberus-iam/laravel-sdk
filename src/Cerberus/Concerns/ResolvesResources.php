@@ -41,16 +41,6 @@ trait ResolvesResources
     protected static array $resourceOverrides = [];
 
     /**
-     * Get merged list of resources.
-     *
-     * @return array<string, string>
-     */
-    protected function getResources(): array
-    {
-        return array_merge(self::$defaultResources, self::$resourceOverrides);
-    }
-
-    /**
      * Override a single resource mapping.
      */
     public static function useResource(string $key, string $class): void
@@ -76,6 +66,16 @@ trait ResolvesResources
     public static function useUserModel(string $model): void
     {
         self::useResource('users', $model);
+    }
+
+    /**
+     * Get merged list of resources.
+     *
+     * @return array<string, string>
+     */
+    protected function getResources(): array
+    {
+        return array_merge(self::$defaultResources, self::$resourceOverrides);
     }
 
     /**

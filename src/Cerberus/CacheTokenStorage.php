@@ -8,16 +8,13 @@ use Illuminate\Support\Facades\Cache;
 class CacheTokenStorage implements TokenStorage
 {
     /**
-     * Cache key for the access token.
+     * Create new CacheTokenStorage instance.
+     *
+     * @return void
      */
-    protected string $cacheKey;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(string $cacheKey = Cerberus::CACHE_KEY_TOKEN)
+    public function __construct(protected string $key = Cerberus::TOKEN_STORAGE_KEY)
     {
-        $this->cacheKey = $cacheKey;
+        //
     }
 
     /**
@@ -25,7 +22,7 @@ class CacheTokenStorage implements TokenStorage
      */
     public function get(): ?array
     {
-        return Cache::get($this->cacheKey);
+        return Cache::get($this->key);
     }
 
     /**
@@ -33,7 +30,7 @@ class CacheTokenStorage implements TokenStorage
      */
     public function put(array $data, int $ttlSeconds): void
     {
-        Cache::put($this->cacheKey, $data, now()->addSeconds($ttlSeconds));
+        Cache::put($this->key, $data, now()->addSeconds($ttlSeconds));
     }
 
     /**
@@ -41,6 +38,6 @@ class CacheTokenStorage implements TokenStorage
      */
     public function forget(): void
     {
-        Cache::forget($this->cacheKey);
+        Cache::forget($this->key);
     }
 }

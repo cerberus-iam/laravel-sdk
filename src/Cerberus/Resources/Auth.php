@@ -51,9 +51,11 @@ class Auth extends Resource
             return null;
         }
 
-        $user = new User($response->json());
+        $user = (new User)->newFromBuilder($response->json());
 
-        return $this->user($user)->user;
+        $this->user($user);
+
+        return $user;
     }
 
     /**

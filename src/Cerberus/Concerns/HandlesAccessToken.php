@@ -28,7 +28,7 @@ trait HandlesAccessToken
      *
      * @var string
      */
-    public const CACHE_KEY_TOKEN = 'cerberus.client_access_token';
+    public const TOKEN_STORAGE_KEY = 'cerberus.client_access_token';
 
     /**
      * The token storage implementation.
@@ -61,8 +61,9 @@ trait HandlesAccessToken
      * Use a specific token for authentication instead of the client credentials flow.
      *
      * @param  string  $token  The JWT token to use for authentication
+     * @param  string|null  $refreshToken  Optional refresh token to store alongside the access token
      */
-    public function useToken(string $token): self
+    public function useToken(string $token, ?string $refreshToken = null): self
     {
         // Set the token on the HTTP client
         $this->http->withToken($token);
@@ -73,10 +74,16 @@ trait HandlesAccessToken
             $expiresIn = $parsedToken->getExpiresIn();
 
             // Store this token in the token storage so it's available for future requests
-            $this->getTokenStorage()->put([
+            $data = [
                 'access_token' => $token,
                 'expires_in' => $expiresIn,
-            ], $expiresIn);
+            ];
+
+            if ($refreshToken) {
+                $data['refresh_token'] = $refreshToken;
+            }
+
+            $this->getTokenStorage()->put($data, $expiresIn);
         } catch (Throwable $e) {
             // If we can't parse the token, still use it for this request
             // but don't store it for future requests
@@ -136,16 +143,6 @@ trait HandlesAccessToken
     }
 
     /**
-     * Initialise the token storage implementation.
-     *
-     * @throws RuntimeException
-     */
-    protected function initialiseStorage(): void
-    {
-        $this->storage = app(TokenStorage::class);
-    }
-
-    /**
      * Request an access token using password grant.
      *
      * @param  array<string, string>  $credentials
@@ -163,7 +160,7 @@ trait HandlesAccessToken
     /**
      * Request a new access token using client credentials or password grant.
      */
-    protected function requestNewAccessToken(
+    public function requestNewAccessToken(
         ?string $grantType = 'client_credentials',
         #[\SensitiveParameter]
         array $credentials = []
@@ -196,7 +193,7 @@ trait HandlesAccessToken
      *
      * @throws InvalidArgumentException
      */
-    protected function checkCredentials(#[\SensitiveParameter] array $credentials = []): void
+    public function checkCredentials(#[\SensitiveParameter] array $credentials = []): void
     {
         if (empty($credentials['email']) || empty($credentials['password'])) {
             throw new InvalidArgumentException('Username and password are required for password grant.');
@@ -206,7 +203,7 @@ trait HandlesAccessToken
     /**
      * Refresh an access token using a refresh token.
      */
-    protected function refreshAccessToken(?string $refreshToken = null): array
+    public function refreshAccessToken(?string $refreshToken = null): array
     {
         if (! $refreshToken) {
             return $this->requestNewAccessToken();
@@ -222,48 +219,6 @@ trait HandlesAccessToken
         ]);
 
         return $this->storeAccessTokenResponse($response->json(), isRefresh: true);
-    }
-
-    /**
-     * Store token data and fire appropriate events.
-     */
-    protected function storeAccessTokenResponse(array $data, bool $isRefresh = false): array
-    {
-        if (! isset($data['access_token'], $data['expires_in'])) {
-            throw new RuntimeException('Invalid access token response from Cerberus.');
-        }
-
-        $this->getTokenStorage()->put($data, $data['expires_in']);
-
-        $token = TokenParser::parseAccessToken($data['access_token']);
-
-        Event::dispatch(new AccessTokenCreated(
-            tokenId: $token->getTokenId(),
-            userId: $token->getUserId(),
-            clientId: $token->getClientId()
-        ));
-
-        if ($isRefresh && isset($data['refresh_token'])) {
-            $refresh = TokenParser::parseRefreshToken(
-                $data['refresh_token'],
-                $token->getTokenId()
-            );
-
-            Event::dispatch(new RefreshTokenCreated(
-                refreshTokenId: $refresh->getTokenId(),
-                accessTokenId: $token->getTokenId()
-            ));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Determine if the token is expired.
-     */
-    protected function isTokenExpired(array $token): bool
-    {
-        return TokenParser::parseAccessToken($token['access_token'])->isExpired();
     }
 
     /**
@@ -319,7 +274,7 @@ trait HandlesAccessToken
      * @param  string  $token  The token to revoke
      * @return bool Success indicator
      */
-    protected function revokeTokenOnServer(string $token): bool
+    public function revokeTokenOnServer(string $token): bool
     {
         try {
             $response = $this->http->withoutToken()->post('/oauth/revoke', [
@@ -377,5 +332,57 @@ trait HandlesAccessToken
         $this->getTokenStorage()->forget();
 
         return true;
+    }
+
+    /**
+     * Initialise the token storage implementation.
+     *
+     * @throws RuntimeException
+     */
+    protected function initialiseStorage(): void
+    {
+        $this->storage = app(TokenStorage::class);
+    }
+
+    /**
+     * Store token data and fire appropriate events.
+     */
+    protected function storeAccessTokenResponse(array $data, bool $isRefresh = false): array
+    {
+        if (! isset($data['access_token'], $data['expires_in'])) {
+            throw new RuntimeException('Invalid access token response from Cerberus.');
+        }
+
+        $this->getTokenStorage()->put($data, $data['expires_in']);
+
+        $token = TokenParser::parseAccessToken($data['access_token']);
+
+        Event::dispatch(new AccessTokenCreated(
+            tokenId: $token->getTokenId(),
+            userId: $token->getUserId(),
+            clientId: $token->getClientId()
+        ));
+
+        if ($isRefresh && isset($data['refresh_token'])) {
+            $refresh = TokenParser::parseRefreshToken(
+                $data['refresh_token'],
+                $token->getTokenId()
+            );
+
+            Event::dispatch(new RefreshTokenCreated(
+                refreshTokenId: $refresh->getTokenId(),
+                accessTokenId: $token->getTokenId()
+            ));
+        }
+
+        return $data;
+    }
+
+    /**
+     * Determine if the token is expired.
+     */
+    protected function isTokenExpired(array $token): bool
+    {
+        return TokenParser::parseAccessToken($token['access_token'])->isExpired();
     }
 }

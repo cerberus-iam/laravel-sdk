@@ -4,6 +4,7 @@ namespace Cerberus\Concerns;
 
 use Fetch\Interfaces\ClientHandler;
 use Illuminate\Database\Eloquent\Model;
+use RuntimeException;
 
 trait HandlesApiConfigurations
 {
@@ -52,7 +53,7 @@ trait HandlesApiConfigurations
         $secret = $client->plainSecret ?? $client->secret;
 
         if (! $secret) {
-            throw new \RuntimeException('Client secret is missing.');
+            throw new RuntimeException('Client secret is missing.');
         }
 
         return $this->useClientCredentials((string) $client->getKey(), $secret);

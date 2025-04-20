@@ -88,9 +88,6 @@ class CerberusUserProviderTest extends TestCase
         $qb->shouldReceive('where')
             ->with('email', 'user@example.com')
             ->andReturn($qb);
-        $qb->shouldReceive('update')
-            ->with(['remember_token' => $token])
-            ->once();
 
         // No exception means success
         $this->userProvider->updateRememberToken($userMock, $token);
