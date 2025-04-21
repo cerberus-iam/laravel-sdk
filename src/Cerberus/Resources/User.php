@@ -48,6 +48,8 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
         'password',
         'remember_token',
         'email_verified_at',
+        'locked_at',
+        'locked',
         'created_at',
         'updated_at',
         'deleted_at',
