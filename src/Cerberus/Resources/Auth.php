@@ -95,4 +95,14 @@ class Auth extends Resource
                 'password' => $password,
             ]);
     }
+
+    /**
+     * Get all roles mapped with resources and permissions.
+     */
+    public function getAuthorisationMapping(): array
+    {
+        return $this->getConnection()
+            ->get('/roles-permissions')
+            ->json();
+    }
 }
