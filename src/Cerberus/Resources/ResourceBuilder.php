@@ -323,10 +323,6 @@ class ResourceBuilder
             // Handle pagination wrapper if present
             if (isset($responseData['data']) && is_array($responseData['data'])) {
                 $data = $responseData['data'];
-
-                // Store pagination metadata if available
-                // This could be extended to return a paginator object
-                // if you're using Laravel's pagination
             } elseif (is_array($responseData)) {
                 $data = $responseData;
             } else {
@@ -348,13 +344,16 @@ class ResourceBuilder
     }
 
     /**
-     * Get a paginator for the records.
+     * Get a Laravel-style paginator for the records.
      *
      * @param  int  $perPage  Number of items per page
      * @param  int  $page  Current page number
-     * @return array<string, mixed> Array with 'data' and pagination info
+     * @param  string  $pageName  The query string variable used to store the page
+     * @return array<string, mixed> Array with pagination metadata in Laravel format
+     *
+     * @throws ResourceException If the API request fails
      */
-    public function paginate(int $perPage = 15, int $page = 1): array
+    public function paginate(int $perPage = 15, int $page = 1, string $pageName = 'page'): array
     {
         $page = max(1, $page);
         $perPage = max(1, $perPage);
@@ -366,18 +365,154 @@ class ResourceBuilder
         $this->limit($perPage);
         $this->offset($offset);
 
-        // Get results
+        try {
+            $connection = $this->model->getConnection();
+
+            // Build query parameters from constraints
+            $queryParams = $this->buildQueryParameters();
+
+            // Many APIs use page and per_page for pagination
+            $queryParams['page'] = $page;
+            $queryParams['per_page'] = $perPage;
+
+            // Apply query parameters
+            if (! empty($queryParams)) {
+                $connection = $connection->withQueryParameters($queryParams);
+            }
+
+            $response = $connection->get("/{$this->model->getResourceName()}");
+
+            if (! $response->ok()) {
+                throw new ResourceException('API returned status code: '.$response->getStatusCode());
+            }
+
+            $responseData = $response->json();
+
+            // Extract pagination metadata and data based on common API response patterns
+            $data = [];
+            $total = null;
+            $lastPage = null;
+            $from = null;
+            $to = null;
+
+            // Handle standard Laravel-style pagination responses
+            if (isset($responseData['data']) && is_array($responseData['data'])) {
+                $data = $responseData['data'];
+
+                // Extract pagination metadata based on Laravel's pattern
+                if (isset($responseData['meta'])) {
+                    $meta = $responseData['meta'];
+                    $total = $meta['total'] ?? null;
+                    $lastPage = $meta['last_page'] ?? null;
+                    $from = $meta['from'] ?? null;
+                    $to = $meta['to'] ?? null;
+                }
+                // Some APIs put pagination info at the top level
+                else {
+                    $total = $responseData['total'] ?? null;
+                    $lastPage = $responseData['last_page'] ?? null;
+                    $from = $responseData['from'] ?? null;
+                    $to = $responseData['to'] ?? null;
+                }
+            } elseif (is_array($responseData)) {
+                // Non-standard response - just use the data directly
+                $data = $responseData;
+            } else {
+                throw new ResourceException('Invalid response format from API');
+            }
+
+            // Calculate pagination metadata if not provided by the API
+            if ($total === null) {
+                // If we have a count endpoint, we could use it here
+                // For now, we'll just use the count of returned items
+                $total = count($data);
+            }
+
+            if ($lastPage === null && $total !== null && $perPage > 0) {
+                $lastPage = max((int) ceil($total / $perPage), 1);
+            }
+
+            if ($from === null) {
+                $from = $offset + 1;
+            }
+
+            if ($to === null) {
+                $to = $offset + count($data);
+            }
+
+            // Create model instances from the response data
+            $models = [];
+            foreach ($data as $item) {
+                $models[] = $this->model->newFromBuilder($item, $connection);
+            }
+
+            // Return in Laravel's LengthAwarePaginator format
+            return [
+                'data' => $models,
+                'links' => [
+                    'first' => $page > 1 ? $this->getPageUrl(1, $perPage, $pageName) : null,
+                    'last' => $lastPage ? $this->getPageUrl($lastPage, $perPage, $pageName) : null,
+                    'prev' => $page > 1 ? $this->getPageUrl($page - 1, $perPage, $pageName) : null,
+                    'next' => $lastPage && $page < $lastPage ? $this->getPageUrl($page + 1, $perPage, $pageName) : null,
+                ],
+                'meta' => [
+                    'current_page' => $page,
+                    'from' => $from,
+                    'last_page' => $lastPage,
+                    'path' => $this->getCurrentUrl(),
+                    'per_page' => $perPage,
+                    'to' => $to,
+                    'total' => $total,
+                ],
+            ];
+        } catch (ResourceException $e) {
+            throw $e;
+        } catch (Throwable $e) {
+            throw new ResourceException('Error executing paginated query: '.$e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
+     * Get a simplified paginator that does not count the total number of results.
+     *
+     * @param  int  $perPage  Number of items per page
+     * @param  int  $page  Current page number
+     * @param  string  $pageName  The query string variable used to store the page
+     * @return array<string, mixed> Array with pagination metadata in Laravel format
+     */
+    public function simplePaginate(int $perPage = 15, int $page = 1, string $pageName = 'page'): array
+    {
+        $page = max(1, $page);
+        $perPage = max(1, $perPage);
+
+        // Set limit and offset
+        $this->limit($perPage + 1); // Get one extra item to determine if there's a next page
+        $this->offset(($page - 1) * $perPage);
+
+        // Get results (one more than needed to check if there's a next page)
         $results = $this->get();
 
-        // Return paginated results
-        // Note: This is a simple implementation
-        // In a real app, you might want to use Laravel's paginator
+        // Determine if there's a next page
+        $hasMorePages = count($results) > $perPage;
+
+        // Remove the extra item if it exists
+        if ($hasMorePages) {
+            array_pop($results);
+        }
+
+        // Return in Laravel's SimplePaginator format
         return [
             'data' => $results,
-            'pagination' => [
-                'per_page' => $perPage,
+            'links' => [
+                'prev' => $page > 1 ? $this->getPageUrl($page - 1, $perPage, $pageName) : null,
+                'next' => $hasMorePages ? $this->getPageUrl($page + 1, $perPage, $pageName) : null,
+            ],
+            'meta' => [
                 'current_page' => $page,
-                'total' => null, // You'd need to get this from the API response
+                'from' => count($results) > 0 ? (($page - 1) * $perPage) + 1 : null,
+                'path' => $this->getCurrentUrl(),
+                'per_page' => $perPage,
+                'to' => count($results) > 0 ? (($page - 1) * $perPage) + count($results) : null,
             ],
         ];
     }
@@ -556,6 +691,32 @@ class ResourceBuilder
         }
 
         return $params;
+    }
+
+    /**
+     * Get the current URL (without query string) for pagination links.
+     *
+     * This is a placeholder method since this is not a Laravel application.
+     * In a real implementation, you would integrate with Laravel's URL generation.
+     */
+    protected function getCurrentUrl(): string
+    {
+        $baseUri = $this->getConnection()->getFullUri();
+
+        return "{$baseUri}/".$this->model->getResourceName();
+    }
+
+    /**
+     * Get a URL for a specific page.
+     *
+     * This is a placeholder method since this is not a Laravel application.
+     * In a real implementation, you would integrate with Laravel's URL generation.
+     */
+    protected function getPageUrl(int $page, int $perPage, string $pageName): string
+    {
+        $baseUrl = $this->getCurrentUrl();
+
+        return "{$baseUrl}?{$pageName}={$page}&per_page={$perPage}";
     }
 
     /**
