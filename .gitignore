@@ -6,4 +6,5 @@ composer.lock
 .DS_Store
 .env
 .vscode
+.phpunit.cache/*
 .phpunit.cache/test-results

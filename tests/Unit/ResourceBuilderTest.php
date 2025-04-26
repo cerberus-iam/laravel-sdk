@@ -6,6 +6,7 @@ use Cerberus\Resources\Resource;
 use Cerberus\Resources\ResourceBuilder;
 use Cerberus\Tests\TestCase;
 use Mockery;
+use ReflectionClass;
 
 class ResourceBuilderTest extends TestCase
 {
@@ -80,7 +81,7 @@ class ResourceBuilderTest extends TestCase
 
     protected function getPrivateProperty($object, string $property)
     {
-        $reflection = new \ReflectionClass($object);
+        $reflection = new ReflectionClass($object);
         $prop = $reflection->getProperty($property);
         $prop->setAccessible(true);
 

@@ -14,7 +14,7 @@ class Activity extends Resource
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected array $fillable = [
         'organisation_id',
         'user_id',
         'type',
