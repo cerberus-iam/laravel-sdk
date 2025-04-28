@@ -5,6 +5,7 @@ namespace Cerberus\Resources;
 use BadMethodCallException;
 use Cerberus\Exceptions\ResourceException;
 use Cerberus\Exceptions\ResourceNotFoundException;
+use Cerberus\Support\PaginatedCollection;
 use Throwable;
 
 class ResourceBuilder
@@ -100,12 +101,29 @@ class ResourceBuilder
     /**
      * Add a "where in" clause to the query.
      *
+     * @param  array<int, mixed>  $values
      * @return $this
      */
     public function whereIn(string $column, array $values): self
     {
         $this->wheres[$column] = [
             'operator' => 'in',
+            'value' => $values,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Add a "where not in" clause to the query.
+     *
+     * @param  array<int, mixed>  $values
+     * @return $this
+     */
+    public function whereNotIn(string $column, array $values): self
+    {
+        $this->wheres[$column] = [
+            'operator' => 'not_in',
             'value' => $values,
         ];
 
@@ -220,7 +238,7 @@ class ResourceBuilder
     /**
      * Find a model by its primary key.
      *
-     * @throws ResourceNotFoundException If API request fails
+     * @throws ResourceException If API request fails
      */
     public function find(mixed $id): ?Resource
     {
@@ -233,7 +251,10 @@ class ResourceBuilder
                     return null;
                 }
 
-                throw new ResourceException('API returned status code: '.$response->getStatusCode());
+                throw new ResourceException(
+                    "API returned error status code: {$response->getStatusCode()}",
+                    $response->getStatusCode()
+                );
             }
 
             $data = $this->parseResponseData($response);
@@ -265,7 +286,10 @@ class ResourceBuilder
     /**
      * Find multiple models by their primary keys.
      *
+     * @param  array<int, mixed>  $ids
      * @return array<int, resource>
+     *
+     * @throws ResourceException If a critical API error occurs
      */
     public function findMany(array $ids): array
     {
@@ -273,20 +297,41 @@ class ResourceBuilder
             return [];
         }
 
-        // Some APIs support fetching multiple resources by ID in one request
-        // If your API supports this, implement it here
+        // Try to use the whereIn method if available for a more efficient query
+        if (count($ids) > 5) {
+            try {
+                return $this->whereIn('id', $ids)->get();
+            } catch (Throwable $e) {
+                // Fall back to individual requests if bulk request fails
+            }
+        }
 
         // Fallback to individual requests
         $results = [];
+        $errors = [];
+
         foreach ($ids as $id) {
             try {
                 if ($model = $this->find($id)) {
                     $results[] = $model;
                 }
-            } catch (Throwable $e) {
-                // Continue processing other IDs even if one fails
+            } catch (ResourceNotFoundException $e) {
+                // Skip not found resources
                 continue;
+            } catch (Throwable $e) {
+                // Collect errors for later reporting
+                $errors[] = "Failed to fetch ID {$id}: {$e->getMessage()}";
             }
+        }
+
+        // If we encountered errors, but still got some results, log the errors
+        if (! empty($errors) && ! empty($results)) {
+            // Log errors but don't throw
+            // This could use a proper logger in a real implementation
+            error_log(implode("\n", $errors));
+        } elseif (! empty($errors)) {
+            // If we got no results and had errors, throw an exception
+            throw new ResourceException('Failed to fetch resources: '.implode('; ', $errors));
         }
 
         return $results;
@@ -315,19 +360,16 @@ class ResourceBuilder
             $response = $connection->get("/{$this->model->getResourceName()}");
 
             if (! $response->ok()) {
-                throw new ResourceException('API returned status code: '.$response->getStatusCode());
+                $statusCode = $response->getStatusCode();
+                $errorMessage = $this->getErrorMessageFromResponse($response);
+
+                throw new ResourceException(
+                    "API returned error status code: {$statusCode} - {$errorMessage}",
+                    $statusCode
+                );
             }
 
-            $responseData = $response->json();
-
-            // Handle pagination wrapper if present
-            if (isset($responseData['data']) && is_array($responseData['data'])) {
-                $data = $responseData['data'];
-            } elseif (is_array($responseData)) {
-                $data = $responseData;
-            } else {
-                throw new ResourceException('Invalid response format from API');
-            }
+            $data = $this->extractDataFromResponse($response);
 
             // Create model instances from the response data
             $models = [];
@@ -344,187 +386,118 @@ class ResourceBuilder
     }
 
     /**
-     * Get a Laravel-style paginator for the records.
+     * Get a paginated collection of records using the API response format.
      *
-     * @param  int  $perPage  Number of items per page
-     * @param  int  $page  Current page number
-     * @param  string  $pageName  The query string variable used to store the page
-     * @return array<string, mixed> Array with pagination metadata in Laravel format
-     *
-     * @throws ResourceException If the API request fails
+     * @throws ResourceException
      */
-    public function paginate(int $perPage = 15, int $page = 1, string $pageName = 'page'): array
+    public function paginate(int $perPage = 15, int $page = 1): PaginatedCollection
     {
         $page = max(1, $page);
         $perPage = max(1, $perPage);
 
-        // Calculate offset
-        $offset = ($page - 1) * $perPage;
-
-        // Set limit and offset
-        $this->limit($perPage);
-        $this->offset($offset);
-
         try {
             $connection = $this->model->getConnection();
 
-            // Build query parameters from constraints
             $queryParams = $this->buildQueryParameters();
-
-            // Many APIs use page and per_page for pagination
+            // Use API-specific pagination parameters
             $queryParams['page'] = $page;
             $queryParams['per_page'] = $perPage;
+            // Clear limit and offset to avoid conflicts with page/per_page
+            unset($queryParams['limit'], $queryParams['offset']);
 
-            // Apply query parameters
-            if (! empty($queryParams)) {
-                $connection = $connection->withQueryParameters($queryParams);
-            }
-
+            $connection = $connection->withQueryParameters($queryParams);
             $response = $connection->get("/{$this->model->getResourceName()}");
 
             if (! $response->ok()) {
-                throw new ResourceException('API returned status code: '.$response->getStatusCode());
+                $statusCode = $response->getStatusCode();
+                $errorMessage = $this->getErrorMessageFromResponse($response);
+
+                throw new ResourceException(
+                    "API returned error status code: {$statusCode} - {$errorMessage}",
+                    $statusCode
+                );
             }
 
             $responseData = $response->json();
+            $rawData = $responseData['data'] ?? [];
+            $meta = $responseData['meta'] ?? [];
 
-            // Extract pagination metadata and data based on common API response patterns
-            $data = [];
-            $total = null;
-            $lastPage = null;
-            $from = null;
-            $to = null;
+            // Standardize pagination metadata
+            $standardizedMeta = $this->standardizePaginationMeta($meta, $page, $perPage, count($rawData));
 
-            // Handle standard Laravel-style pagination responses
-            if (isset($responseData['data']) && is_array($responseData['data'])) {
-                $data = $responseData['data'];
-
-                // Extract pagination metadata based on Laravel's pattern
-                if (isset($responseData['meta'])) {
-                    $meta = $responseData['meta'];
-                    $total = $meta['total'] ?? null;
-                    $lastPage = $meta['last_page'] ?? null;
-                    $from = $meta['from'] ?? null;
-                    $to = $meta['to'] ?? null;
-                }
-                // Some APIs put pagination info at the top level
-                else {
-                    $total = $responseData['total'] ?? null;
-                    $lastPage = $responseData['last_page'] ?? null;
-                    $from = $responseData['from'] ?? null;
-                    $to = $responseData['to'] ?? null;
-                }
-            } elseif (is_array($responseData)) {
-                // Non-standard response - just use the data directly
-                $data = $responseData;
-            } else {
-                throw new ResourceException('Invalid response format from API');
-            }
-
-            // Calculate pagination metadata if not provided by the API
-            if ($total === null) {
-                // If we have a count endpoint, we could use it here
-                // For now, we'll just use the count of returned items
-                $total = count($data);
-            }
-
-            if ($lastPage === null && $total !== null && $perPage > 0) {
-                $lastPage = max((int) ceil($total / $perPage), 1);
-            }
-
-            if ($from === null) {
-                $from = $offset + 1;
-            }
-
-            if ($to === null) {
-                $to = $offset + count($data);
-            }
-
-            // Create model instances from the response data
             $models = [];
-            foreach ($data as $item) {
+            foreach ($rawData as $item) {
                 $models[] = $this->model->newFromBuilder($item, $connection);
             }
 
-            // Return in Laravel's LengthAwarePaginator format
-            return [
-                'data' => $models,
-                'links' => [
-                    'first' => $page > 1 ? $this->getPageUrl(1, $perPage, $pageName) : null,
-                    'last' => $lastPage ? $this->getPageUrl($lastPage, $perPage, $pageName) : null,
-                    'prev' => $page > 1 ? $this->getPageUrl($page - 1, $perPage, $pageName) : null,
-                    'next' => $lastPage && $page < $lastPage ? $this->getPageUrl($page + 1, $perPage, $pageName) : null,
-                ],
-                'meta' => [
-                    'current_page' => $page,
-                    'from' => $from,
-                    'last_page' => $lastPage,
-                    'path' => $this->getCurrentUrl(),
-                    'per_page' => $perPage,
-                    'to' => $to,
-                    'total' => $total,
-                ],
-            ];
-        } catch (ResourceException $e) {
-            throw $e;
+            return new PaginatedCollection($models, $standardizedMeta);
         } catch (Throwable $e) {
             throw new ResourceException('Error executing paginated query: '.$e->getMessage(), 0, $e);
         }
     }
 
     /**
-     * Get a simplified paginator that does not count the total number of results.
+     * Get a simplified paginated collection that does not rely on total counts.
      *
-     * @param  int  $perPage  Number of items per page
-     * @param  int  $page  Current page number
-     * @param  string  $pageName  The query string variable used to store the page
-     * @return array<string, mixed> Array with pagination metadata in Laravel format
+     * @throws ResourceException
      */
-    public function simplePaginate(int $perPage = 15, int $page = 1, string $pageName = 'page'): array
+    public function simplePaginate(int $perPage = 15, int $page = 1): PaginatedCollection
     {
         $page = max(1, $page);
         $perPage = max(1, $perPage);
 
-        // Set limit and offset
-        $this->limit($perPage + 1); // Get one extra item to determine if there's a next page
-        $this->offset(($page - 1) * $perPage);
+        try {
+            $connection = $this->model->getConnection();
 
-        // Get results (one more than needed to check if there's a next page)
-        $results = $this->get();
+            $queryParams = $this->buildQueryParameters();
+            // Request one more item than needed to determine if there are more pages
+            $queryParams['limit'] = $perPage + 1;
+            $queryParams['offset'] = ($page - 1) * $perPage;
+            // Do not use page/per_page parameters for simplePaginate
 
-        // Determine if there's a next page
-        $hasMorePages = count($results) > $perPage;
+            $connection = $connection->withQueryParameters($queryParams);
+            $response = $connection->get("/{$this->model->getResourceName()}");
 
-        // Remove the extra item if it exists
-        if ($hasMorePages) {
-            array_pop($results);
-        }
+            if (! $response->ok()) {
+                $statusCode = $response->getStatusCode();
+                $errorMessage = $this->getErrorMessageFromResponse($response);
 
-        // Return in Laravel's SimplePaginator format
-        return [
-            'data' => $results,
-            'links' => [
-                'prev' => $page > 1 ? $this->getPageUrl($page - 1, $perPage, $pageName) : null,
-                'next' => $hasMorePages ? $this->getPageUrl($page + 1, $perPage, $pageName) : null,
-            ],
-            'meta' => [
+                throw new ResourceException(
+                    "API returned error status code: {$statusCode} - {$errorMessage}",
+                    $statusCode
+                );
+            }
+
+            $data = $this->extractDataFromResponse($response);
+
+            $hasMore = count($data) > $perPage;
+
+            if ($hasMore) {
+                array_pop($data);
+            }
+
+            $models = [];
+            foreach ($data as $item) {
+                $models[] = $this->model->newFromBuilder($item, $connection);
+            }
+
+            return new PaginatedCollection($models, [
                 'current_page' => $page,
-                'from' => count($results) > 0 ? (($page - 1) * $perPage) + 1 : null,
-                'path' => $this->getCurrentUrl(),
                 'per_page' => $perPage,
-                'to' => count($results) > 0 ? (($page - 1) * $perPage) + count($results) : null,
-            ],
-        ];
+                'has_more_pages' => $hasMore,
+            ]);
+        } catch (Throwable $e) {
+            throw new ResourceException('Error executing simple paginated query: '.$e->getMessage(), 0, $e);
+        }
     }
 
     /**
      * Execute the query and get the count of matching records.
+     *
+     * @throws ResourceException
      */
     public function count(): int
     {
-        // Some APIs provide a count endpoint or parameter
-        // This is a simplified implementation
-
         try {
             $connection = $this->model->getConnection();
 
@@ -542,7 +515,13 @@ class ResourceBuilder
             $response = $connection->get("/{$this->model->getResourceName()}");
 
             if (! $response->ok()) {
-                throw new ResourceException('API returned status code: '.$response->getStatusCode());
+                $statusCode = $response->getStatusCode();
+                $errorMessage = $this->getErrorMessageFromResponse($response);
+
+                throw new ResourceException(
+                    "API returned error status code: {$statusCode} - {$errorMessage}",
+                    $statusCode
+                );
             }
 
             $responseData = $response->json();
@@ -552,6 +531,8 @@ class ResourceBuilder
                 return (int) $responseData['total'];
             } elseif (isset($responseData['meta']['total'])) {
                 return (int) $responseData['meta']['total'];
+            } elseif (isset($responseData['count'])) {
+                return (int) $responseData['count'];
             } elseif (isset($responseData['data']) && is_array($responseData['data'])) {
                 // Fallback to counting the returned data
                 return count($responseData['data']);
@@ -565,6 +546,8 @@ class ResourceBuilder
 
     /**
      * Determine if any rows exist for the current query.
+     *
+     * @throws ResourceException
      */
     public function exists(): bool
     {
@@ -582,6 +565,8 @@ class ResourceBuilder
 
     /**
      * Determine if no rows exist for the current query.
+     *
+     * @throws ResourceException
      */
     public function doesntExist(): bool
     {
@@ -590,39 +575,85 @@ class ResourceBuilder
 
     /**
      * Chunk the results of the query.
+     *
+     * @param  int  $count  Number of records per chunk
+     * @param  callable  $callback  Function to process each chunk
+     *
+     * @throws ResourceException
      */
     public function chunk(int $count, callable $callback): bool
     {
         $page = 1;
+        $originalLimit = $this->limit;
+        $originalOffset = $this->offset;
 
-        do {
-            // Clone the query to avoid modifying the original
-            $clone = clone $this;
-            $results = $clone->limit($count)->offset(($page - 1) * $count)->get();
+        try {
+            do {
+                // Instead of cloning the entire query, just update the pagination params
+                $this->limit($count);
+                $this->offset(($page - 1) * $count);
 
-            $countResults = count($results);
+                $results = $this->get();
+                $countResults = count($results);
 
-            if ($countResults == 0) {
-                break;
-            }
+                if ($countResults == 0) {
+                    break;
+                }
 
-            // If the callback returns false, we stop processing
-            if ($callback($results, $page) === false) {
-                return false;
-            }
+                // If the callback returns false, we stop processing
+                if ($callback($results, $page) === false) {
+                    return false;
+                }
 
-            unset($results);
+                unset($results);
 
-            $page++;
-        } while ($countResults == $count);
+                $page++;
+            } while ($countResults == $count);
 
-        return true;
+            return true;
+        } finally {
+            // Restore original pagination settings
+            $this->limit = $originalLimit;
+            $this->offset = $originalOffset;
+        }
     }
 
     /**
-     * Parse response data from API responses.
+     * Extract structured data from the API response.
      *
+     * @param  mixed  $response  API response object
+     * @return array<int, array<string, mixed>>
+     *
+     * @throws ResourceException If response format is invalid
+     */
+    protected function extractDataFromResponse($response): array
+    {
+        $responseData = $response->json();
+
+        if (! is_array($responseData)) {
+            throw new ResourceException('API response is not valid JSON');
+        }
+
+        // Handle different response formats
+        if (isset($responseData['data']) && is_array($responseData['data'])) {
+            return $responseData['data'];
+        } elseif (is_array($responseData) && $this->isSequentialArray($responseData)) {
+            return $responseData;
+        } elseif (is_array($responseData) && ! empty($responseData)) {
+            // Single item response
+            return [$responseData];
+        } else {
+            throw new ResourceException('Invalid or empty response format from API');
+        }
+    }
+
+    /**
+     * Parse response data for single item requests.
+     *
+     * @param  mixed  $response  API response object
      * @return array<string, mixed>
+     *
+     * @throws ResourceException If response format is invalid
      */
     protected function parseResponseData($response): array
     {
@@ -634,6 +665,70 @@ class ResourceBuilder
 
         // Check if the response has a 'data' wrapper
         return $json['data'] ?? $json;
+    }
+
+    /**
+     * Extract error message from API response.
+     *
+     * @param  mixed  $response  API response object
+     */
+    protected function getErrorMessageFromResponse($response): string
+    {
+        try {
+            $data = $response->json();
+
+            if (isset($data['error']['message'])) {
+                return $data['error']['message'];
+            } elseif (isset($data['error'])) {
+                return is_string($data['error']) ? $data['error'] : 'Unknown error';
+            } elseif (isset($data['message'])) {
+                return $data['message'];
+            }
+        } catch (Throwable $e) {
+            // Cannot parse response as JSON
+        }
+
+        return 'Unknown error';
+    }
+
+    /**
+     * Standardize pagination metadata from different API formats.
+     *
+     * @param  array<string, mixed>  $meta
+     * @return array<string, mixed>
+     */
+    protected function standardizePaginationMeta(array $meta, int $page, int $perPage, int $itemCount): array
+    {
+        $standardMeta = [
+            'current_page' => $page,
+            'per_page' => $perPage,
+            'from' => (($page - 1) * $perPage) + 1,
+            'to' => (($page - 1) * $perPage) + $itemCount,
+        ];
+
+        // Extract additional metadata if available
+        if (isset($meta['total'])) {
+            $standardMeta['total'] = (int) $meta['total'];
+            $standardMeta['last_page'] = ceil($meta['total'] / $perPage);
+        }
+
+        // Handle other common API metadata formats
+        if (isset($meta['page'])) {
+            $standardMeta['current_page'] = (int) $meta['page'];
+        }
+
+        if (isset($meta['pages'])) {
+            $standardMeta['last_page'] = (int) $meta['pages'];
+        }
+
+        if (isset($meta['count'])) {
+            $standardMeta['total'] = (int) $meta['count'];
+            if (! isset($standardMeta['last_page']) && $perPage > 0) {
+                $standardMeta['last_page'] = ceil($meta['count'] / $perPage);
+            }
+        }
+
+        return $standardMeta;
     }
 
     /**
@@ -651,15 +746,42 @@ class ResourceBuilder
                 $operator = $condition['operator'];
                 $value = $condition['value'];
 
-                if ($operator === 'in' && is_array($value)) {
-                    // Format for "where in" clauses
-                    $params[$column] = implode(',', $value);
-                } elseif ($operator === '=') {
-                    // Simple equality
-                    $params[$column] = $value;
-                } else {
-                    // Other operators - format will depend on your API
-                    $params["{$column}_{$operator}"] = $value;
+                switch ($operator) {
+                    case 'in':
+                        if (is_array($value)) {
+                            $params[$column] = implode(',', $value);
+                        }
+                        break;
+                    case 'not_in':
+                        if (is_array($value)) {
+                            $params["{$column}_not"] = implode(',', $value);
+                        }
+                        break;
+                    case '=':
+                        $params[$column] = $value;
+                        break;
+                    case '!=':
+                    case '<>':
+                        $params["{$column}_not"] = $value;
+                        break;
+                    case '>':
+                        $params["{$column}_gt"] = $value;
+                        break;
+                    case '>=':
+                        $params["{$column}_gte"] = $value;
+                        break;
+                    case '<':
+                        $params["{$column}_lt"] = $value;
+                        break;
+                    case '<=':
+                        $params["{$column}_lte"] = $value;
+                        break;
+                    case 'like':
+                        $params["{$column}_like"] = $value;
+                        break;
+                    default:
+                        // Default format for other operators
+                        $params["{$column}_{$operator}"] = $value;
                 }
             } else {
                 // Simple value (backwards compatibility)
@@ -694,33 +816,19 @@ class ResourceBuilder
     }
 
     /**
-     * Get the current URL (without query string) for pagination links.
+     * Check if an array is a sequential, numeric-indexed array.
      *
-     * This is a placeholder method since this is not a Laravel application.
-     * In a real implementation, you would integrate with Laravel's URL generation.
+     * @param  array<mixed>  $array
      */
-    protected function getCurrentUrl(): string
+    protected function isSequentialArray(array $array): bool
     {
-        $baseUri = $this->getConnection()->getFullUri();
-
-        return "{$baseUri}/".$this->model->getResourceName();
-    }
-
-    /**
-     * Get a URL for a specific page.
-     *
-     * This is a placeholder method since this is not a Laravel application.
-     * In a real implementation, you would integrate with Laravel's URL generation.
-     */
-    protected function getPageUrl(int $page, int $perPage, string $pageName): string
-    {
-        $baseUrl = $this->getCurrentUrl();
-
-        return "{$baseUrl}?{$pageName}={$page}&per_page={$perPage}";
+        return array_keys($array) === range(0, count($array) - 1);
     }
 
     /**
      * Forward calls to the model.
+     *
+     * @param  array<mixed>  $parameters
      *
      * @throws \BadMethodCallException When the method does not exist
      */
@@ -739,7 +847,7 @@ class ResourceBuilder
      */
     public function __clone()
     {
-        // Create deep copies of arrays to avoid modifying the original
+        // Create deep copies of arrays
         $this->wheres = array_map(function ($item) {
             return is_array($item)
                 ? array_map(fn ($value) => is_object($value) ? clone $value : $value, $item)

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cerberus;
+namespace Cerberus\Storage;
 
 use Cerberus\Contracts\TokenStorage;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Cache\Store as Cache;
 
 class CacheTokenStorage implements TokenStorage
 {
@@ -12,8 +12,10 @@ class CacheTokenStorage implements TokenStorage
      *
      * @return void
      */
-    public function __construct(protected string $key = Cerberus::TOKEN_STORAGE_KEY)
-    {
+    public function __construct(
+        protected string $key,
+        protected Cache $cache
+    ) {
         //
     }
 
@@ -22,7 +24,7 @@ class CacheTokenStorage implements TokenStorage
      */
     public function get(): ?array
     {
-        return Cache::get($this->key);
+        return $this->cache->get($this->key);
     }
 
     /**
@@ -30,7 +32,7 @@ class CacheTokenStorage implements TokenStorage
      */
     public function put(array $data, int $ttlSeconds): void
     {
-        Cache::put($this->key, $data, now()->addSeconds($ttlSeconds));
+        $this->cache->put($this->key, $data, now()->addSeconds($ttlSeconds));
     }
 
     /**
@@ -38,6 +40,6 @@ class CacheTokenStorage implements TokenStorage
      */
     public function forget(): void
     {
-        Cache::forget($this->key);
+        $this->cache->forget($this->key);
     }
 }
