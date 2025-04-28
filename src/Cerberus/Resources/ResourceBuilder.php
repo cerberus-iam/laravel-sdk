@@ -421,16 +421,14 @@ class ResourceBuilder
             $responseData = $response->json();
             $rawData = $responseData['data'] ?? [];
             $meta = $responseData['meta'] ?? [];
-
-            // Standardize pagination metadata
-            $standardizedMeta = $this->standardizePaginationMeta($meta, $page, $perPage, count($rawData));
+            $links = $responseData['links'] ?? [];
 
             $models = [];
             foreach ($rawData as $item) {
                 $models[] = $this->model->newFromBuilder($item, $connection);
             }
 
-            return new PaginatedCollection($models, $standardizedMeta);
+            return new PaginatedCollection($models, $meta, $links);
         } catch (Throwable $e) {
             throw new ResourceException('Error executing paginated query: '.$e->getMessage(), 0, $e);
         }

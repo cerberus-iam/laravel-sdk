@@ -11,8 +11,14 @@ class PaginatedCollection implements Arrayable
      *
      * @param  array<int, mixed>  $data
      * @param  array<string, mixed>  $meta
+     * @param  array<string, mixed>  $links
+     * @return void
      */
-    public function __construct(public array $data, public array $meta = []) {}
+    public function __construct(
+        public array $data,
+        public array $meta = [],
+        public array $links = []
+    ) {}
 
     /**
      * Get the current page number.
@@ -47,14 +53,78 @@ class PaginatedCollection implements Arrayable
     }
 
     /**
+     * Get the first item index on this page.
+     */
+    public function from(): ?int
+    {
+        return $this->meta['from'] ?? null;
+    }
+
+    /**
+     * Get the last item index on this page.
+     */
+    public function to(): ?int
+    {
+        return $this->meta['to'] ?? null;
+    }
+
+    /**
+     * Get the URL for a given page.
+     */
+    public function url(int $page): ?string
+    {
+        if ($page === 1 && isset($this->links['first'])) {
+            return $this->links['first'];
+        }
+
+        if ($page === $this->lastPage() && isset($this->links['last'])) {
+            return $this->links['last'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the URL for the next page.
+     */
+    public function nextPageUrl(): ?string
+    {
+        return $this->links['next'] ?? null;
+    }
+
+    /**
+     * Get the URL for the previous page.
+     */
+    public function previousPageUrl(): ?string
+    {
+        return $this->links['prev'] ?? null;
+    }
+
+    /**
      * Determine if more pages exist after the current page.
+     */
+    public function hasMorePages(): bool
+    {
+        return $this->nextPageUrl() !== null ||
+               ($this->currentPage() !== null &&
+                $this->lastPage() !== null &&
+                $this->currentPage() < $this->lastPage());
+    }
+
+    /**
+     * Alias for hasMorePages
      */
     public function hasMore(): bool
     {
-        $current = $this->currentPage() ?? 1;
-        $last = $this->lastPage() ?? $current;
+        return $this->hasMorePages();
+    }
 
-        return $current < $last;
+    /**
+     * Get the items for the current page.
+     */
+    public function items(): array
+    {
+        return $this->data;
     }
 
     /**
@@ -67,6 +137,7 @@ class PaginatedCollection implements Arrayable
         return [
             'data' => $this->data,
             'meta' => $this->meta,
+            'links' => $this->links,
         ];
     }
 }
