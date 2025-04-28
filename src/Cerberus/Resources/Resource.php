@@ -9,11 +9,14 @@ use Cerberus\Exceptions\ResourceDeleteException;
 use Cerberus\Exceptions\ResourceException;
 use Cerberus\Exceptions\ResourceNotFoundException;
 use Cerberus\Exceptions\ResourceUpdateException;
+use DateTime;
 use Fetch\Interfaces\ClientHandler;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\JsonEncodingException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
@@ -29,74 +32,87 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     use ForwardsCalls;
 
     /**
-     * Indicates if the resource exists.
+     * Indicates whether the resource has been persisted to the API.
      */
     public bool $exists = false;
 
     /**
-     * The resource endpoint name.
+     * The name of the API resource endpoint (e.g., "users", "projects").
      */
     public string $resource;
 
     /**
-     * The filters applied to the resource.
+     * Filters applied to the resource query.
      */
     protected array $filters = [];
 
     /**
-     * The attributes of the resource.
-     *
-     * @var array<string, mixed>
+     * Current attribute values for the resource.
      */
     protected array $attributes = [];
 
     /**
-     * The original attributes of the resource.
-     *
-     * @var array<string, mixed>
+     * Original attribute values for tracking changes.
      */
     protected array $original = [];
 
     /**
-     * The primary key of the resource.
+     * The name of the primary key for the resource.
      */
     protected string $primaryKey = 'uid';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * Attributes that are mass assignable.
      */
     protected array $fillable = [];
 
     /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<int, string>
+     * Attributes that are not mass assignable.
      */
     protected array $guarded = ['*'];
 
     /**
-     * Indicates which attributes should be hidden when serializing to array/JSON.
-     *
-     * @var array<int, string>
+     * Attributes that should be hidden when converting to array or JSON.
      */
     protected array $hidden = [];
 
     /**
-     * The client connection instance.
+     * Attributes and their corresponding cast types.
+     */
+    protected array $casts = [];
+
+    /**
+     * The API client handler instance.
      */
     protected ?ClientHandler $connection = null;
 
     /**
-     * Indicates if string output should be escaped.
+     * Whether to escape JSON string output.
      */
     protected bool $escapeWhenCastingToString = false;
 
     /**
-     * Create a new resource instance.
-     *
-     * @param  array<string, mixed>  $attributes
+     * Indicates whether the model should track created_at and updated_at timestamps.
+     */
+    protected bool $timestamps = false;
+
+    /**
+     * The column name used for the "created at" timestamp.
+     */
+    protected string $createdAtColumn = 'created_at';
+
+    /**
+     * The column name used for the "updated at" timestamp.
+     */
+    protected string $updatedAtColumn = 'updated_at';
+
+    /**
+     * A fluent wrapper instance used for nested key access.
+     */
+    protected ?Fluent $fluent = null;
+
+    /**
+     * Create a new resource instance and fill with attributes.
      */
     public function __construct(array $attributes = [])
     {
@@ -106,9 +122,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Create a new instance.
-     *
-     * @param  array<string, mixed>  $attributes
+     * Create a new instance of the resource with the given attributes.
      */
     public static function make(array $attributes = []): static
     {
@@ -116,7 +130,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get a new query builder for the model's table.
+     * Start a new query builder for the resource.
      */
     public static function query(): ResourceBuilder
     {
@@ -124,7 +138,11 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Begin querying the model.
+     * Add a basic where clause to the query.
+     *
+     * @param  mixed  $column
+     * @param  mixed|null  $operator
+     * @param  mixed|null  $value
      */
     public static function where($column, $operator = null, $value = null): ResourceBuilder
     {
@@ -132,7 +150,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Add a where-in condition to the query.
+     * Add a "where in" clause to the query.
      */
     public static function whereIn(string $column, array $values): ResourceBuilder
     {
@@ -140,9 +158,15 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Find a model by its primary key.
-     *
-     * @throws ResourceNotFoundException If the resource cannot be found.
+     * Add a "where not in" clause to the query.
+     */
+    public static function whereNotIn(string $column, array $values): ResourceBuilder
+    {
+        return static::query()->whereNotIn($column, $values);
+    }
+
+    /**
+     * Find a resource by its primary key.
      */
     public static function find(mixed $id): mixed
     {
@@ -150,19 +174,17 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             return null;
         }
 
-        // Check if the ID is an array and handle accordingly
         if (is_array($id)) {
             return static::findMany($id);
         }
 
-        // Attempt to find the model by its primary key
         return static::query()->find($id);
     }
 
     /**
-     * Find a model by its primary key or throw an exception.
+     * Find a resource by its primary key or throw an exception.
      *
-     * @throws ResourceNotFoundException If the resource cannot be found.
+     * @throws ResourceNotFoundException
      */
     public static function findOrFail(mixed $id): static
     {
@@ -176,7 +198,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Find multiple models by their primary keys.
+     * Find multiple resources by their primary keys.
      *
      * @return array<int, static>
      */
@@ -186,7 +208,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Execute the query and get the first result.
+     * Get the first result of the query.
      */
     public static function first(): ?static
     {
@@ -194,9 +216,10 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Execute the query and get the first result or throw an exception.
+     * Get the first result or throw an exception.
      *
-     * @throws ResourceNotFoundException If no resource is found.
+     *
+     * @throws ResourceNotFoundException
      */
     public static function firstOrFail(): static
     {
@@ -210,7 +233,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get all of the models from the database.
+     * Get all results for the resource.
      *
      * @return array<int, static>
      */
@@ -220,11 +243,10 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Create a new model and persist it to the database.
+     * Create a new resource via the API.
      *
-     * @param  array<string, mixed>  $attributes
      *
-     * @throws ResourceCreationException If the resource cannot be created.
+     * @throws ResourceCreationException
      */
     public static function create(array $attributes): static
     {
@@ -238,7 +260,40 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Destroy the models for the given IDs.
+     * Update an existing resource or create a new one.
+     */
+    public static function updateOrCreate(array $attributes, array $values = []): static
+    {
+        $values = array_merge($attributes, $values);
+        $primaryKey = (new static)->getKeyName();
+
+        if (isset($attributes[$primaryKey])) {
+            try {
+                $model = static::findOrFail($attributes[$primaryKey]);
+                $model->fill($values);
+                $model->save();
+
+                return $model;
+            } catch (ResourceNotFoundException $e) {
+                // Resource not found with primary key, proceed to create
+            }
+        } else {
+            // Try to find by attributes
+            $model = static::where($attributes)->first();
+
+            if ($model !== null) {
+                $model->fill($values);
+                $model->save();
+
+                return $model;
+            }
+        }
+
+        return static::create($values);
+    }
+
+    /**
+     * Delete one or many resources by ID.
      *
      * @param  array|int|string  $ids
      * @return int Number of resources successfully deleted
@@ -251,6 +306,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             $ids = [$ids];
         }
 
+        $errors = [];
         foreach ($ids as $id) {
             try {
                 if ($model = static::find($id)) {
@@ -259,23 +315,50 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
                     }
                 }
             } catch (Throwable $e) {
-                // Continue processing other IDs even if one fails
-                continue;
+                $errors[] = "Failed to delete ID {$id}: {$e->getMessage()}";
             }
+        }
+
+        if (! empty($errors)) {
+            error_log(implode("\n", $errors));
         }
 
         return $count;
     }
 
     /**
-     * Create a new model instance that is existing.
+     * Check if a resource exists by the given attributes.
+     */
+    public static function exists(array $attributes): bool
+    {
+        return static::where($attributes)->exists();
+    }
+
+    /**
+     * Convert an array of raw data into resource instances.
      *
-     * @param  array<string, mixed>  $attributes
+     * @return array<int, static>
+     */
+    public static function hydrate(array $items): array
+    {
+        $models = [];
+        $instance = new static;
+
+        foreach ($items as $item) {
+            $models[] = $instance->newModelFromBuilder($item);
+        }
+
+        return $models;
+    }
+
+    /**
+     * Create a new instance from raw builder attributes.
+     *
+     * @param  array  $attributes
      */
     public function newFromBuilder($attributes = [], ?ClientHandler $connection = null): static
     {
         $model = $this->newInstance([], true);
-
         $model->setRawAttributes((array) $attributes, true);
 
         if ($connection) {
@@ -286,17 +369,13 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Create a new instance of the given model.
-     *
-     * @param  array<string, mixed>  $attributes
+     * Create a new instance of the current model.
      */
     public function newInstance(array $attributes = [], bool $exists = false): static
     {
         $model = new static($attributes);
-
         $model->exists = $exists;
 
-        // Transfer the connection if it exists
         if ($this->connection !== null) {
             $model->setConnection($this->connection);
         }
@@ -305,30 +384,86 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get an attribute from the model.
+     * Get the value of a given attribute with casting applied.
+     *
+     * @param  string  $key
      */
-    public function getAttribute(string $key): mixed
+    public function getAttribute($key): mixed
     {
-        return $this->attributes[$key] ?? null;
+        if (array_key_exists($key, $this->attributes)) {
+            $value = $this->attributes[$key];
+
+            if (isset($this->casts[$key])) {
+                return $this->castAttribute($key, $value);
+            }
+
+            return $value;
+        }
+
+        return null;
     }
 
     /**
-     * Set a given attribute on the model.
+     * Get an attribute's value using fluent syntax.
      *
-     * @return $this
+     * @param  mixed|null  $default
      */
-    public function setAttribute(string $key, mixed $value): static
+    public function get(string $key, $default = null): mixed
     {
+        if ($this->fluent === null) {
+            $this->fluent = new Fluent($this->attributes);
+        } else {
+            $this->fluent->fill($this->attributes);
+        }
+
+        return $this->fluent->get($key, $default);
+    }
+
+    /**
+     * Set a given attribute using fluent syntax.
+     *
+     * @param  mixed  $value
+     */
+    public function set(string $key, $value): static
+    {
+        if ($this->fluent === null) {
+            $this->fluent = new Fluent($this->attributes);
+        }
+
+        $this->fluent->set($key, $value);
+
+        if (strpos($key, '.') === false) {
+            $this->setAttribute($key, $value);
+        } else {
+            $rootKey = explode('.', $key)[0];
+
+            if (isset($this->fluent->{$rootKey})) {
+                $this->setAttribute($rootKey, $this->fluent->{$rootKey});
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set the raw value of an attribute with optional casting.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     */
+    public function setAttribute($key, $value): static
+    {
+        if (isset($this->casts[$key])) {
+            $value = $this->castValueForStorage($key, $value);
+        }
+
         $this->attributes[$key] = $value;
 
         return $this;
     }
 
     /**
-     * Set the array of model attributes. No checking is done.
-     *
-     * @param  array<string, mixed>  $attributes
-     * @return $this
+     * Set raw attributes on the model.
      */
     public function setRawAttributes(array $attributes, bool $sync = false): static
     {
@@ -342,10 +477,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Fill the model with an array of attributes.
-     *
-     * @param  array<string, mixed>  $attributes
-     * @return $this
+     * Fill the model with an array of attributes while considering mass assignment rules.
      *
      * @throws MassAssignmentException
      */
@@ -371,10 +503,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Fill the model with an array of attributes. Force mass assignment.
-     *
-     * @param  array<string, mixed>  $attributes
-     * @return $this
+     * Force fill the model with the given attributes without checking guard rules.
      */
     public function forceFill(array $attributes): static
     {
@@ -394,7 +523,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the primary key for the model.
+     * Get the name of the primary key for the resource.
      */
     public function getKeyName(): string
     {
@@ -402,9 +531,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Set the primary key for the model.
-     *
-     * @return $this
+     * Set the name of the primary key for the resource.
      */
     public function setKeyName(string $key): static
     {
@@ -414,7 +541,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the value of the model's primary key.
+     * Get the primary key value of the resource.
      */
     public function getKey(): mixed
     {
@@ -422,7 +549,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the resource endpoint name.
+     * Get the resource name associated with the model.
      */
     public function getResourceName(): string
     {
@@ -430,7 +557,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Create a new Eloquent query builder for the model.
+     * Get a new query builder for the model.
      */
     public function newQuery(): ResourceBuilder
     {
@@ -438,13 +565,18 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Save the model to the database.
+     * Save the model to the remote API.
      *
-     * @throws ResourceUpdateException|ResourceCreationException When the save operation fails.
+     *
+     * @throws ResourceCreationException|ResourceUpdateException
      */
     public function save(): bool
     {
         try {
+            if ($this->timestamps) {
+                $this->updateTimestamps();
+            }
+
             if ($this->exists) {
                 if (! $this->isDirty()) {
                     return true;
@@ -458,10 +590,8 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
 
             return true;
         } catch (ResourceException $e) {
-            // Re-throw our custom exceptions
             throw $e;
         } catch (Throwable $e) {
-            // Convert general exceptions to our custom exceptions
             if ($this->exists) {
                 throw new ResourceUpdateException('Failed to update resource: '.$e->getMessage(), 0, $e);
             } else {
@@ -471,11 +601,9 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Update the model in the database.
+     * Update the resource with new attributes.
      *
-     * @param  array<string, mixed>  $attributes
-     *
-     * @throws ResourceUpdateException If the update fails.
+     * @throws ResourceUpdateException
      */
     public function update(array $attributes = []): bool
     {
@@ -489,14 +617,14 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Delete the model from the database.
+     * Delete the resource via the API.
      *
-     * @throws ResourceDeleteException If the deletion fails.
+     * @throws ResourceDeleteException
      */
     public function delete(): bool
     {
         if (! $this->exists) {
-            return true; // Already doesn't exist, so technically successful
+            return true;
         }
 
         $key = $this->getKey();
@@ -509,7 +637,13 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             $response = $this->getConnection()->delete("/{$this->resource}/{$key}");
 
             if (! $response->ok()) {
-                throw new ResourceDeleteException('API returned status code: '.$response->getStatusCode());
+                $statusCode = $response->getStatusCode();
+                $errorMessage = $this->getErrorMessageFromResponse($response);
+
+                throw new ResourceDeleteException(
+                    "API returned error status code: {$statusCode} - {$errorMessage}",
+                    $statusCode
+                );
             }
 
             $this->exists = false;
@@ -523,9 +657,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Force a hard delete on a soft deleted model.
-     *
-     * @throws ResourceDeleteException If the deletion fails.
+     * Force delete the resource (alias for delete).
      */
     public function forceDelete(): bool
     {
@@ -533,7 +665,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if the model instance has been soft-deleted.
+     * Determine if the resource has been soft deleted.
      */
     public function trashed(): bool
     {
@@ -541,7 +673,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if two models have the same ID and belong to the same table.
+     * Check if the given model instance is the same as the current one.
      */
     public function is(?Resource $model): bool
     {
@@ -551,7 +683,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if two models are not the same.
+     * Check if the given model instance is different from the current one.
      */
     public function isNot(?Resource $model): bool
     {
@@ -559,9 +691,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if the model has been modified since last sync.
-     *
-     * @param  array<string>|string|null  $attributes
+     * Determine if any attributes have been modified.
      */
     public function isDirty(array|string|null $attributes = null): bool
     {
@@ -571,7 +701,6 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     /**
      * Get the attributes that have been changed since last sync.
      *
-     * @param  array<string>|string|null  $attributes
      * @return array<string, mixed>
      */
     public function getDirty(array|string|null $attributes = null): array
@@ -585,16 +714,12 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         $attributes = is_array($attributes) ? $attributes : [$attributes];
 
         foreach ($attributes as $key) {
+            if (! array_key_exists($key, $this->attributes)) {
+                continue;
+            }
+
             if (! array_key_exists($key, $this->original) ||
                 $this->attributes[$key] !== $this->original[$key]) {
-                $dirty[$key] = $this->attributes[$key];
-            }
-
-            if (! array_key_exists($key, $this->original)) {
-                continue; // was never known, don't assume it's dirty
-            }
-
-            if ($this->attributes[$key] !== $this->original[$key]) {
                 $dirty[$key] = $this->attributes[$key];
             }
         }
@@ -603,7 +728,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if the model has any dirty attributes.
+     * Determine if any attributes were changed since the last sync.
      */
     public function wasChanged(): bool
     {
@@ -611,9 +736,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Sync the original attributes with the current.
-     *
-     * @return $this
+     * Sync the original attributes with the current state.
      */
     public function syncOriginal(): static
     {
@@ -623,15 +746,96 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Convert the model instance to an array.
+     * Reload the current model instance from the API.
      *
-     * @return array<string, mixed>
+     *
+     * @throws ResourceNotFoundException
+     */
+    public function refresh(): static
+    {
+        if (! $this->exists) {
+            throw new ResourceNotFoundException("Cannot refresh a resource that doesn't exist.");
+        }
+
+        $key = $this->getKey();
+
+        if ($key === null) {
+            throw new ResourceNotFoundException('Cannot refresh a resource without a primary key.');
+        }
+
+        $updated = static::findOrFail($key);
+
+        $this->attributes = $updated->attributes;
+        $this->syncOriginal();
+
+        return $this;
+    }
+
+    /**
+     * Determine if a specific attribute or any attribute has changed.
+     */
+    public function hasChanged(string|array|null $attribute = null): bool
+    {
+        if (is_null($attribute)) {
+            return $this->wasChanged();
+        }
+
+        if (is_array($attribute)) {
+            foreach ($attribute as $key) {
+                if ($this->hasChanged($key)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return array_key_exists($attribute, $this->attributes) &&
+               array_key_exists($attribute, $this->original) &&
+               $this->attributes[$attribute] !== $this->original[$attribute];
+    }
+
+    /**
+     * Return only the specified attributes.
+     *
+     * @param  array|string|null  $keys
+     */
+    public function only($keys = null): array
+    {
+        if (is_null($keys)) {
+            return $this->attributes;
+        }
+
+        $keys = is_array($keys) ? $keys : func_get_args();
+
+        return Arr::only($this->attributes, $keys);
+    }
+
+    /**
+     * Return the attributes except those specified.
+     *
+     * @param  array|string  $keys
+     */
+    public function except($keys): array
+    {
+        $keys = is_array($keys) ? $keys : func_get_args();
+
+        return Arr::except($this->attributes, $keys);
+    }
+
+    /**
+     * Convert the model instance to an array.
      */
     public function toArray(): array
     {
         $attributes = $this->attributes;
 
-        // Remove hidden attributes
+        foreach ($this->casts as $key => $type) {
+            if (array_key_exists($key, $attributes)) {
+                $attributes[$key] = $this->castAttribute($key, $attributes[$key]);
+            }
+        }
+
         if (! empty($this->hidden)) {
             $attributes = array_diff_key($attributes, array_flip($this->hidden));
         }
@@ -644,7 +848,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
      *
      * @param  int  $options
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     * @throws JsonEncodingException
      */
     public function toJson($options = 0): string
     {
@@ -656,9 +860,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array<string, mixed>
+     * Prepare the model for JSON serialization.
      */
     public function jsonSerialize(): mixed
     {
@@ -666,39 +868,48 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Determine if the given attribute exists.
+     * Determine if the given offset exists.
+     *
+     * @param  mixed  $offset
      */
-    public function offsetExists(mixed $offset): bool
+    public function offsetExists($offset): bool
     {
         return isset($this->attributes[$offset]);
     }
 
     /**
-     * Get the value for a given offset.
+     * Get the value at the given offset.
+     *
+     * @param  mixed  $offset
      */
-    public function offsetGet(mixed $offset): mixed
+    public function offsetGet($offset): mixed
     {
         return $this->getAttribute($offset);
     }
 
     /**
-     * Set the value for a given offset.
+     * Set the value at the given offset.
+     *
+     * @param  mixed  $offset
+     * @param  mixed  $value
      */
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function offsetSet($offset, $value): void
     {
         $this->setAttribute($offset, $value);
     }
 
     /**
-     * Unset the value for a given offset.
+     * Unset the value at the given offset.
+     *
+     * @param  mixed  $offset
      */
-    public function offsetUnset(mixed $offset): void
+    public function offsetUnset($offset): void
     {
         unset($this->attributes[$offset]);
     }
 
     /**
-     * Get the client connection.
+     * Get the API connection instance.
      */
     public function getConnection(): ClientHandler
     {
@@ -710,9 +921,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Set the client connection.
-     *
-     * @return $this
+     * Set the API connection instance.
      */
     public function setConnection(ClientHandler $connection): static
     {
@@ -722,10 +931,91 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Get the fillable attributes of a given array.
+     * Cast an attribute's value when getting.
      *
-     * @param  array<string, mixed>  $attributes
-     * @return array<string, mixed>
+     * @param  string  $key
+     * @param  mixed  $value
+     */
+    protected function castAttribute($key, $value): mixed
+    {
+        $castType = $this->casts[$key];
+
+        if ($value === null) {
+            return null;
+        }
+
+        switch ($castType) {
+            case 'int':
+            case 'integer':
+                return (int) $value;
+            case 'float':
+            case 'double':
+                return (float) $value;
+            case 'string':
+                return (string) $value;
+            case 'bool':
+            case 'boolean':
+                return (bool) $value;
+            case 'array':
+                return is_array($value) ? $value : json_decode((string) $value, true);
+            case 'json':
+                return json_decode((string) $value, true);
+            case 'datetime':
+            case 'date':
+                return new DateTime((string) $value);
+            default:
+                return $value;
+        }
+    }
+
+    /**
+     * Cast a value for storage before persisting.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     */
+    protected function castValueForStorage($key, $value): mixed
+    {
+        $castType = $this->casts[$key];
+
+        if ($value === null) {
+            return null;
+        }
+
+        switch ($castType) {
+            case 'array':
+            case 'json':
+                return is_array($value) ? json_encode($value) : $value;
+            case 'datetime':
+            case 'date':
+                if ($value instanceof DateTime) {
+                    return $value->format('Y-m-d H:i:s');
+                }
+
+                return $value;
+            default:
+                return $value;
+        }
+    }
+
+    /**
+     * Update the timestamps on the model.
+     */
+    protected function updateTimestamps(): void
+    {
+        $time = date('Y-m-d H:i:s');
+
+        if (! $this->exists && ! isset($this->attributes[$this->createdAtColumn])) {
+            $this->attributes[$this->createdAtColumn] = $time;
+        }
+
+        if (! isset($this->attributes[$this->updatedAtColumn])) {
+            $this->attributes[$this->updatedAtColumn] = $time;
+        }
+    }
+
+    /**
+     * Filter the provided attributes according to the fillable and guarded settings.
      */
     protected function fillableFromArray(array $attributes): array
     {
@@ -741,9 +1031,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Create a new model instance using attributes from the API response.
-     *
-     * @param  array<string, mixed>  $attributes
+     * Create a new model instance from raw API attributes.
      */
     protected function newModelFromBuilder(array $attributes): static
     {
@@ -754,21 +1042,26 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Perform a model insert operation.
+     * Perform an API request to insert a new resource.
      *
-     * @throws ResourceCreationException If the creation fails or returns invalid data.
+     * @throws ResourceCreationException
      */
     protected function performInsert(): void
     {
         $response = $this->getConnection()->post("/{$this->resource}", $this->attributes);
 
         if (! $response->ok()) {
-            throw new ResourceCreationException('API returned status code: '.$response->getStatusCode());
+            $statusCode = $response->getStatusCode();
+            $errorMessage = $this->getErrorMessageFromResponse($response);
+
+            throw new ResourceCreationException(
+                "API returned error status code: {$statusCode} - {$errorMessage}",
+                $statusCode
+            );
         }
 
         $data = $this->parseResponseData($response);
 
-        // Update the model with the returned data
         if (is_array($data)) {
             $this->fill($data);
         } else {
@@ -780,11 +1073,9 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Perform a model update operation.
+     * Perform an API request to update an existing resource.
      *
-     * @param  array<string, mixed>  $attributes
-     *
-     * @throws ResourceUpdateException If the update fails or returns invalid data.
+     * @throws ResourceUpdateException
      */
     protected function performUpdate(array $attributes): void
     {
@@ -797,12 +1088,17 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
         $response = $this->getConnection()->put("/{$this->resource}/{$key}", $attributes);
 
         if (! $response->ok()) {
-            throw new ResourceUpdateException('API returned status code: '.$response->getStatusCode());
+            $statusCode = $response->getStatusCode();
+            $errorMessage = $this->getErrorMessageFromResponse($response);
+
+            throw new ResourceUpdateException(
+                "API returned error status code: {$statusCode} - {$errorMessage}",
+                $statusCode
+            );
         }
 
         $data = $this->parseResponseData($response);
 
-        // Update the model with the returned data
         if (is_array($data)) {
             $this->fill($data);
         }
@@ -811,9 +1107,35 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Parse response data from API responses.
+     * Extract an error message from the API response.
      *
-     * @return array<string, mixed>
+     * @param  mixed  $response
+     */
+    protected function getErrorMessageFromResponse($response): string
+    {
+        try {
+            $data = $response->json();
+
+            if (isset($data['error']['message'])) {
+                return $data['error']['message'];
+            } elseif (isset($data['error'])) {
+                return is_string($data['error']) ? $data['error'] : 'Unknown error';
+            } elseif (isset($data['message'])) {
+                return $data['message'];
+            }
+        } catch (Throwable $e) {
+            // Cannot parse response as JSON
+        }
+
+        return 'Unknown error';
+    }
+
+    /**
+     * Parse the resource data from the API response.
+     *
+     * @param  mixed  $response
+     *
+     * @throws ResourceException
      */
     protected function parseResponseData($response): array
     {
@@ -823,52 +1145,64 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
             throw new ResourceException('API response is not valid JSON');
         }
 
-        // Check if the response has a 'data' wrapper
         return $json['data'] ?? $json;
     }
 
     /**
-     * Dynamically retrieve attributes on the model.
+     * Dynamically retrieve attribute.
+     *
+     * @return mixed
      */
-    public function __get(string $key): mixed
+    public function __get(string $key)
     {
         return $this->getAttribute($key);
     }
 
     /**
-     * Dynamically set attributes on the model.
+     * Dynamically set attribute.
+     *
+     * @param  mixed  $value
+     * @return void
      */
-    public function __set(string $key, mixed $value): void
+    public function __set(string $key, $value)
     {
         $this->setAttribute($key, $value);
     }
 
     /**
-     * Determine if an attribute or relation exists on the model.
+     * Check if an attribute is set.
+     *
+     * @return bool
      */
-    public function __isset(string $key): bool
+    public function __isset(string $key)
     {
         return isset($this->attributes[$key]);
     }
 
     /**
-     * Unset an attribute on the model.
+     * Unset an attribute.
+     *
+     * @return void
      */
-    public function __unset(string $key): void
+    public function __unset(string $key)
     {
         unset($this->attributes[$key]);
     }
 
     /**
-     * Convert the model to its string representation.
+     * Convert the resource instance to a JSON string.
      */
     public function __toString(): string
     {
-        return $this->toJson();
+        try {
+            return $this->toJson();
+        } catch (Throwable $e) {
+            return '';
+        }
     }
 
     /**
-     * Handle dynamic static method calls into the model.
+     * Handle dynamic static method calls.
      */
     public static function __callStatic(string $method, array $parameters): mixed
     {
@@ -876,7 +1210,7 @@ abstract class Resource implements Arrayable, ArrayAccess, Jsonable, JsonSeriali
     }
 
     /**
-     * Handle dynamic method calls into the model.
+     * Handle dynamic method calls.
      */
     public function __call(string $method, array $parameters): mixed
     {
