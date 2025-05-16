@@ -29,7 +29,7 @@
         "illuminate/encryption": "^12.0",
         "illuminate/http": "*",
         "illuminate/support": "^12.0",
-        "jerome/fetch-php": "dev-main",
+        "jerome/fetch-php": "^3.2",
         "lcobucci/jwt": "^5.0",
         "league/oauth2-server": "^3.2",
         "nesbot/carbon": "^3.8",
