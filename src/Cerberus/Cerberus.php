@@ -18,7 +18,7 @@ class Cerberus
     /**
      * API base URI.
      */
-    public const API_URI = 'https://dev-api.cerberus-iam.com';
+    public const API_URI = 'https://api.cerberus-iam.com';
 
     /**
      * API version.
