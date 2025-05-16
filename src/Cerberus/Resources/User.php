@@ -69,6 +69,16 @@ class User extends Resource implements AuthenticatableContract, AuthorizableCont
     }
 
     /**
+     * Get the name of the unique identifier for the user.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'id';
+    }
+
+    /**
      * Get the password hash for the user.
      */
     public function getAuthPasswordName(): string
