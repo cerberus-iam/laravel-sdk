@@ -38,7 +38,7 @@ class CerberusServiceProvider extends ServiceProvider
     protected function registerHttpClient(): void
     {
         $this->app->singleton(ClientHandlerInterface::class, function (Application $app) {
-            return fetch(url: null, options: [
+            return fetch_client([
                 'base_uri' => Cerberus::getBaseUri(),
                 'headers' => Cerberus::getHttpHeaders(),
             ]);
