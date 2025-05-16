@@ -6,6 +6,7 @@ use Cerberus\Contracts\TokenStorage;
 use Cerberus\Guards\SessionGuard;
 use Cerberus\Guards\TokenGuard;
 use Cerberus\Storage\SessionTokenStorage;
+use Fetch\Http\ClientHandler;
 use Fetch\Interfaces\ClientHandler as ClientHandlerInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +39,10 @@ class CerberusServiceProvider extends ServiceProvider
     protected function registerHttpClient(): void
     {
         $this->app->singleton(ClientHandlerInterface::class, function (Application $app) {
-            return fetch_client([
-                'base_uri' => Cerberus::getBaseUri(),
-                'headers' => Cerberus::getHttpHeaders(),
-            ]);
+            $http = ClientHandler::createWithBaseUri(Cerberus::getBaseUri());
+            $http->withHeaders(Cerberus::getHttpHeaders());
+
+            return $http;
         });
     }
 

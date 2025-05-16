@@ -4,6 +4,7 @@ namespace Cerberus\Tests\Unit;
 
 use Cerberus\Resources\Auth;
 use Cerberus\Resources\User;
+use Fetch\Http\Response;
 use Fetch\Interfaces\ClientHandler;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -43,10 +44,12 @@ class AuthTest extends TestCase
         $credentials = ['email' => 'test@example.com', 'password' => 'secret'];
         $expected = ['access_token' => 'fake-token'];
 
+        $responseMock = Mockery::mock(Response::class);
+        $responseMock->shouldReceive('json')->andReturn($expected);
         $this->connection->shouldReceive('post')
             ->with('/login', $credentials)
             ->once()
-            ->andReturn(Mockery::mock(['json' => $expected]));
+            ->andReturn($responseMock);
 
         $result = $this->auth->authenticateViaCredentials($credentials);
 
@@ -57,13 +60,13 @@ class AuthTest extends TestCase
     {
         $userData = ['id' => 1, 'email' => 'test@example.com'];
 
+        $responseMock = Mockery::mock(Response::class);
+        $responseMock->shouldReceive('ok')->andReturn(true);
+        $responseMock->shouldReceive('json')->andReturn($userData);
         $this->connection->shouldReceive('get')
             ->with('/user')
             ->once()
-            ->andReturn(Mockery::mock([
-                'ok' => true,
-                'json' => $userData,
-            ]));
+            ->andReturn($responseMock);
 
         $result = $this->auth->findByToken();
 
@@ -73,10 +76,13 @@ class AuthTest extends TestCase
 
     public function test_find_by_token_returns_null_when_response_is_not_ok(): void
     {
+        $responseMock = Mockery::mock(Response::class);
+        $responseMock->shouldReceive('ok')->andReturn(false);
+        $responseMock->shouldReceive('json')->andReturn(null);
         $this->connection->shouldReceive('get')
             ->with('/user')
             ->once()
-            ->andReturn(Mockery::mock(['ok' => false]));
+            ->andReturn($responseMock);
 
         $this->assertNull($this->auth->findByToken());
     }
@@ -89,13 +95,15 @@ class AuthTest extends TestCase
 
         $this->auth->user($user);
 
+        $responseMock = Mockery::mock(Response::class);
+        $responseMock->shouldReceive('ok')->andReturn(true);
         $this->connection->shouldReceive('post')
             ->with('/check-password', [
                 'email' => 'test@example.com',
                 'password' => 'secret',
             ])
             ->once()
-            ->andReturn(Mockery::mock(['ok' => true]));
+            ->andReturn($responseMock);
 
         $this->assertTrue($this->auth->checkPassword($credentials));
     }
