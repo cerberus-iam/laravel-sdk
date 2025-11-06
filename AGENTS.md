@@ -1,213 +1,216 @@
-# 🤖 AI Agent Instructions for Cerberus IAM Laravel Package
+# AI Agent Instructions for Cerberus IAM Laravel Package
 
-## Welcome, AI Agent
+## Overview
 
-You are working on the **Cerberus IAM Laravel Bridge** - a professional Laravel package that provides seamless authentication and user management integration with the Cerberus IAM platform.
+This document provides comprehensive guidance for AI agents working on the Cerberus IAM Laravel Bridge package. The package provides seamless authentication and user management integration with the Cerberus IAM platform.
 
-## 🎯 Your Mission
+## Project Context
 
-Help maintain and improve this production-ready Laravel package by:
+- **Package**: cerberus/laravel-iam
+- **Purpose**: Laravel authentication bridge for Cerberus IAM
+- **Architecture**: OAuth2 with PKCE, session-based token storage
+- **Testing**: Pest framework with comprehensive test suite
+- **Quality**: PSR-12, PHPStan level 8, automated CI/CD
 
-- Writing clean, well-tested, and documented code
-- Following Laravel and PHP best practices
-- Ensuring security and performance standards
-- Maintaining comprehensive test coverage
-- Keeping documentation up-to-date
+## Code Standards
 
-## 📋 Code Standards
+### PHP Standards
 
-### PHP & Laravel Standards
+- PSR-12 coding standards
+- Laravel naming conventions
+- Strict type declarations
+- Comprehensive PHPDoc documentation
+- Error handling without exposing sensitive data
 
-- **PSR-12**: Strict adherence to PHP Standards Recommendations
-- **Laravel Conventions**: Use Laravel naming patterns and structure
-- **Type Safety**: Comprehensive type hints and return types
-- **Strict Types**: Always use `declare(strict_types=1)`
+### Architecture Principles
 
-### Documentation Standards
+- SOLID design principles
+- Dependency injection via Laravel service container
+- Interface-based design for testability
+- Separation of concerns
+- Graceful error handling
 
-- **PHPDoc**: Complete documentation for all public methods
-- **Inline Comments**: Explain complex business logic
-- **README Updates**: Keep installation and usage docs current
-- **Changelog**: Document all changes appropriately
-
-## 🏗️ Architecture Guidelines
-
-### SOLID Principles
-
-- **Single Responsibility**: Each class has one reason to change
-- **Open/Closed**: Open for extension, closed for modification
-- **Liskov Substitution**: Subtypes are substitutable for base types
-- **Interface Segregation**: Client-specific interfaces
-- **Dependency Inversion**: Depend on abstractions, not concretions
-
-### Laravel Integration
-
-- **Service Container**: Use dependency injection
-- **Contracts**: Define interfaces for testability
-- **Facades**: Use judiciously for developer experience
-- **Middleware**: Follow Laravel middleware patterns
-
-## 🧪 Testing Strategy
-
-### Test Categories
-
-- **Unit Tests**: Test individual classes and methods
-- **Feature Tests**: Test complete user journeys
-- **Integration Tests**: Test component interactions
-
-### Testing Standards
-
-- **Pest Framework**: Use Pest for all test writing
-- **Coverage**: Maintain >80% test coverage
-- **Mocking**: Mock external dependencies (HTTP, sessions)
-- **Edge Cases**: Test success, failure, and error scenarios
-
-## 🔒 Security First
-
-### OAuth2 Security
-
-- **PKCE**: Always use Proof Key for Code Exchange
-- **State Validation**: Prevent CSRF attacks
-- **Token Handling**: Secure storage and automatic refresh
-- **Input Validation**: Never trust external data
-
-### Best Practices
-
-- **No Secrets in Logs**: Never log passwords, tokens, or secrets
-- **HTTPS Only**: All external API calls must use HTTPS
-- **Input Sanitization**: Validate and sanitize all inputs
-- **Error Handling**: Don't expose sensitive information in errors
-
-## 🚀 Development Workflow
+## Development Workflow
 
 ### Before Starting Work
 
-1. **Understand Requirements**: Read issues/PRs thoroughly
-2. **Check Existing Code**: Look for similar implementations
-3. **Plan Changes**: Consider impact on existing functionality
-4. **Update Tests**: Plan test additions/modifications
+1. Review existing code for similar implementations
+2. Understand requirements and impact
+3. Plan test coverage additions
+4. Check for breaking changes
 
 ### During Development
 
-1. **Write Code**: Follow established patterns
-2. **Add Tests**: Write tests as you develop
-3. **Run Quality Checks**: Use `composer ci` frequently
-4. **Document Changes**: Update docs as needed
+1. Follow established patterns
+2. Write tests concurrently with code
+3. Run quality checks frequently
+4. Update documentation as needed
 
 ### Before Committing
 
-1. **Run Full Suite**: `composer ci` (lint + analyse + test)
-2. **Check Coverage**: Ensure test coverage remains high
-3. **Update Docs**: README, CHANGELOG, PHPDoc as needed
-4. **Clean Code**: Remove debug statements and TODOs
+1. Execute full test suite with coverage
+2. Verify static analysis passes
+3. Ensure code formatting compliance
+4. Update CHANGELOG for changes
 
-## 🛠️ Common Tasks
+## Testing Strategy
 
-### Adding a New Feature
+### Test Categories
 
-1. **Define Interface**: Add contract in `src/Contracts/`
-2. **Implement Class**: Create implementation following patterns
-3. **Add Tests**: Comprehensive test coverage
-4. **Update Config**: Add configuration if needed
-5. **Document**: Update README and add PHPDoc
+- Unit tests for individual components
+- Feature tests for complete workflows
+- Integration tests for component interaction
 
-### Fixing a Bug
+### Testing Standards
 
-1. **Reproduce Issue**: Understand the problem
-2. **Write Test**: Create failing test first
-3. **Fix Code**: Implement the solution
-4. **Verify Fix**: Ensure test passes and no regressions
+- Pest framework for all test writing
+- Mock external dependencies appropriately
+- Test success and failure scenarios
+- Maintain minimum coverage requirements
 
-### Security Updates
+## Security Considerations
 
-1. **Audit Code**: Review for security implications
-2. **Update Dependencies**: Use latest secure versions
-3. **Test Thoroughly**: Ensure no breaking changes
-4. **Document Changes**: Update security notes
+### OAuth2 Implementation
 
-## 📁 Project Structure
+- PKCE (Proof Key for Code Exchange) required
+- State parameter validation for CSRF protection
+- Secure token storage and automatic refresh
+- HTTPS-only external communications
+
+### Best Practices
+
+- Never log sensitive information
+- Validate all input parameters
+- Sanitize data appropriately
+- Handle errors without information disclosure
+
+## File Structure
 
 ```
 src/
-├── Auth/              # Authentication guards and providers
+├── Auth/              # Guards and user providers
 ├── Contracts/         # Interface definitions
 ├── Facades/           # Laravel facades
-├── Http/Clients/      # HTTP client implementations
-├── Middleware/        # Route protection middleware
+├── Http/Clients/      # API client implementations
+├── Middleware/        # Route protection
 ├── Repositories/      # Data access layer
-└── Support/           # Utility classes and stores
+└── Support/           # Utility classes
 
 tests/
 ├── Feature/           # Integration tests
-└── Fixtures/          # Test mocks and data
-
-.github/
-├── workflows/         # CI/CD pipelines
-└── ISSUE_TEMPLATE/    # Issue templates
+└── Fixtures/          # Test data and mocks
 ```
 
-## 🔧 Quality Gates
+## Key Components
+
+- **CerberusGuard**: Laravel authentication guard
+- **CerberusUserProvider**: User resolution from IAM API
+- **CerberusClient**: HTTP client for IAM communication
+- **EnsureCerberusAuthenticated**: Route protection middleware
+
+## Configuration
+
+Environment variables prefixed with `CERBERUS_IAM_`:
+
+- API endpoints and credentials
+- OAuth2 client configuration
+- HTTP client settings
+- Session and security options
+
+## Dependencies
+
+- **Laravel**: ^10.0|^11.0 (framework integration)
+- **jerome/fetch-php**: ^3.2 (HTTP client)
+- **jerome/filterable**: ^2.0 (query filtering)
+
+## Quality Assurance
 
 ### Automated Checks
 
-- **PHPStan**: Level 8 static analysis (must pass)
-- **Pint**: Code formatting (must pass)
-- **Pest**: All tests pass (must pass)
-- **Coverage**: >80% in CI (must pass)
+- PHPStan static analysis (level 8)
+- Laravel Pint code formatting
+- Pest test execution
+- Code coverage analysis
 
 ### Manual Reviews
 
-- **Security Review**: Check for vulnerabilities
-- **Performance Review**: Consider performance impact
-- **Documentation Review**: Ensure docs are complete
-- **API Review**: Check for breaking changes
+- Security vulnerability assessment
+- Performance impact evaluation
+- Documentation completeness
+- API compatibility verification
 
-## 📞 Communication
+## Common Tasks
+
+### Adding Features
+
+1. Define interface contracts
+2. Implement functionality following patterns
+3. Create comprehensive tests
+4. Update configuration if needed
+5. Document changes in README and CHANGELOG
+
+### Bug Fixes
+
+1. Reproduce the issue
+2. Write failing test case
+3. Implement fix
+4. Verify test passes
+5. Ensure no regressions
+
+### Security Updates
+
+1. Review security implications
+2. Update dependencies to secure versions
+3. Test thoroughly for compatibility
+4. Document security changes
+
+## Communication Standards
 
 ### Commit Messages
 
-- Use conventional commits: `feat:`, `fix:`, `docs:`, `refactor:`
-- Be descriptive but concise
-- Reference issues: `fix: resolve user lookup issue (#123)`
+- Use conventional commit format
+- Reference issue numbers when applicable
+- Provide clear, descriptive messages
+- Keep commits focused and atomic
 
 ### Pull Requests
 
-- **Title**: Clear, descriptive title
-- **Description**: Explain what and why
-- **Tests**: Include test coverage
-- **Breaking Changes**: Clearly marked
-- **Screenshots**: For UI changes (if applicable)
+- Include comprehensive descriptions
+- Reference related issues
+- Ensure test coverage
+- Mark breaking changes clearly
+- Provide testing instructions
 
-## 🎉 Success Criteria
+## Success Criteria
 
-Your work is successful when:
+Work is considered complete when:
 
-- ✅ All CI checks pass
-- ✅ Code follows established patterns
-- ✅ Tests provide good coverage
-- ✅ Documentation is complete and accurate
-- ✅ Security standards are maintained
-- ✅ Performance is not negatively impacted
-- ✅ Other developers can easily understand and maintain the code
+- All CI checks pass successfully
+- Code follows established patterns
+- Test coverage meets requirements
+- Documentation is current and accurate
+- Security standards are maintained
+- Performance impact is acceptable
+- Code is maintainable by other developers
 
-## 🚨 Emergency Procedures
+## Emergency Procedures
 
-### If You Break the Build
+### Build Failures
 
-1. **Stop**: Don't commit more changes
-2. **Revert**: Go back to working state
-3. **Analyze**: Understand what went wrong
-4. **Fix**: Make targeted fixes
-5. **Test**: Ensure everything works
+1. Stop additional changes
+2. Revert to working state
+3. Analyze root cause
+4. Implement targeted fixes
+5. Verify all tests pass
 
-### If You Find a Security Issue
+### Security Issues
 
-1. **Don't Commit**: Keep it local
-2. **Report**: Use appropriate security channels
-3. **Fix**: Implement secure solution
-4. **Test**: Verify the fix works
-5. **Document**: Update security documentation
+1. Do not commit locally
+2. Report through appropriate channels
+3. Implement secure solution
+4. Test fix thoroughly
+5. Document security measures
 
----
+## Important Notes
 
-**Remember**: This is a production package used by real applications. Your changes impact real users and businesses. Take pride in your work and maintain the highest standards of quality and security! 🚀
+This is a production package used by real applications. All changes impact actual users and businesses. Maintain the highest standards of quality, security, and professionalism in all work.

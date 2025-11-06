@@ -1,0 +1,30 @@
+# Code Owners
+
+# <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners>
+
+# Global owners - Cerberus IAM team
+
+* @Thavarshan
+
+# Security-related files
+
+src/ @Thavarshan
+tests/ @Thavarshan
+.github/ @Thavarshan
+
+# Documentation
+
+README.md @Thavarshan
+CHANGELOG.md @Thavarshan
+*.md @Thavarshan
+
+# Configuration files
+
+composer.json @Thavarshan
+phpstan.neon @Thavarshan
+pint.json @Thavarshan
+phpunit.xml.dist @Thavarshan
+
+# CI/CD
+
+.github/workflows/ @Thavarshan

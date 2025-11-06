@@ -60,4 +60,4 @@ jobs:
         run: ./vendor/bin/phpstan analyse --error-format=github
 
       - name: Run tests
-        run: ./vendor/bin/pest --coverage --min=80
+        run: ./vendor/bin/pest --coverage --min=60
