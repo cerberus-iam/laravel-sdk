@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 namespace CerberusIAM\Auth;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Arr;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Support\Fluent;
 
 /**
  * Cerberus User
  *
- * This class represents a user authenticated via Cerberus IAM,
- * implementing Laravel's Authenticatable interface.
+ * This class represents a user authenticated via Cerberus IAM.
+ * It's a stateless value object that extends Laravel's Fluent class.
  */
-class CerberusUser implements Authenticatable
+class CerberusUser extends Fluent implements
+    AuthenticatableContract,
+    AuthorizableContract
 {
-    protected array $attributes;
-
-    /**
-     * Create a new Cerberus user instance.
-     *
-     * @param  array<string, mixed>  $attributes  The user attributes.
-     */
-    public function __construct(array $attributes)
-    {
-        $this->attributes = $attributes;
-    }
+    use Authorizable;
 
     /**
      * Create a Cerberus user from a profile payload.
@@ -37,13 +31,19 @@ class CerberusUser implements Authenticatable
      */
     public static function fromProfile(array $payload): self
     {
+        $organisation = $payload['organisation'] ?? [];
+
         return new self([
             'id' => $payload['id'] ?? $payload['sub'] ?? null,
             'email' => $payload['email'] ?? null,
             'name' => $payload['name'] ?? trim(($payload['firstName'] ?? '').' '.($payload['lastName'] ?? '')),
             'first_name' => $payload['firstName'] ?? null,
             'last_name' => $payload['lastName'] ?? null,
-            'organisation' => Arr::only($payload['organisation'] ?? [], ['id', 'slug', 'name']),
+            'organisation' => [
+                'id' => $organisation['id'] ?? null,
+                'slug' => $organisation['slug'] ?? null,
+                'name' => $organisation['name'] ?? null,
+            ],
             'roles' => $payload['roles'] ?? [],
             'permissions' => $payload['permissions'] ?? [],
             'raw' => $payload,
@@ -129,16 +129,42 @@ class CerberusUser implements Authenticatable
      */
     public function getAttribute(string $key, mixed $default = null): mixed
     {
-        return Arr::get($this->attributes, $key, $default);
+        return $this->get($key, $default);
     }
 
     /**
-     * Convert the user to an array.
+     * Determine if the user has a specific role.
      *
-     * @return array<string, mixed> The user attributes.
+     * @param  string  $role
+     * @return bool
      */
-    public function toArray(): array
+    public function hasRole(string $role): bool
     {
-        return $this->attributes;
+        $roles = $this->attributes['roles'] ?? [];
+
+        return in_array($role, array_column($roles, 'name'), true);
+    }
+
+    /**
+     * Determine if the user has a specific permission.
+     *
+     * @param  string  $permission
+     * @return bool
+     */
+    public function hasPermission(string $permission): bool
+    {
+        $permissions = $this->attributes['permissions'] ?? [];
+
+        return in_array($permission, array_column($permissions, 'name'), true);
+    }
+
+    /**
+     * Get the user's organisation.
+     *
+     * @return array|null
+     */
+    public function organisation(): ?array
+    {
+        return $this->attributes['organisation'] ?? null;
     }
 }
