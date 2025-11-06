@@ -78,8 +78,9 @@ class CerberusIamServiceProvider extends ServiceProvider
         $this->app->bind(OAuthStateStore::class, function ($app, array $parameters = []) {
             $stateKey = $parameters['state_key'] ?? 'cerberus.oauth.state';
             $codeKey = $parameters['code_key'] ?? 'cerberus.oauth.code_verifier';
+            $guardKey = $parameters['guard_key'] ?? 'cerberus.oauth.guard';
 
-            return new SessionOAuthStateStore($app['session.store'], $stateKey, $codeKey);
+            return new SessionOAuthStateStore($app['session.store'], $stateKey, $codeKey, $guardKey);
         });
     }
 
@@ -142,6 +143,7 @@ class CerberusIamServiceProvider extends ServiceProvider
             $stateStore = $app->make(OAuthStateStore::class, [
                 'state_key' => "{$stateStoreKey}.state",
                 'code_key' => "{$stateStoreKey}.code_verifier",
+                'guard_key' => 'cerberus.oauth.guard', // Global key shared across all guards
             ]);
 
             // Return a new CerberusGuard instance
