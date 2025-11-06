@@ -22,7 +22,7 @@ A framework-agnostic bridge that lets any Laravel application outsource authenti
 
 ```bash
 composer require cerberus-iam/laravel-sdk
-php artisan vendor:publish --provider="CerberusIAM\\CerberusIamServiceProvider" --tag=config
+php artisan vendor:publish --provider="CerberusIAM\\Providers\\CerberusIamServiceProvider" --tag=config
 ```
 
 Publishing yields `config/cerberus-iam.php` – the single source of truth for connecting to the IAM platform.
