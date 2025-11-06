@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CerberusIAM\Auth;
 
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -13,13 +14,21 @@ use Illuminate\Support\Fluent;
  * Cerberus User
  *
  * This class represents a user authenticated via Cerberus IAM.
- * It's a stateless value object that extends Laravel's Fluent class.
+ * It's a stateless value object that extends Laravel's Fluent class
+ * and uses the same traits as Laravel's default User model.
  */
 class CerberusUser extends Fluent implements
     AuthenticatableContract,
     AuthorizableContract
 {
-    use Authorizable;
+    use Authenticatable, Authorizable;
+
+    /**
+     * The primary key for the user.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
 
     /**
      * Create a Cerberus user from a profile payload.
@@ -53,83 +62,31 @@ class CerberusUser extends Fluent implements
     /**
      * Get the name of the unique identifier for the user.
      *
-     * @return string The identifier name.
+     * @return string
      */
     public function getAuthIdentifierName(): string
     {
-        return 'id';
+        return $this->primaryKey;
     }
 
     /**
      * Get the unique identifier for the user.
      *
-     * @return mixed The user identifier.
+     * @return mixed
      */
     public function getAuthIdentifier(): mixed
     {
-        return $this->attributes['id'] ?? null;
+        return $this->get('id');
     }
 
     /**
-     * Get the password for the user (not applicable for OAuth).
+     * Get the password for the user.
      *
-     * @return string|null Always returns null.
+     * @return string|null
      */
     public function getAuthPassword(): ?string
     {
         return null;
-    }
-
-    /**
-     * Get the password column name (not applicable for OAuth).
-     *
-     * @return string The password column name.
-     */
-    public function getAuthPasswordName(): string
-    {
-        return 'password';
-    }
-
-    /**
-     * Get the remember token (not supported).
-     *
-     * @return string|null Always returns null.
-     */
-    public function getRememberToken(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * Set the remember token (not supported).
-     *
-     * @param  string  $value  The token value.
-     */
-    public function setRememberToken($value): void
-    {
-        // Remember tokens are not supported for OAuth authentication
-    }
-
-    /**
-     * Get the remember token column name.
-     *
-     * @return string The remember token column name.
-     */
-    public function getRememberTokenName(): string
-    {
-        return 'remember_token';
-    }
-
-    /**
-     * Get an attribute from the user.
-     *
-     * @param  string  $key  The attribute key.
-     * @param  mixed  $default  The default value if not found.
-     * @return mixed The attribute value.
-     */
-    public function getAttribute(string $key, mixed $default = null): mixed
-    {
-        return $this->get($key, $default);
     }
 
     /**
