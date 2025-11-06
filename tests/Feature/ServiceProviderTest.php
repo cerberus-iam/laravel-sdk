@@ -56,8 +56,9 @@ it('handles the OAuth callback route', function () {
     // Replace the IAM client with the fake
     app()->instance(IamClient::class, $fake);
 
-    // Set the expected state in the session
+    // Set the expected state and guard name in the session
     session()->put('cerberus.oauth.cerberus.state', 'state-xyz');
+    session()->put('cerberus.oauth.guard', 'cerberus');
 
     // Make a GET request to the callback route
     $response = $this->get('/cerberus/callback?code=code-xyz&state=state-xyz');

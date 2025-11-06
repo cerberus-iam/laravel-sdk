@@ -51,9 +51,18 @@ class CerberusCallbackController extends Controller
         $session = $request->session();
         $guardName = $session->get('cerberus.oauth.guard');
 
-        // Fall back to configured default guard if no guard name is stored
+        // If no guard name is stored, try the configured default guard
+        // This provides backward compatibility for existing OAuth flows
         if (! $guardName) {
-            $guardName = config('cerberus-iam.default_guard', 'cerberus');
+            $guardName = config('cerberus-iam.default_guard');
+
+            // If still no guard name, throw an error
+            if (! $guardName) {
+                throw new BadRequestHttpException(
+                    'Unable to determine which guard initiated the OAuth flow. ' .
+                    'Please ensure cerberus-iam.default_guard is configured, or upgrade your OAuth flow.'
+                );
+            }
         }
 
         // Get the Cerberus guard instance

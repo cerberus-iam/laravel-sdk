@@ -80,13 +80,24 @@ return [
     | Default Guard
     |--------------------------------------------------------------------------
     |
-    | The default authentication guard to use when handling OAuth callbacks.
-    | This should match the guard name configured in your config/auth.php
-    | that uses the 'cerberus' driver.
+    | The default authentication guard name to use when handling OAuth callbacks.
+    | This should match a guard name you have configured in config/auth.php
+    | that uses driver: 'cerberus'.
+    |
+    | Example in config/auth.php:
+    |   'guards' => [
+    |       'web' => [
+    |           'driver' => 'cerberus',
+    |           'provider' => 'users',
+    |       ],
+    |   ]
+    |
+    | In the above example, you would set this to 'web', not 'cerberus'.
+    | Note: 'cerberus' is the driver name, not necessarily your guard name.
     |
     */
 
-    'default_guard' => env('CERBERUS_IAM_DEFAULT_GUARD', 'cerberus'),
+    'default_guard' => env('CERBERUS_IAM_DEFAULT_GUARD', 'web'),
 
     /*
     |--------------------------------------------------------------------------
