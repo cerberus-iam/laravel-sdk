@@ -95,7 +95,7 @@ class CerberusIamServiceProvider extends ServiceProvider
     {
         // Publish the package configuration file to the application's config directory
         $this->publishes([
-            __DIR__.'/../config/cerberus-iam.php' => config_path('cerberus-iam.php'),
+            __DIR__.'/../../config/cerberus-iam.php' => config_path('cerberus-iam.php'),
         ], 'config');
 
         // Register the Cerberus authentication driver
