@@ -1,4 +1,4 @@
-# Cerberus IAM | Laravel Bridge
+# Cerberus IAM | Laravel SDK
 
 A framework-agnostic bridge that lets any Laravel application outsource authentication and user directory responsibilities to the [Cerberus IAM API](../README.md).  Instead of maintaining local passwords, session stores, and role logic, you attach this package, configure a guard, and delegate the heavy lifting to Cerberus.
 
