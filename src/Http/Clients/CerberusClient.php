@@ -218,14 +218,12 @@ class CerberusClient implements IamClient
                 'body' => http_build_query($body),
             ];
 
-            // Add authorization header if client credentials are available
-            if ($header = $this->clientCredentialsHeader()) {
-                $options['headers']['Authorization'] = $header;
-            } else {
-                // Include client credentials in the request body
+            // Include client credentials in the request body (client_secret_post method)
+            // Cerberus IAM requires this authentication method
+            if (! empty($this->oauthConfig['client_secret'])) {
                 $options['body'] .= '&'.http_build_query([
                     'client_id' => $this->oauthConfig['client_id'],
-                    'client_secret' => $this->oauthConfig['client_secret'] ?? null,
+                    'client_secret' => $this->oauthConfig['client_secret'],
                 ]);
             }
 
@@ -270,11 +268,9 @@ class CerberusClient implements IamClient
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
 
-        // Add authorization header if client credentials are available
-        if ($cred = $this->clientCredentialsHeader()) {
-            $headers['Authorization'] = $cred;
-        } elseif (! empty($this->oauthConfig['client_secret'])) {
-            // Include client credentials in the body if no header
+        // Include client credentials in the body (client_secret_post method)
+        // Cerberus IAM requires this authentication method
+        if (! empty($this->oauthConfig['client_secret'])) {
             $body['client_id'] = $this->oauthConfig['client_id'];
             $body['client_secret'] = $this->oauthConfig['client_secret'];
         }
@@ -299,17 +295,6 @@ class CerberusClient implements IamClient
     {
         // Generate the SHA256 hash of the verifier and base64url encode it
         return rtrim(strtr(base64_encode(hash('sha256', $verifier, true)), '+/', '-_'), '=');
-    }
-
-    protected function clientCredentialsHeader(): ?string
-    {
-        // Return null if client secret is not configured
-        if (empty($this->oauthConfig['client_secret'])) {
-            return null;
-        }
-
-        // Return the Basic authorization header with base64 encoded credentials
-        return 'Basic '.base64_encode($this->oauthConfig['client_id'].':'.$this->oauthConfig['client_secret']);
     }
 
     public function url(string $path): string
