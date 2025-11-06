@@ -21,7 +21,7 @@ A framework-agnostic bridge that lets any Laravel application outsource authenti
 ## Installation
 
 ```bash
-composer require cerberus/laravel-iam
+composer require cerberus-iam/laravel-iam
 php artisan vendor:publish --provider="CerberusIAM\\CerberusIamServiceProvider" --tag=config
 ```
 
