@@ -45,6 +45,49 @@ CERBERUS_IAM_REDIRECT_AFTER_LOGIN=/dashboard
 
 ---
 
+## Database Requirements
+
+Cerberus IAM uses UUIDs for user identifiers. If your Laravel application uses database sessions, you must ensure the `sessions` table's `user_id` column can store UUIDs (strings) rather than bigints.
+
+### For New Applications
+
+When creating the sessions table migration, use:
+
+```php
+$table->string('user_id')->nullable()->index();
+```
+
+### For Existing Applications
+
+If you already have a sessions table with a bigint `user_id` column, create a migration to convert it:
+
+```php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('sessions', function (Blueprint $table) {
+            $table->string('user_id')->nullable()->change();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('sessions', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable()->change();
+        });
+    }
+};
+```
+
+> **Note:** The same requirement applies if you use UUIDs for the `users` table in your application. This is a common practice when integrating with external authentication systems.
+
+---
+
 ## Guard Setup
 
 Replace the default `web` guard (or add a dedicated guard) in `config/auth.php`:
@@ -222,12 +265,13 @@ To test against a live Cerberus instance locally:
 
 ## Troubleshooting
 
-| Symptom                                  | Likely Cause                       | Fix                                                             |
-| ---------------------------------------- | ---------------------------------- | --------------------------------------------------------------- |
-| Redirect loop back to Cerberus           | callback URL mismatch              | Confirm `CERBERUS_IAM_REDIRECT_URI` matches the client settings |
-| `invalid_state` exception                | Session not persisting             | Check session driver, domain, and ensure HTTPS in production    |
-| `Route [/cerberus/callback] not defined` | Routes cached without package boot | Clear route cache or define the route manually                  |
-| 401 when listing users                   | Missing organisation slug header   | Pass `X-Org-Domain` or adjust repository call                   |
+| Symptom                                                  | Likely Cause                       | Fix                                                             |
+| -------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------- |
+| Redirect loop back to Cerberus                           | callback URL mismatch              | Confirm `CERBERUS_IAM_REDIRECT_URI` matches the client settings |
+| `invalid_state` exception                                | Session not persisting             | Check session driver, domain, and ensure HTTPS in production    |
+| `Route [/cerberus/callback] not defined`                 | Routes cached without package boot | Clear route cache or define the route manually                  |
+| 401 when listing users                                   | Missing organisation slug header   | Pass `X-Org-Domain` or adjust repository call                   |
+| `Invalid text representation: invalid input syntax for type bigint` | Sessions table `user_id` is bigint | Change sessions table `user_id` column to string (see Database Requirements) |
 
 ---
 
