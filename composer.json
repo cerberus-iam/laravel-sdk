@@ -53,7 +53,10 @@
   "autoload-dev": {
     "psr-4": {
       "CerberusIAM\\Tests\\": "tests/"
-    }
+    },
+    "files": [
+      "tests/Support/FetchStub.php"
+    ]
   },
   "extra": {
     "laravel": {

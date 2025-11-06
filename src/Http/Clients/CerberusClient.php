@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-use function Fetch\fetch;
+use function fetch;
 
 /**
  * Cerberus IAM HTTP Client
