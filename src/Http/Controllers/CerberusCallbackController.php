@@ -59,7 +59,7 @@ class CerberusCallbackController extends Controller
             // If still no guard name, throw an error
             if (! $guardName) {
                 throw new BadRequestHttpException(
-                    'Unable to determine which guard initiated the OAuth flow. ' .
+                    'Unable to determine which guard initiated the OAuth flow. '.
                     'Please ensure cerberus-iam.default_guard is configured, or upgrade your OAuth flow.'
                 );
             }

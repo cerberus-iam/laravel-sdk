@@ -17,9 +17,7 @@ use Illuminate\Support\Fluent;
  * It's a stateless value object that extends Laravel's Fluent class
  * and uses the same traits as Laravel's default User model.
  */
-class CerberusUser extends Fluent implements
-    AuthenticatableContract,
-    AuthorizableContract
+class CerberusUser extends Fluent implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
@@ -61,8 +59,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Get the name of the unique identifier for the user.
-     *
-     * @return string
      */
     public function getAuthIdentifierName(): string
     {
@@ -71,8 +67,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Get the unique identifier for the user.
-     *
-     * @return mixed
      */
     public function getAuthIdentifier(): mixed
     {
@@ -81,8 +75,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Get the password for the user.
-     *
-     * @return string|null
      */
     public function getAuthPassword(): ?string
     {
@@ -91,9 +83,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Determine if the user has a specific role.
-     *
-     * @param  string  $role
-     * @return bool
      */
     public function hasRole(string $role): bool
     {
@@ -104,9 +93,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Determine if the user has a specific permission.
-     *
-     * @param  string  $permission
-     * @return bool
      */
     public function hasPermission(string $permission): bool
     {
@@ -117,8 +103,6 @@ class CerberusUser extends Fluent implements
 
     /**
      * Get the user's organisation.
-     *
-     * @return array|null
      */
     public function organisation(): ?array
     {
