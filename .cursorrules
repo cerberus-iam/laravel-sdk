@@ -1,0 +1,73 @@
+# Cursor Rules for Cerberus IAM Laravel Package
+
+## Code Style & Standards
+
+- Follow PSR-12 coding standards
+- Use Laravel naming conventions
+- Maintain consistent code formatting with Pint
+- Write comprehensive PHPDoc blocks for all public methods
+- Use type hints and return types consistently
+
+## Architecture Patterns
+
+- Follow SOLID principles
+- Use dependency injection over static calls
+- Implement interfaces for testability
+- Keep classes focused on single responsibilities
+- Use Laravel service container for dependency resolution
+
+## Testing Requirements
+
+- Write tests for all new features and bug fixes
+- Aim for high test coverage (>80%)
+- Use descriptive test method names
+- Mock external dependencies appropriately
+- Test both success and failure scenarios
+
+## Security Considerations
+
+- Never log sensitive information (passwords, tokens, secrets)
+- Validate all input parameters
+- Use HTTPS for all external API calls
+- Implement proper OAuth2 flow security
+- Handle token storage securely
+
+## Error Handling
+
+- Use appropriate exception types
+- Provide meaningful error messages
+- Log errors for debugging but don't expose sensitive data
+- Gracefully handle API failures
+- Return null for optional operations rather than throwing exceptions
+
+## Documentation Standards
+
+- Update README.md for any configuration changes
+- Document breaking changes in CHANGELOG.md
+- Add PHPDoc for complex business logic
+- Keep code comments focused and meaningful
+- Update issue templates when adding new features
+
+## Git Workflow
+
+- Use descriptive commit messages
+- Follow conventional commit format when possible
+- Create focused pull requests
+- Reference issues in commits and PRs
+- Keep branches up to date with main
+
+## Laravel Specific
+
+- Use Eloquent relationships appropriately
+- Leverage Laravel's built-in validation
+- Use Laravel's caching and session features
+- Follow Laravel directory structure conventions
+- Use Laravel facades judiciously
+
+## Performance Considerations
+
+- Avoid N+1 query problems
+- Use eager loading when fetching relationships
+- Cache expensive operations appropriately
+- Minimize external API calls
+- Profile performance-critical code paths

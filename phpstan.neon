@@ -1,0 +1,30 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    tmpDir: .phpstan.cache
+    treatPhpDocTypesAsCertain: false
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Laravel specific ignores
+        - '#Call to an undefined method.*#'
+        - '#Access to an undefined property.*#'
+        - '#Cannot call method.*on mixed.#'
+        - '#Parameter .* expects.*#'
+        - '#Property .* does not accept .*#'
+        - '#Return type .* should be compatible with return type .*#'
+        - '#Negated boolean expression is always false.#'
+        - '#Method .* has parameter .* with no type specified.#'
+        - '#Method .* has no return type specified.#'
+        - '#Cannot access property .* on .*\|null.#'
+        - '#Cannot access offset .* on .*#'
+        - '#Function .* has no return type specified.#'
+        - '#Offset .* does not exist on array.*#'
+        # Test specific ignores
+        - '#Method .* should return .* but returns mixed.#'
+        - '#Cannot access property .* on mixed.#'
+    excludePaths:
+        - vendor/*
+        - .phpstan.cache/*

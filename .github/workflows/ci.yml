@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [8.2, 8.3]
+        laravel: [10, 11]
+        stability: [prefer-lowest, prefer-stable]
+        exclude:
+          # Exclude Laravel 11 with PHP 8.2 lowest stability due to compatibility
+          - php: 8.2
+            laravel: 11
+            stability: prefer-lowest
+
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install lowest dependencies
+        if: matrix.stability == 'prefer-lowest'
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Install highest dependencies
+        if: matrix.stability == 'prefer-stable'
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Copy environment file
+        run: cp .env.ci .env || true
+
+      - name: Generate application key
+        run: php artisan key:generate || true
+
+      - name: Lint code
+        run: ./vendor/bin/pint --test
+
+      - name: Run static analysis
+        run: ./vendor/bin/phpstan analyse --error-format=github
+
+      - name: Run tests
+        run: ./vendor/bin/pest --coverage --min=80
