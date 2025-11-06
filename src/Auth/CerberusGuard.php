@@ -223,8 +223,8 @@ class CerberusGuard implements StatefulGuard
         $state = Str::uuid()->toString();
         // Generate a code verifier for PKCE
         $codeVerifier = $this->client->generateCodeVerifier();
-        // Store the state and code verifier
-        $this->stateStore->putState($state, $codeVerifier);
+        // Store the state, code verifier, and guard name
+        $this->stateStore->putState($state, $codeVerifier, $this->name);
 
         // Build the authorization URL
         $authUrl = $this->client->buildAuthorizationUrl($state, $codeVerifier, $returnTo ?? ($this->request?->fullUrl() ?? null));

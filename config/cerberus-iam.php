@@ -77,6 +77,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Guard
+    |--------------------------------------------------------------------------
+    |
+    | The default authentication guard to use when handling OAuth callbacks.
+    | This should match the guard name configured in your config/auth.php
+    | that uses the 'cerberus' driver.
+    |
+    */
+
+    'default_guard' => env('CERBERUS_IAM_DEFAULT_GUARD', 'cerberus'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Post-login Redirect
     |--------------------------------------------------------------------------
     |

@@ -20,8 +20,9 @@ interface OAuthStateStore
      *
      * @param  string  $state  The OAuth state parameter for CSRF protection.
      * @param  string|null  $codeVerifier  The PKCE code verifier for security.
+     * @param  string|null  $guardName  The name of the guard initiating the OAuth flow.
      */
-    public function putState(string $state, ?string $codeVerifier = null): void;
+    public function putState(string $state, ?string $codeVerifier = null, ?string $guardName = null): void;
 
     /**
      * Retrieve and remove the stored OAuth state and code verifier.
@@ -29,7 +30,7 @@ interface OAuthStateStore
      * This method retrieves the stored state and code verifier, then removes them
      * from storage to prevent reuse.
      *
-     * @return array{state: string|null, code_verifier: string|null} The state and code verifier.
+     * @return array{state: string|null, code_verifier: string|null, guard_name: string|null} The state, code verifier, and guard name.
      */
     public function pullState(): array;
 }

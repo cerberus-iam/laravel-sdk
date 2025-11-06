@@ -21,11 +21,13 @@ class SessionOAuthStateStore implements OAuthStateStore
      * @param  Session  $session  The Laravel session instance.
      * @param  string  $stateKey  The session key for storing the state.
      * @param  string  $codeVerifierKey  The session key for storing the code verifier.
+     * @param  string  $guardNameKey  The session key for storing the guard name.
      */
     public function __construct(
         protected Session $session,
         protected string $stateKey = 'cerberus.oauth.state',
-        protected string $codeVerifierKey = 'cerberus.oauth.code_verifier'
+        protected string $codeVerifierKey = 'cerberus.oauth.code_verifier',
+        protected string $guardNameKey = 'cerberus.oauth.guard'
     ) {}
 
     /**
@@ -36,8 +38,9 @@ class SessionOAuthStateStore implements OAuthStateStore
      *
      * @param  string  $state  The OAuth state parameter.
      * @param  string|null  $codeVerifier  The PKCE code verifier.
+     * @param  string|null  $guardName  The name of the guard initiating the OAuth flow.
      */
-    public function putState(string $state, ?string $codeVerifier = null): void
+    public function putState(string $state, ?string $codeVerifier = null, ?string $guardName = null): void
     {
         // Store the state in the session
         $this->session->put($this->stateKey, $state);
@@ -45,6 +48,11 @@ class SessionOAuthStateStore implements OAuthStateStore
         // Store the code verifier if provided
         if ($codeVerifier !== null) {
             $this->session->put($this->codeVerifierKey, $codeVerifier);
+        }
+
+        // Store the guard name if provided
+        if ($guardName !== null) {
+            $this->session->put($this->guardNameKey, $guardName);
         }
     }
 
@@ -54,7 +62,7 @@ class SessionOAuthStateStore implements OAuthStateStore
      * This method pulls the state and code verifier from the session,
      * removing them to prevent reuse.
      *
-     * @return array{state: string|null, code_verifier: string|null} The state and code verifier.
+     * @return array{state: string|null, code_verifier: string|null, guard_name: string|null} The state, code verifier, and guard name.
      */
     public function pullState(): array
     {
@@ -62,11 +70,14 @@ class SessionOAuthStateStore implements OAuthStateStore
         $state = $this->session->pull($this->stateKey);
         // Pull the code verifier from the session (removes it)
         $codeVerifier = $this->session->pull($this->codeVerifierKey);
+        // Pull the guard name from the session (removes it)
+        $guardName = $this->session->pull($this->guardNameKey);
 
         // Return the values, ensuring they are strings or null
         return [
             'state' => is_string($state) ? $state : null,
             'code_verifier' => is_string($codeVerifier) ? $codeVerifier : null,
+            'guard_name' => is_string($guardName) ? $guardName : null,
         ];
     }
 }

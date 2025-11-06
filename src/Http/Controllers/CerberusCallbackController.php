@@ -46,9 +46,19 @@ class CerberusCallbackController extends Controller
             throw new BadRequestHttpException('Missing Cerberus OAuth response parameters.');
         }
 
+        // Peek at the stored state to get the guard name without removing it
+        // (The guard's loginFromAuthorizationCode will pull and validate the full state)
+        $session = $request->session();
+        $guardName = $session->get('cerberus.oauth.guard');
+
+        // Fall back to configured default guard if no guard name is stored
+        if (! $guardName) {
+            $guardName = config('cerberus-iam.default_guard', 'cerberus');
+        }
+
         // Get the Cerberus guard instance
         /** @var CerberusGuard $guard */
-        $guard = Auth::guard($request->input('guard', 'web'));
+        $guard = Auth::guard($guardName);
 
         // Attempt to log in the user using the authorization code and state
         $guard->loginFromAuthorizationCode($code, $state);
