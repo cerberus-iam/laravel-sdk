@@ -1,5 +1,5 @@
 {
-  "name": "cerberus-iam/laravel-iam",
+  "name": "cerberus-iam/laravel-sdk",
   "description": "Laravel bridge for the Cerberus IAM platform providing guard, middleware, and HTTP client integration.",
   "keywords": [
     "laravel",
