@@ -47,17 +47,15 @@ CERBERUS_IAM_REDIRECT_AFTER_LOGIN=/dashboard
 
 ## Database Requirements
 
-Cerberus IAM uses UUIDs for user identifiers. If your Laravel application uses database sessions, you must ensure the `sessions` table's `user_id` column can store UUIDs (strings) rather than bigints.
+Cerberus IAM uses UUIDs for user identifiers. You must configure your Laravel application's database to support this.
 
-### For New Applications
+### Sessions Table
 
-When creating the sessions table migration, use:
+Update your sessions table migration to use string for `user_id`:
 
 ```php
 $table->string('user_id')->nullable()->index();
 ```
-
-### For Existing Applications
 
 If you already have a sessions table with a bigint `user_id` column, create a migration to convert it:
 
@@ -84,7 +82,65 @@ return new class extends Migration
 };
 ```
 
-> **Note:** The same requirement applies if you use UUIDs for the `users` table in your application. This is a common practice when integrating with external authentication systems.
+### User Model (Optional but Recommended)
+
+By default, the SDK retrieves user data from Cerberus IAM on every request (stateless mode). For better performance and integration with Laravel's ecosystem, you can configure the SDK to sync users to a local database table.
+
+To enable database-backed authentication, set the `CERBERUS_IAM_USER_MODEL` environment variable:
+
+```dotenv
+CERBERUS_IAM_USER_MODEL=App\\Models\\User
+```
+
+Your `users` table migration should include:
+
+```php
+Schema::create('users', function (Blueprint $table) {
+    $table->id();
+    $table->string('cerberus_id')->unique(); // UUID from Cerberus IAM
+    $table->string('name');
+    $table->string('email')->unique();
+
+    // Optional fields
+    $table->string('first_name')->nullable();
+    $table->string('last_name')->nullable();
+    $table->string('organisation_id')->nullable();
+    $table->string('organisation_slug')->nullable();
+
+    $table->timestamps();
+});
+```
+
+Your User model must:
+1. Implement `Illuminate\Contracts\Auth\Authenticatable` (typically via `Illuminate\Foundation\Auth\User`)
+2. Have `cerberus_id`, `name`, and `email` in the `$fillable` array
+3. Optionally include `first_name`, `last_name`, `organisation_id`, `organisation_slug`
+
+Example User model:
+
+```php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    protected $fillable = [
+        'cerberus_id',
+        'name',
+        'email',
+        'first_name',
+        'last_name',
+        'organisation_id',
+        'organisation_slug',
+    ];
+}
+```
+
+When database-backed authentication is enabled:
+- Users are automatically created/updated in your local database on login
+- Subsequent requests retrieve the user from your database (fast)
+- User data is refreshed from Cerberus on each login
 
 ---
 

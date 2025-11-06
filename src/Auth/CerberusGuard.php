@@ -173,16 +173,20 @@ class CerberusGuard implements StatefulGuard
         // Exchange the authorization code for tokens
         $tokenPayload = $this->client->exchangeAuthorizationCode($code, $codeVerifier);
 
-        // Normalize and store the tokens
-        $normalizedTokens = $this->normalizeTokenPayload($tokenPayload);
-        $this->tokens->store($normalizedTokens);
+        // Retrieve the user profile from the access token
+        $profile = $this->client->getUserInfo($tokenPayload['access_token'] ?? null);
 
-        // Retrieve the user from the access token
-        $user = $this->retrieveUserFromAccessToken($normalizedTokens['access_token'] ?? null);
-
-        if (! $user) {
+        if (! $profile) {
             throw new RuntimeException('Unable to resolve user profile from Cerberus.');
         }
+
+        // Normalize and store the tokens with user profile
+        $normalizedTokens = $this->normalizeTokenPayload($tokenPayload);
+        $normalizedTokens['user_profile'] = $profile;
+        $this->tokens->store($normalizedTokens);
+
+        // Create the user instance
+        $user = $this->hydrateUser($profile);
 
         // Set the authenticated user
         $this->setUser($user);
@@ -264,17 +268,24 @@ class CerberusGuard implements StatefulGuard
         $expiresAt = isset($stored['expires_at']) ? Carbon::parse($stored['expires_at']) : null;
 
         if ($expiresAt && $expiresAt->isPast() && ! empty($stored['refresh_token'])) {
+            // Refresh the access token
             $fresh = $this->client->refreshAccessToken($stored['refresh_token']);
+
+            // Fetch fresh user profile
+            $profile = $this->client->getUserInfo($fresh['access_token'] ?? null);
+
+            // Store refreshed tokens with updated profile
             $stored = $this->normalizeTokenPayload($fresh);
+            $stored['user_profile'] = $profile;
             $this->tokens->store($stored);
-            $accessToken = $stored['access_token'] ?? null;
         }
 
-        if (! $accessToken) {
-            return null;
+        // Try to get user from stored profile first (fast path)
+        if (! empty($stored['user_profile'])) {
+            return $this->hydrateUser($stored['user_profile']);
         }
 
-        // Retrieve user from the access token
+        // Fallback: fetch user from IAM API (slow path, for backwards compatibility)
         return $this->retrieveUserFromAccessToken($accessToken);
     }
 
@@ -293,7 +304,7 @@ class CerberusGuard implements StatefulGuard
 
         $profile = $this->client->getCurrentUserFromSession($cookieValue);
 
-        return $profile ? CerberusUser::fromProfile($profile) : null;
+        return $profile ? $this->hydrateUser($profile) : null;
     }
 
     protected function retrieveUserFromAccessToken(?string $accessToken): ?Authenticatable
@@ -304,7 +315,28 @@ class CerberusGuard implements StatefulGuard
 
         $profile = $this->client->getUserInfo($accessToken);
 
-        return $profile ? CerberusUser::fromProfile($profile) : null;
+        return $profile ? $this->hydrateUser($profile) : null;
+    }
+
+    /**
+     * Create a user instance from profile data.
+     *
+     * This method handles both database-backed (Eloquent) and stateless authentication.
+     * For database-backed mode, it syncs the user to the local database.
+     * For stateless mode, it creates a CerberusUser value object.
+     *
+     * @param  array<string, mixed>  $profile  The user profile data from Cerberus.
+     * @return Authenticatable The user instance.
+     */
+    protected function hydrateUser(array $profile): Authenticatable
+    {
+        // If the provider supports syncing, sync the user to the local database
+        if ($this->provider instanceof EloquentCerberusUserProvider) {
+            return $this->provider->syncUser($profile);
+        }
+
+        // Otherwise, return a stateless CerberusUser instance
+        return CerberusUser::fromProfile($profile);
     }
 
     /**

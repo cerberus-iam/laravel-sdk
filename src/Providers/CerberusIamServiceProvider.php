@@ -6,6 +6,7 @@ namespace CerberusIAM\Providers;
 
 use CerberusIAM\Auth\CerberusGuard;
 use CerberusIAM\Auth\CerberusUserProvider;
+use CerberusIAM\Auth\EloquentCerberusUserProvider;
 use CerberusIAM\Contracts\IamClient;
 use CerberusIAM\Contracts\OAuthStateStore;
 use CerberusIAM\Contracts\TokenStore;
@@ -123,7 +124,16 @@ class CerberusIamServiceProvider extends ServiceProvider
     {
         // Register the 'cerberus' user provider
         $auth->provider('cerberus', function ($app, array $config) {
-            return new CerberusUserProvider($app->make(IamClient::class));
+            $client = $app->make(IamClient::class);
+            $userModel = config('cerberus-iam.user_model');
+
+            // If a user model is configured, use the Eloquent provider that syncs to database
+            if ($userModel && class_exists($userModel)) {
+                return new EloquentCerberusUserProvider($client, $userModel);
+            }
+
+            // Otherwise, use the stateless provider
+            return new CerberusUserProvider($client);
         });
 
         // Extend the authentication system with the 'cerberus' guard

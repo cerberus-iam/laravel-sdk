@@ -111,4 +111,26 @@ return [
     */
 
     'redirect_after_login' => env('CERBERUS_IAM_REDIRECT_AFTER_LOGIN', '/'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | User Model (Optional)
+    |--------------------------------------------------------------------------
+    |
+    | If you want to sync users from Cerberus IAM to a local Eloquent model,
+    | specify the fully-qualified class name here. The model must:
+    |
+    | 1. Implement Illuminate\Contracts\Auth\Authenticatable
+    | 2. Have a 'cerberus_id' column (string/uuid) to store the IAM user ID
+    | 3. Have standard user fields: name, email
+    |
+    | When set, users will be automatically created/updated in your local
+    | database on login. When null, users are retrieved on-demand from
+    | Cerberus IAM (stateless mode).
+    |
+    | Example: App\Models\User::class
+    |
+    */
+
+    'user_model' => env('CERBERUS_IAM_USER_MODEL'),
 ];
