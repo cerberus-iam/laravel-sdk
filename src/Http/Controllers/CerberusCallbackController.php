@@ -48,7 +48,7 @@ class CerberusCallbackController extends Controller
 
         // Get the Cerberus guard instance
         /** @var CerberusGuard $guard */
-        $guard = Auth::guard($request->input('guard', 'cerberus'));
+        $guard = Auth::guard($request->input('guard', 'web'));
 
         // Attempt to log in the user using the authorization code and state
         $guard->loginFromAuthorizationCode($code, $state);
