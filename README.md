@@ -11,7 +11,6 @@ A framework-agnostic bridge that lets any Laravel application outsource authenti
 | PHP                | 8.2+                              |
 | Laravel components | 10.x / 11.x                       |
 | cerberus-iam/api   | Compatible REST instance          |
-| jerome/fetch-php   | ^3.2 (HTTP client)                |
 | jerome/filterable  | ^2.0 (optional request filtering) |
 
 > The package is designed for multi-tenant environments. Ensure the API instance you point to has the desired organisations, roles, and OAuth clients configured.
@@ -40,8 +39,13 @@ CERBERUS_IAM_ORG_SLUG=cerberus-iam
 CERBERUS_IAM_HTTP_TIMEOUT=10
 CERBERUS_IAM_HTTP_RETRY=true
 CERBERUS_IAM_HTTP_RETRY_ATTEMPTS=2
+CERBERUS_IAM_HTTP_RETRY_DELAY=100
 CERBERUS_IAM_REDIRECT_AFTER_LOGIN=/dashboard
 ```
+
+### HTTP Client Customisation
+
+All outbound calls now run through Laravel's HTTP client, so you get first-class support for `Http::fake()`, middleware, and macros. Tune timeouts or retry behaviour via `cerberus-iam.http` in the config (or the matching environment variables shown above). If you need deeper customisation you can register macros/global middleware on the `Http` facade the same way you would in any Laravel app—those hooks automatically apply to the SDK because it resolves the shared HTTP factory from the container.
 
 ---
 
@@ -248,7 +252,7 @@ The guard asks the store for `access_token`, `refresh_token`, and optionally `ex
 
 ## HTTP Client & Facade
 
-`CerberusIAM\Http\Clients\CerberusClient` is a thin wrapper over [`jerome/fetch-php`](https://fetch-php.thavarshan.com).  Use the facade when you need low-level access:
+`CerberusIAM\Http\Clients\CerberusClient` delegates to Laravel's HTTP client, so anything you register via `Http::macro()` or `Http::middleware()` flows through automatically. Use the facade when you need low-level access:
 
 ```php
 use CerberusIAM\Facades\CerberusIam;

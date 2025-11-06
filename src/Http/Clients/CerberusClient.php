@@ -5,69 +5,47 @@ declare(strict_types=1);
 namespace CerberusIAM\Http\Clients;
 
 use CerberusIAM\Contracts\IamClient;
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-use function fetch;
-
 /**
  * Cerberus IAM HTTP Client
  *
- * This class implements the IamClient interface, providing HTTP-based communication
- * with the Cerberus IAM service for authentication, authorization, and user management.
+ * Implements the IamClient contract by delegating HTTP requests to Laravel's HTTP client.
  */
 class CerberusClient implements IamClient
 {
-    /**
-     * The base URL of the Cerberus IAM service.
-     */
     protected string $baseUrl;
 
+    protected HttpFactory $http;
+
     /**
-     * Create a new Cerberus client instance.
-     *
-     * @param  string  $baseUrl  The base URL of the Cerberus IAM service.
-     * @param  string|null  $sessionCookie  The name of the session cookie for session-based requests.
-     * @param  array  $oauthConfig  The OAuth configuration including client_id, client_secret, redirect_uri, scopes.
-     * @param  array  $httpConfig  Additional HTTP client configuration like timeout and retry settings.
+     * @param  array<string, mixed>  $oauthConfig
+     * @param  array<string, mixed>  $httpConfig
      */
     public function __construct(
         string $baseUrl,
         protected ?string $sessionCookie,
         protected ?string $organisationSlug,
         protected array $oauthConfig,
-        protected array $httpConfig = []
+        protected array $httpConfig = [],
+        ?HttpFactory $http = null
     ) {
-        // Ensure the base URL does not end with a slash
         $this->baseUrl = rtrim($baseUrl, '/');
+        $this->http = $http ?? new HttpFactory();
     }
 
-    /**
-     * Get the name of the session cookie.
-     *
-     * @return string|null The session cookie name, or null if not configured.
-     */
     public function sessionCookieName(): ?string
     {
         return $this->sessionCookie;
     }
 
-    /**
-     * Build the authorization URL for OAuth flow.
-     *
-     * This method constructs the OAuth authorization URL with all necessary parameters
-     * including state, code challenge, and scopes.
-     *
-     * @param  string  $state  The OAuth state parameter for CSRF protection.
-     * @param  string  $codeVerifier  The PKCE code verifier.
-     * @param  string|null  $returnTo  Optional return URL after authorization.
-     * @return string The complete authorization URL.
-     */
     public function buildAuthorizationUrl(string $state, string $codeVerifier, ?string $returnTo = null): string
     {
-        // Build the query parameters for the OAuth authorization request
         $query = [
             'response_type' => 'code',
             'client_id' => $this->oauthConfig['client_id'],
@@ -78,47 +56,30 @@ class CerberusClient implements IamClient
             'code_challenge_method' => 'S256',
         ];
 
-        // Add the return_to parameter if provided
         if ($returnTo) {
             $query['return_to'] = $returnTo;
         }
 
-        // Construct the full authorization URL
         return $this->url('/oauth2/authorize').'?'.http_build_query($query);
     }
 
-    /**
-     * Generate a code verifier for PKCE.
-     *
-     * @return string The generated code verifier.
-     */
     public function generateCodeVerifier(): string
     {
         return Str::random(64);
     }
 
-    /**
-     * Exchange authorization code for tokens.
-     *
-     * @param  string  $code  The authorization code from the OAuth callback.
-     * @param  string|null  $codeVerifier  The PKCE code verifier.
-     * @return array<string, mixed> The token response.
-     */
     public function exchangeAuthorizationCode(string $code, ?string $codeVerifier = null): array
     {
-        // Prepare the payload for the token exchange request
         $payload = [
             'grant_type' => 'authorization_code',
             'code' => $code,
             'redirect_uri' => $this->oauthConfig['redirect_uri'],
         ];
 
-        // Include the code verifier if provided for PKCE
         if ($codeVerifier) {
             $payload['code_verifier'] = $codeVerifier;
         }
 
-        // Make the token request and return the response
         return $this->tokenRequest($payload);
     }
 
@@ -132,103 +93,62 @@ class CerberusClient implements IamClient
 
     public function getUserInfo(string $accessToken): ?array
     {
-        // Make a GET request to the OAuth2 userinfo endpoint
-        $response = fetch($this->url('/oauth2/userinfo'), $this->applyDefaults([
-            'method' => 'GET',
-            'headers' => [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer '.$accessToken,
-            ],
-        ]));
+        $response = $this->http()
+            ->withToken($accessToken)
+            ->get('/oauth2/userinfo');
 
-        // Return the JSON response if the request was successful
-        if ($response->successful()) {
-            return $response->json();
-        }
-
-        return null;
+        return $response->successful() ? $response->json() : null;
     }
 
     public function getCurrentUserFromSession(string $sessionToken): ?array
     {
-        // Return null if session cookie is not configured
         if (! $this->sessionCookie) {
             return null;
         }
 
-        // Make a GET request to the user profile endpoint using the session cookie
-        $response = fetch($this->url('/v1/me/profile'), $this->applyDefaults([
-            'method' => 'GET',
-            'headers' => [
-                'Accept' => 'application/json',
+        $response = $this->http()
+            ->withHeaders([
                 'Cookie' => sprintf('%s=%s', $this->sessionCookie, $sessionToken),
-            ],
-        ]));
+            ])
+            ->get('/v1/me/profile');
 
-        // Parse the response and extract user data
-        if ($response->successful()) {
-            $data = $response->json();
-            if (isset($data['data'])) {
-                return $data['data'];
-            }
-
-            return $data;
+        if (! $response->successful()) {
+            return null;
         }
 
-        return null;
+        $data = $response->json();
+
+        return $data['data'] ?? $data;
     }
 
     public function logoutSession(string $sessionToken): void
     {
-        // Return early if session cookie is not configured
         if (! $this->sessionCookie) {
             return;
         }
 
-        // Make a POST request to the logout endpoint to invalidate the session
-        fetch($this->url('/v1/auth/logout'), $this->applyDefaults([
-            'method' => 'POST',
-            'headers' => [
-                'Accept' => 'application/json',
+        $this->http()
+            ->withHeaders([
                 'Cookie' => sprintf('%s=%s', $this->sessionCookie, $sessionToken),
-            ],
-        ]));
+            ])
+            ->post('/v1/auth/logout');
     }
 
     public function revokeTokens(?string $accessToken, ?string $refreshToken): void
     {
-        // Helper function to create payload for a token
-        $payload = static function (?string $token) {
-            return $token ? ['token' => $token] : null;
-        };
+        $tokens = array_filter([$accessToken, $refreshToken]);
 
-        // Iterate over access and refresh tokens to revoke each one
-        foreach ([$payload($accessToken), $payload($refreshToken)] as $body) {
-            if (! $body) {
-                continue;
-            }
+        foreach ($tokens as $token) {
+            $payload = ['token' => $token];
 
-            // Prepare the request options for the revoke endpoint
-            $options = [
-                'method' => 'POST',
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ],
-                'body' => http_build_query($body),
-            ];
-
-            // Include client credentials in the request body (client_secret_post method)
-            // Cerberus IAM requires this authentication method
             if (! empty($this->oauthConfig['client_secret'])) {
-                $options['body'] .= '&'.http_build_query([
-                    'client_id' => $this->oauthConfig['client_id'],
-                    'client_secret' => $this->oauthConfig['client_secret'],
-                ]);
+                $payload['client_id'] = $this->oauthConfig['client_id'];
+                $payload['client_secret'] = $this->oauthConfig['client_secret'];
             }
 
-            // Make the revoke request
-            fetch($this->url('/oauth2/revoke'), $this->applyDefaults($options));
+            $this->http()
+                ->asForm()
+                ->post('/oauth2/revoke', $payload);
         }
     }
 
@@ -244,79 +164,66 @@ class CerberusClient implements IamClient
             return null;
         }
 
-        $response = fetch($this->url("/v1/admin/users/{$id}"), $this->applyDefaults([
-            'method' => 'GET',
-            'headers' => [
-                'Accept' => 'application/json',
+        $response = $this->http()
+            ->withHeaders([
                 'Authorization' => 'Bearer '.$accessToken,
                 'X-Org-Domain' => $this->organisationSlug,
-            ],
-        ]));
+            ])
+            ->get("/v1/admin/users/{$id}");
 
-        if ($response->successful()) {
-            return $response->json();
-        }
-
-        return null;
+        return $response->successful() ? $response->json() : null;
     }
 
     protected function tokenRequest(array $body): array
     {
-        // Prepare headers for the token request
-        $headers = [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/x-www-form-urlencoded',
-        ];
-
-        // Include client credentials in the body (client_secret_post method)
-        // Cerberus IAM requires this authentication method
         if (! empty($this->oauthConfig['client_secret'])) {
             $body['client_id'] = $this->oauthConfig['client_id'];
             $body['client_secret'] = $this->oauthConfig['client_secret'];
         }
 
-        // Make the POST request to the token endpoint
-        $response = fetch($this->url('/oauth2/token'), $this->applyDefaults([
-            'method' => 'POST',
-            'headers' => $headers,
-            'body' => http_build_query($body),
-        ]));
+        $headers = [];
 
-        // Throw an exception if the request was not successful
-        if (! $response->successful()) {
-            throw new RuntimeException('Cerberus token request failed: '.$response->text());
+        if (! empty($this->oauthConfig['client_id'])) {
+            $headers['Authorization'] = 'Basic '.base64_encode(sprintf(
+                '%s:%s',
+                $this->oauthConfig['client_id'],
+                $this->oauthConfig['client_secret'] ?? ''
+            ));
         }
 
-        // Return the JSON response
-        return $response->json();
-    }
+        $response = $this->http()
+            ->asForm()
+            ->withHeaders($headers)
+            ->post('/oauth2/token', $body);
 
-    protected function generateCodeChallenge(string $verifier): string
-    {
-        // Generate the SHA256 hash of the verifier and base64url encode it
-        return rtrim(strtr(base64_encode(hash('sha256', $verifier, true)), '+/', '-_'), '=');
+        if (! $response->successful()) {
+            throw new RuntimeException('Cerberus token request failed: '.$response->body());
+        }
+
+        return $response->json();
     }
 
     public function url(string $path): string
     {
-        // Concatenate the base URL with the provided path
         return $this->baseUrl.$path;
     }
 
-    protected function applyDefaults(array $options): array
+    protected function http(): PendingRequest
     {
-        // Apply default timeout if not set and configured
-        if (! isset($options['timeout']) && isset($this->httpConfig['timeout'])) {
-            $options['timeout'] = (int) $this->httpConfig['timeout'];
+        $request = $this->http->baseUrl($this->baseUrl)->acceptJson();
+
+        if (isset($this->httpConfig['timeout'])) {
+            $request = $request->timeout((int) $this->httpConfig['timeout']);
         }
 
-        // Apply default retry settings if not set and enabled
-        if (! isset($options['retries']) && Arr::get($this->httpConfig, 'retry.enabled')) {
-            $options['retries'] = (int) Arr::get($this->httpConfig, 'retry.max_attempts', 2);
+        if (Arr::get($this->httpConfig, 'retry.enabled')) {
+            $request = $request->retry(
+                (int) Arr::get($this->httpConfig, 'retry.max_attempts', 2),
+                (int) Arr::get($this->httpConfig, 'retry.delay', 100)
+            );
         }
 
-        // Return the options with defaults applied
-        return $options;
+        return $request;
     }
 
     /**

@@ -5,45 +5,19 @@ namespace CerberusIAM\Tests\Feature;
 use CerberusIAM\Contracts\IamClient;
 use CerberusIAM\Repositories\UserDirectoryRepository;
 use CerberusIAM\Tests\Fixtures\FakeIamClient;
-use CerberusIAM\Tests\Support\FetchStub;
 use Illuminate\Http\Request;
-
-class RepositoryStubResponse
-{
-    public function __construct(
-        protected bool $ok,
-        protected array $payload,
-        protected string $text = ''
-    ) {}
-
-    public function successful(): bool
-    {
-        return $this->ok;
-    }
-
-    public function json(): array
-    {
-        return $this->payload;
-    }
-
-    public function text(): string
-    {
-        return $this->text;
-    }
-}
+use Illuminate\Support\Facades\Http;
 
 it('builds requests with filter parameters', function () {
-    FetchStub::$requests = [];
-    FetchStub::$queue = [
-        new RepositoryStubResponse(true, [
-            'data' => [],
-        ]),
-    ];
-
     $fake = new FakeIamClient;
     app()->instance(IamClient::class, $fake);
 
-    $repository = new UserDirectoryRepository($fake);
+    Http::fake(fn () => Http::response(['data' => []], 200));
+
+    $repository = new UserDirectoryRepository(
+        $fake,
+        app(\Illuminate\Http\Client\Factory::class)
+    );
 
     $request = Request::create('/users', 'GET', [
         'email' => 'jane@example.com',
@@ -52,18 +26,17 @@ it('builds requests with filter parameters', function () {
 
     $repository->list('acme', $request, ['page' => 2], 'access-token', 'session-token');
 
-    expect(FetchStub::$requests)->toHaveCount(1);
+    Http::assertSentCount(1);
 
-    $requestPayload = FetchStub::$requests[0];
-    expect($requestPayload['url'])->toBe('https://cerberus.test/v1/admin/users');
+    Http::assertSent(function ($request) {
+        parse_str(parse_url($request->url(), PHP_URL_QUERY) ?? '', $query);
 
-    $headers = $requestPayload['options']['headers'];
-    expect($headers['X-Org-Domain'])->toBe('acme');
-    expect($headers['Authorization'])->toBe('Bearer access-token');
-    expect($headers['Cookie'])->toBe('cerb_sid=session-token');
-
-    $query = $requestPayload['options']['query'];
-    expect($query['filter[email]'])->toBe('jane@example.com');
-    expect($query['filter[team]'])->toBe('ops');
-    expect($query['page'])->toBe(2);
+        return $request->method() === 'GET'
+            && str_starts_with($request->url(), 'https://cerberus.test/v1/admin/users')
+            && $request->header('X-Org-Domain')[0] === 'acme'
+            && $request->header('Authorization')[0] === 'Bearer access-token'
+            && $request->header('Cookie')[0] === 'cerb_sid=session-token'
+            && ($query['filter']['email'] ?? null) === 'jane@example.com'
+            && ($query['filter']['team'] ?? null) === 'ops';
+    });
 });

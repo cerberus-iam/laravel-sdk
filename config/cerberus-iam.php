@@ -62,8 +62,8 @@ return [
     | Timeout Settings
     |--------------------------------------------------------------------------
     |
-    | Customize HTTP client behaviour. The package uses jerome/fetch-php under
-    | the hood which ultimately proxies to Guzzle, so the keys map directly.
+    | Customize the built-in Laravel HTTP client behaviour used for all outbound
+    | requests to the Cerberus IAM API.
     |
     */
 
@@ -72,6 +72,7 @@ return [
         'retry' => [
             'enabled' => env('CERBERUS_IAM_HTTP_RETRY', true),
             'max_attempts' => env('CERBERUS_IAM_HTTP_RETRY_ATTEMPTS', 2),
+            'delay' => env('CERBERUS_IAM_HTTP_RETRY_DELAY', 100),
         ],
     ],
 

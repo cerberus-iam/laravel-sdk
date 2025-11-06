@@ -3,48 +3,18 @@
 namespace CerberusIAM\Tests\Feature;
 
 use CerberusIAM\Http\Clients\CerberusClient;
-use CerberusIAM\Tests\Support\FetchStub;
-
-class StubResponse
-{
-    public function __construct(
-        protected bool $ok,
-        protected array $payload,
-        protected string $text = ''
-    ) {}
-
-    public function successful(): bool
-    {
-        return $this->ok;
-    }
-
-    public function json(): array
-    {
-        return $this->payload;
-    }
-
-    public function text(): string
-    {
-        return $this->text;
-    }
-}
+use Illuminate\Support\Facades\Http;
 
 it('fetches a user by id using client credentials', function () {
-    // TODO: Fix this test - the fetch stub is not being loaded before the real fetch function
-    // This is a pre-existing issue that needs proper HTTP client mocking
-    test()->markTestSkipped('Fetch function mocking issue - needs refactoring to use dependency injection');
-
-    FetchStub::$requests = [];
-    FetchStub::$queue = [
-        new StubResponse(true, [
+    Http::fakeSequence()
+        ->push([
             'access_token' => 'app-token',
             'expires_in' => 3600,
-        ]),
-        new StubResponse(true, [
+        ], 200)
+        ->push([
             'id' => 'user-123',
             'email' => 'admin@example.com',
-        ]),
-    ];
+        ], 200);
 
     $client = new CerberusClient(
         'https://cerb.test',
@@ -56,7 +26,8 @@ it('fetches a user by id using client credentials', function () {
             'redirect_uri' => 'https://app.test/callback',
             'scopes' => ['users:read'],
         ],
-        []
+        [],
+        app(\Illuminate\Http\Client\Factory::class)
     );
 
     $user = $client->getUserById('user-123');
@@ -66,15 +37,17 @@ it('fetches a user by id using client credentials', function () {
         'email' => 'admin@example.com',
     ]);
 
-    expect(FetchStub::$requests)->toHaveCount(2);
+    Http::assertSentCount(2);
 
-    $tokenRequest = FetchStub::$requests[0];
-    expect($tokenRequest['url'])->toBe('https://cerb.test/oauth2/token');
-    expect($tokenRequest['options']['method'])->toBe('POST');
-    expect($tokenRequest['options']['headers']['Authorization'])->toStartWith('Basic ');
+    Http::assertSent(function ($request) {
+        return $request->url() === 'https://cerb.test/oauth2/token'
+            && $request->method() === 'POST'
+            && str_starts_with($request->header('Authorization')[0] ?? '', 'Basic ');
+    });
 
-    $userRequest = FetchStub::$requests[1];
-    expect($userRequest['url'])->toBe('https://cerb.test/v1/admin/users/user-123');
-    expect($userRequest['options']['headers']['Authorization'])->toBe('Bearer app-token');
-    expect($userRequest['options']['headers']['X-Org-Domain'])->toBe('cerberus-iam');
+    Http::assertSent(function ($request) {
+        return $request->url() === 'https://cerb.test/v1/admin/users/user-123'
+            && $request->header('Authorization')[0] === 'Bearer app-token'
+            && $request->header('X-Org-Domain')[0] === 'cerberus-iam';
+    });
 });

@@ -19,6 +19,7 @@ use CerberusIAM\Support\Stores\SessionTokenStore;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -53,7 +54,8 @@ class CerberusIamServiceProvider extends ServiceProvider
                 $config->get('cerberus-iam.session_cookie'),
                 $config->get('cerberus-iam.organisation_slug'),
                 $config->get('cerberus-iam.oauth'),
-                $config->get('cerberus-iam.http', [])
+                $config->get('cerberus-iam.http', []),
+                $app->make(HttpFactory::class)
             );
         });
 
@@ -62,7 +64,14 @@ class CerberusIamServiceProvider extends ServiceProvider
 
         // Register the UserDirectoryRepository as a singleton
         $this->app->singleton(UserDirectoryRepository::class, function (Container $app) {
-            return new UserDirectoryRepository($app->make(IamClient::class));
+            /** @var ConfigRepository $config */
+            $config = $app->make(ConfigRepository::class);
+
+            return new UserDirectoryRepository(
+                $app->make(IamClient::class),
+                $app->make(HttpFactory::class),
+                $config->get('cerberus-iam.http', [])
+            );
         });
 
         // Bind the UserRepository interface to the UserDirectoryRepository implementation

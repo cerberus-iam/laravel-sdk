@@ -7,10 +7,11 @@ namespace CerberusIAM\Repositories;
 use CerberusIAM\Contracts\IamClient;
 use CerberusIAM\Contracts\UserRepository;
 use CerberusIAM\Filters\UserDirectoryFilter;
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
-
-use function Fetch\fetch;
 
 /**
  * User Directory Repository
@@ -26,7 +27,9 @@ class UserDirectoryRepository implements UserRepository
      * @param  IamClient  $client  The IAM client for API communication.
      */
     public function __construct(
-        protected IamClient $client
+        protected IamClient $client,
+        protected HttpFactory $http,
+        protected array $httpConfig = []
     ) {}
 
     /**
@@ -87,11 +90,9 @@ class UserDirectoryRepository implements UserRepository
         }
 
         // Make the GET request to the user directory endpoint
-        $response = fetch($this->client->url('/v1/admin/users'), [
-            'method' => 'GET',
-            'headers' => $headers,
-            'query' => $query,
-        ]);
+        $response = $this->request()
+            ->withHeaders($headers)
+            ->get($this->client->url('/v1/admin/users'), $query);
 
         // Handle unsuccessful responses
         if (! $response->successful()) {
@@ -100,7 +101,7 @@ class UserDirectoryRepository implements UserRepository
             try {
                 $error = $response->json();
             } catch (\Throwable $exception) {
-                $error = ['message' => $response->text()];
+                $error = ['message' => $response->body()];
             }
 
             // Return empty data with error metadata
@@ -114,5 +115,23 @@ class UserDirectoryRepository implements UserRepository
 
         // Return the successful JSON response
         return $response->json();
+    }
+
+    protected function request(): PendingRequest
+    {
+        $request = $this->http->acceptJson();
+
+        if (isset($this->httpConfig['timeout'])) {
+            $request = $request->timeout((int) $this->httpConfig['timeout']);
+        }
+
+        if (Arr::get($this->httpConfig, 'retry.enabled')) {
+            $request = $request->retry(
+                (int) Arr::get($this->httpConfig, 'retry.max_attempts', 2),
+                (int) Arr::get($this->httpConfig, 'retry.delay', 100)
+            );
+        }
+
+        return $request;
     }
 }

@@ -35,7 +35,6 @@
     "illuminate/session": "^10.0|^11.0|^12",
     "illuminate/routing": "^10.0|^11.0|^12",
     "illuminate/support": "^10.0|^11.0|^12",
-    "jerome/fetch-php": "^3.2",
     "jerome/filterable": "^2.0"
   },
   "require-dev": {
@@ -53,10 +52,7 @@
   "autoload-dev": {
     "psr-4": {
       "CerberusIAM\\Tests\\": "tests/"
-    },
-    "files": [
-      "tests/Support/FetchStub.php"
-    ]
+    }
   },
   "extra": {
     "laravel": {

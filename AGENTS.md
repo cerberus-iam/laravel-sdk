@@ -119,8 +119,7 @@ Environment variables prefixed with `CERBERUS_IAM_`:
 
 ## Dependencies
 
-- **Laravel**: ^10.0|^11.0 (framework integration)
-- **jerome/fetch-php**: ^3.2 (HTTP client)
+- **Laravel**: ^10.0|^11.0 (framework integration, HTTP client, and Auth stack)
 - **jerome/filterable**: ^2.0 (query filtering)
 
 ## Quality Assurance
