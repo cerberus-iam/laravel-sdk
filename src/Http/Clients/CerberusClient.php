@@ -82,6 +82,8 @@ class CerberusClient implements IamClient
             $query['return_to'] = $returnTo;
         }
 
+        unset($body['client_secret']);
+
         return $this->url('/oauth2/authorize').'?'.http_build_query($query);
     }
 
@@ -282,22 +284,17 @@ class CerberusClient implements IamClient
      */
     protected function tokenRequest(array $body): array
     {
-        if (! empty($this->oauthConfig['client_id'])) {
-            $body['client_id'] = $this->oauthConfig['client_id'];
-        }
-
-        if (! empty($this->oauthConfig['client_secret'])) {
-            $body['client_secret'] = $this->oauthConfig['client_secret'];
-        }
-
         $headers = [];
+        $clientId = $this->oauthConfig['client_id'] ?? null;
+        $clientSecret = $this->oauthConfig['client_secret'] ?? null;
 
-        if (! empty($this->oauthConfig['client_secret'])) {
-            $headers['Authorization'] = 'Basic '.base64_encode(sprintf(
-                '%s:%s',
-                $this->oauthConfig['client_id'],
-                $this->oauthConfig['client_secret'] ?? ''
-            ));
+        if ($clientId) {
+            $body['client_id'] = $clientId;
+        }
+
+        if ($clientSecret) {
+            // Confidential client: authenticate via HTTP Basic instead of sending the secret in the form body
+            $headers['Authorization'] = 'Basic '.base64_encode(sprintf('%s:%s', $clientId, $clientSecret));
         }
 
         $response = $this->http()
