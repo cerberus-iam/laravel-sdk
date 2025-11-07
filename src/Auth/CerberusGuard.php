@@ -65,16 +65,34 @@ class CerberusGuard implements StatefulGuard
         $this->config = $config;
     }
 
+    /**
+     * Determine if the current user is authenticated.
+     *
+     * @return bool True if a user is authenticated, false otherwise
+     */
     public function check(): bool
     {
         return $this->user() !== null;
     }
 
+    /**
+     * Determine if the current user is a guest (not authenticated).
+     *
+     * @return bool True if no user is authenticated, false otherwise
+     */
     public function guest(): bool
     {
         return ! $this->check();
     }
 
+    /**
+     * Get the currently authenticated user.
+     *
+     * Attempts to resolve the user from stored OAuth tokens or session cookies.
+     * Returns null if no authenticated user is found.
+     *
+     * @return Authenticatable|null The authenticated user or null
+     */
     public function user(): ?Authenticatable
     {
         if ($this->user !== null) {
@@ -92,37 +110,86 @@ class CerberusGuard implements StatefulGuard
         return null;
     }
 
+    /**
+     * Get the ID of the currently authenticated user.
+     *
+     * @return mixed The user ID or null if not authenticated
+     */
     public function id(): mixed
     {
         return $this->user()?->getAuthIdentifier();
     }
 
+    /**
+     * Validate the given credentials (not supported for OAuth).
+     *
+     * This method exists for interface compatibility but always returns
+     * the current authentication status since OAuth doesn't use passwords.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored for OAuth authentication
+     * @return bool True if authenticated, false otherwise
+     */
     public function validate(array $credentials = []): bool
     {
         return $this->check();
     }
 
+    /**
+     * Set the current authenticated user.
+     *
+     * @param  Authenticatable  $user  The user to set as authenticated
+     */
     public function setUser(Authenticatable $user): void
     {
         $this->user = $user;
     }
 
+    /**
+     * Determine if a user has been set on this guard instance.
+     *
+     * @return bool True if a user is set, false otherwise
+     */
     public function hasUser(): bool
     {
         return $this->user !== null;
     }
 
+    /**
+     * Determine if the user was authenticated via "remember me" cookie.
+     *
+     * Cerberus IAM does not support Laravel's remember-me functionality.
+     *
+     * @return bool Always returns false
+     */
     public function viaRemember(): bool
     {
         // Cerberus IAM guard does not support Laravel's remember-me cookies.
         return false;
     }
 
+    /**
+     * Log a user into the application.
+     *
+     * Sets the given user as the currently authenticated user.
+     * The remember parameter is ignored as OAuth handles session persistence.
+     *
+     * @param  Authenticatable  $user  The user to authenticate
+     * @param  bool  $remember  Ignored for OAuth authentication
+     */
     public function login(Authenticatable $user, $remember = false): void
     {
         $this->setUser($user);
     }
 
+    /**
+     * Log a user into the application by their ID.
+     *
+     * Retrieves the user by ID from the user provider and authenticates them.
+     *
+     * @param  mixed  $id  The user ID
+     * @param  bool  $remember  Ignored for OAuth authentication
+     * @return Authenticatable|null The authenticated user or null if not found
+     */
     public function loginUsingId($id, $remember = false): ?Authenticatable
     {
         if (! $this->provider) {
@@ -138,26 +205,79 @@ class CerberusGuard implements StatefulGuard
         return $user;
     }
 
+    /**
+     * Log a user into the application for a single request.
+     *
+     * For OAuth authentication, this behaves the same as checking current authentication
+     * since OAuth sessions are managed externally.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored for OAuth authentication
+     * @return bool True if authenticated, false otherwise
+     */
     public function once(array $credentials = []): bool
     {
         return $this->check();
     }
 
+    /**
+     * Log a user into the application for a single request by their ID.
+     *
+     * @param  mixed  $id  The user ID
+     * @return Authenticatable|null The authenticated user or null if not found
+     */
     public function onceUsingId($id): ?Authenticatable
     {
         return $this->loginUsingId($id);
     }
 
+    /**
+     * Attempt to authenticate a user using the given credentials.
+     *
+     * Password-based authentication is not supported. This method throws an exception
+     * directing users to use OAuth flow instead.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored - password auth not supported
+     * @param  bool  $remember  Ignored - password auth not supported
+     * @return bool Never returns - always throws exception
+     *
+     * @throws BadMethodCallException Always thrown as password auth is disabled
+     */
     public function attempt(array $credentials = [], $remember = false): bool
     {
         throw new BadMethodCallException('Password-based authentication is disabled. Redirect to Cerberus for sign-in.');
     }
 
+    /**
+     * Attempt to authenticate a user with conditions using the given credentials.
+     *
+     * Delegates to the attempt method. Callbacks are ignored since password
+     * authentication is not supported.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored - password auth not supported
+     * @param  array<callable>  $callbacks  Ignored - password auth not supported
+     * @param  bool  $remember  Ignored - password auth not supported
+     * @return bool Never returns - always throws exception
+     *
+     * @throws BadMethodCallException Always thrown as password auth is disabled
+     */
     public function attemptWhen(array $credentials, array $callbacks, $remember = false): bool
     {
         return $this->attempt($credentials, $remember);
     }
 
+    /**
+     * Complete OAuth authentication using an authorization code.
+     *
+     * Exchanges the authorization code for tokens, validates the OAuth state,
+     * retrieves the user profile, and authenticates the user.
+     *
+     * @param  string  $code  The authorization code from the OAuth callback
+     * @param  string  $state  The state parameter for CSRF protection
+     * @param  string|null  $codeVerifier  The PKCE code verifier (optional if stored)
+     * @return Authenticatable The authenticated user instance
+     *
+     * @throws RuntimeException When state validation fails or user profile cannot be retrieved
+     */
     public function loginFromAuthorizationCode(string $code, string $state, ?string $codeVerifier = null): Authenticatable
     {
         // Retrieve and validate the expected state
@@ -194,6 +314,12 @@ class CerberusGuard implements StatefulGuard
         return $user;
     }
 
+    /**
+     * Log the current user out of the application.
+     *
+     * Revokes OAuth tokens, clears stored tokens, logs out the session,
+     * and clears the authenticated user from the guard.
+     */
     public function logout(): void
     {
         // Retrieve stored tokens
@@ -221,6 +347,15 @@ class CerberusGuard implements StatefulGuard
         $this->user = null;
     }
 
+    /**
+     * Redirect the user to the Cerberus IAM authorization endpoint.
+     *
+     * Generates OAuth state and PKCE parameters, stores them securely,
+     * and returns a redirect response to initiate the OAuth flow.
+     *
+     * @param  string|null  $returnTo  Optional URL to redirect to after authentication
+     * @return Response Redirect response to the Cerberus authorization URL
+     */
     public function redirectToCerberus(?string $returnTo = null): Response
     {
         // Generate a unique state for CSRF protection
@@ -237,11 +372,22 @@ class CerberusGuard implements StatefulGuard
         return new RedirectResponse($authUrl);
     }
 
+    /**
+     * Get the token store instance used by this guard.
+     *
+     * @return TokenStore The token storage implementation
+     */
     public function getTokenStore(): TokenStore
     {
         return $this->tokens;
     }
 
+    /**
+     * Set the current HTTP request instance.
+     *
+     * @param  Request  $request  The HTTP request instance
+     * @return $this
+     */
     public function setRequest(Request $request)
     {
         $this->request = $request;
@@ -249,6 +395,14 @@ class CerberusGuard implements StatefulGuard
         return $this;
     }
 
+    /**
+     * Attempt to resolve the authenticated user from stored OAuth tokens.
+     *
+     * Checks for valid stored tokens, refreshes expired tokens if possible,
+     * and hydrates the user from the stored or fetched profile data.
+     *
+     * @return Authenticatable|null The authenticated user or null if tokens are invalid
+     */
     protected function resolveUserFromStoredTokens(): ?Authenticatable
     {
         // Retrieve stored tokens
@@ -289,6 +443,14 @@ class CerberusGuard implements StatefulGuard
         return $this->retrieveUserFromAccessToken($accessToken);
     }
 
+    /**
+     * Attempt to resolve the authenticated user from a session cookie.
+     *
+     * Checks for a valid session cookie and retrieves the user profile
+     * from the session-based authentication endpoint.
+     *
+     * @return Authenticatable|null The authenticated user or null if session is invalid
+     */
     protected function resolveUserFromSessionCookie(): ?Authenticatable
     {
         $cookieName = $this->client->sessionCookieName();
@@ -307,6 +469,15 @@ class CerberusGuard implements StatefulGuard
         return $profile ? $this->hydrateUser($profile) : null;
     }
 
+    /**
+     * Retrieve user information using an access token.
+     *
+     * Fetches the user profile from the OAuth userinfo endpoint
+     * using the provided access token.
+     *
+     * @param  string|null  $accessToken  The access token for authentication
+     * @return Authenticatable|null The user instance or null if token is invalid
+     */
     protected function retrieveUserFromAccessToken(?string $accessToken): ?Authenticatable
     {
         if (! $accessToken) {
@@ -362,6 +533,13 @@ class CerberusGuard implements StatefulGuard
         return $tokens;
     }
 
+    /**
+     * Get the default OAuth scopes for authentication.
+     *
+     * Returns the standard OpenID Connect scopes required for user authentication.
+     *
+     * @return array<string> Array of default scope strings
+     */
     protected function defaultScopes(): array
     {
         return ['openid', 'profile', 'email'];

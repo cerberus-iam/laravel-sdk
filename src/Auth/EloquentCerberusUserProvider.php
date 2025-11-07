@@ -32,12 +32,13 @@ class EloquentCerberusUserProvider implements UserProvider
      * Retrieve a user by their unique identifier.
      *
      * @param  mixed  $identifier  The user identifier.
-     * @return Authenticatable|null The user instance, or null if not found.
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null The user instance, or null if not found.
      */
-    public function retrieveById($identifier): ?Authenticatable
+    public function retrieveById($identifier): ?\Illuminate\Contracts\Auth\Authenticatable
     {
         $model = $this->createModel();
 
+        /** @var \Illuminate\Contracts\Auth\Authenticatable|null */
         return $model->newQuery()
             ->where($model->getAuthIdentifierName(), $identifier)
             ->first();
@@ -48,9 +49,9 @@ class EloquentCerberusUserProvider implements UserProvider
      *
      * @param  mixed  $identifier  The user identifier.
      * @param  string  $token  The remember token.
-     * @return Authenticatable|null The user instance, or null if not found.
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null The user instance, or null if not found.
      */
-    public function retrieveByToken($identifier, $token): ?Authenticatable
+    public function retrieveByToken($identifier, $token): ?\Illuminate\Contracts\Auth\Authenticatable
     {
         $model = $this->createModel();
 
@@ -64,6 +65,7 @@ class EloquentCerberusUserProvider implements UserProvider
 
         $rememberToken = $retrievedModel->getRememberToken();
 
+        /** @var \Illuminate\Contracts\Auth\Authenticatable|null */
         return $rememberToken && hash_equals($rememberToken, $token)
             ? $retrievedModel
             : null;
@@ -72,11 +74,12 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Update the remember token for a user.
      *
-     * @param  Authenticatable  $user  The user instance.
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user  The user instance.
      * @param  string  $token  The remember token.
      */
-    public function updateRememberToken(Authenticatable $user, $token): void
+    public function updateRememberToken(\Illuminate\Contracts\Auth\Authenticatable $user, $token): void
     {
+        /** @var \Illuminate\Database\Eloquent\Model $user */
         $user->setRememberToken($token);
 
         $timestamps = $user->timestamps;
@@ -133,9 +136,9 @@ class EloquentCerberusUserProvider implements UserProvider
      * This method creates or updates a local user record based on data from Cerberus.
      *
      * @param  array<string, mixed>  $profile  The user profile from Cerberus.
-     * @return Authenticatable The synced user instance.
+     * @return \Illuminate\Contracts\Auth\Authenticatable The synced user instance.
      */
-    public function syncUser(array $profile): Authenticatable
+    public function syncUser(array $profile): \Illuminate\Contracts\Auth\Authenticatable
     {
         $model = $this->createModel();
 
@@ -173,6 +176,7 @@ class EloquentCerberusUserProvider implements UserProvider
         }
 
         // Use updateOrCreate to sync the user
+        /** @var \Illuminate\Contracts\Auth\Authenticatable */
         $user = $model->newQuery()->updateOrCreate(
             ['cerberus_id' => $userId],
             $userData
@@ -184,12 +188,15 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return Model The model instance.
+     * @return \Illuminate\Database\Eloquent\Model The model instance.
      */
-    protected function createModel(): Model
+    protected function createModel(): \Illuminate\Database\Eloquent\Model
     {
         $class = '\\'.ltrim($this->model, '\\');
 
-        return new $class;
+        /** @var \Illuminate\Database\Eloquent\Model $instance */
+        $instance = new $class;
+
+        return $instance;
     }
 }

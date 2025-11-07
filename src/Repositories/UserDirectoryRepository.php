@@ -117,6 +117,11 @@ class UserDirectoryRepository implements UserRepository
         return $response->json();
     }
 
+    /**
+     * Prepare a base HTTP request with common configuration.
+     *
+     * @return PendingRequest The configured HTTP request instance.
+     */
     protected function request(): PendingRequest
     {
         $request = $this->http->acceptJson();

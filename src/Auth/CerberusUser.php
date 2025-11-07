@@ -16,6 +16,8 @@ use Illuminate\Support\Fluent;
  * This class represents a user authenticated via Cerberus IAM.
  * It's a stateless value object that extends Laravel's Fluent class
  * and uses the same traits as Laravel's default User model.
+ *
+ * @extends \Illuminate\Support\Fluent<string, mixed>
  */
 class CerberusUser extends Fluent implements AuthenticatableContract, AuthorizableContract
 {
@@ -34,9 +36,9 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
      * This method maps the profile data from Cerberus to user attributes.
      *
      * @param  array<string, mixed>  $payload  The profile data from Cerberus.
-     * @return self The Cerberus user instance.
+     * @return CerberusUser The Cerberus user instance.
      */
-    public static function fromProfile(array $payload): self
+    public static function fromProfile(array $payload): CerberusUser
     {
         $organisation = $payload['organisation'] ?? [];
 
@@ -59,6 +61,8 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Get the name of the unique identifier for the user.
+     *
+     * @return string The name of the identifier field
      */
     public function getAuthIdentifierName(): string
     {
@@ -67,6 +71,8 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Get the unique identifier for the user.
+     *
+     * @return mixed The user's unique identifier
      */
     public function getAuthIdentifier(): mixed
     {
@@ -75,6 +81,10 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Get the password for the user.
+     *
+     * OAuth users don't have passwords stored locally.
+     *
+     * @return string|null Always returns null for OAuth users
      */
     public function getAuthPassword(): ?string
     {
@@ -83,6 +93,9 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Determine if the user has a specific role.
+     *
+     * @param  string  $role  The role name to check
+     * @return bool True if the user has the role, false otherwise
      */
     public function hasRole(string $role): bool
     {
@@ -93,6 +106,9 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Determine if the user has a specific permission.
+     *
+     * @param  string  $permission  The permission name to check
+     * @return bool True if the user has the permission, false otherwise
      */
     public function hasPermission(string $permission): bool
     {
@@ -103,6 +119,8 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
 
     /**
      * Get the user's organisation.
+     *
+     * @return array<string, mixed>|null The organisation data or null if not available
      */
     public function organisation(): ?array
     {

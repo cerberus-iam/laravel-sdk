@@ -1,27 +1,27 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1762393816,
+	'lastFullAnalysisTime' => 1762476611,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
   'phpVersion' => 80414,
-  'projectConfig' => '{parameters: {level: 8, paths: [/Users/jerome/Projects/cerberus-iam/laravel-iam/src, /Users/jerome/Projects/cerberus-iam/laravel-iam/tests], tmpDir: /Users/jerome/Projects/cerberus-iam/laravel-iam/.phpstan.cache, treatPhpDocTypesAsCertain: false, checkMissingIterableValueType: false, excludePaths: {analyseAndScan: [/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/*, /Users/jerome/Projects/cerberus-iam/laravel-iam/.phpstan.cache/*], analyse: []}}}',
+  'projectConfig' => '{parameters: {level: 8, paths: [/Users/jerome/Projects/cerberus-iam/laravel-sdk/src, /Users/jerome/Projects/cerberus-iam/laravel-sdk/tests], tmpDir: /Users/jerome/Projects/cerberus-iam/laravel-sdk/.phpstan.cache, treatPhpDocTypesAsCertain: false, checkMissingIterableValueType: false, excludePaths: {analyseAndScan: [/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/*, /Users/jerome/Projects/cerberus-iam/laravel-sdk/.phpstan.cache/*], analyse: []}}}',
   'analysedPaths' => 
   array (
-    0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src',
-    1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests',
+    0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src',
+    1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests',
   ),
   'scannedFiles' => 
   array (
   ),
   'composerLocks' => 
   array (
-    '/Users/jerome/Projects/cerberus-iam/laravel-iam/composer.lock' => '4a527802122e8fc14439382dc597493bf1907ef3',
+    '/Users/jerome/Projects/cerberus-iam/laravel-sdk/composer.lock' => '17607b011a10f19488a0b502fe7ea50124e48a2e',
   ),
   'composerInstalled' => 
   array (
-    '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/installed.php' => 
+    '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/installed.php' => 
     array (
       'versions' => 
       array (
@@ -31,7 +31,7 @@ return [
           'version' => '7.8.4.0',
           'reference' => '130a9bf0e269ee5f5b320108f794ad03e275cad4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../brianium/paratest',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../brianium/paratest',
           'aliases' => 
           array (
           ),
@@ -43,7 +43,7 @@ return [
           'version' => '0.14.0.0',
           'reference' => '113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../brick/math',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../brick/math',
           'aliases' => 
           array (
           ),
@@ -55,7 +55,7 @@ return [
           'version' => '3.2.0.0',
           'reference' => '18ba5ddfec8976260ead6e866180bd5d2f71aa1d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../carbonphp/carbon-doctrine-types',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../carbonphp/carbon-doctrine-types',
           'aliases' => 
           array (
           ),
@@ -67,7 +67,7 @@ return [
           'version' => '3.4.4.0',
           'reference' => '198166618906cb2de69b95d7d47e5fa8aa1b2b95',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/./semver',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/./semver',
           'aliases' => 
           array (
           ),
@@ -95,7 +95,7 @@ return [
           'version' => '3.0.3.0',
           'reference' => 'a23a2bf4f31d3518f3ecb38660c95715dfead60f',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../dflydev/dot-access-data',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../dflydev/dot-access-data',
           'aliases' => 
           array (
           ),
@@ -107,7 +107,7 @@ return [
           'version' => '1.1.5.0',
           'reference' => '459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../doctrine/deprecations',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../doctrine/deprecations',
           'aliases' => 
           array (
           ),
@@ -119,7 +119,7 @@ return [
           'version' => '2.1.0.0',
           'reference' => '6d6c96277ea252fc1304627204c3d5e6e15faa3b',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../doctrine/inflector',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../doctrine/inflector',
           'aliases' => 
           array (
           ),
@@ -131,7 +131,7 @@ return [
           'version' => '3.0.1.0',
           'reference' => '31ad66abc0fc9e1a1f2d9bc6a42668d2fbbcd6dd',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../doctrine/lexer',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../doctrine/lexer',
           'aliases' => 
           array (
           ),
@@ -143,7 +143,7 @@ return [
           'version' => '3.6.0.0',
           'reference' => 'd61a8a9604ec1f8c3d150d09db6ce98b32675013',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../dragonmantank/cron-expression',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../dragonmantank/cron-expression',
           'aliases' => 
           array (
           ),
@@ -155,7 +155,7 @@ return [
           'version' => '4.0.4.0',
           'reference' => 'd42c8731f0624ad6bdc8d3e5e9a4524f68801cfa',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../egulias/email-validator',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../egulias/email-validator',
           'aliases' => 
           array (
           ),
@@ -167,7 +167,7 @@ return [
           'version' => '1.24.1.0',
           'reference' => 'e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../fakerphp/faker',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../fakerphp/faker',
           'aliases' => 
           array (
           ),
@@ -179,7 +179,7 @@ return [
           'version' => '1.3.0.0',
           'reference' => 'db9508f7b1474469d9d3c53b86f817e344732678',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../fidry/cpu-core-counter',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../fidry/cpu-core-counter',
           'aliases' => 
           array (
           ),
@@ -191,7 +191,7 @@ return [
           'version' => '2.18.4.0',
           'reference' => 'd2102955e48b9fd9ab24280a7ad12ed552752c4d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../filp/whoops',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../filp/whoops',
           'aliases' => 
           array (
           ),
@@ -203,7 +203,7 @@ return [
           'version' => '1.3.0.0',
           'reference' => '3d158f36e7875e2f040f37bc0573956240a5a38b',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../fruitcake/php-cors',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../fruitcake/php-cors',
           'aliases' => 
           array (
           ),
@@ -215,7 +215,7 @@ return [
           'version' => '1.1.3.0',
           'reference' => '3ba905c11371512af9d9bdd27d99b782216b6945',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../graham-campbell/result-type',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../graham-campbell/result-type',
           'aliases' => 
           array (
           ),
@@ -227,7 +227,7 @@ return [
           'version' => '7.10.0.0',
           'reference' => 'b51ac707cfa420b7bfd4e4d5e510ba8008e822b4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../guzzlehttp/guzzle',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../guzzlehttp/guzzle',
           'aliases' => 
           array (
           ),
@@ -239,7 +239,7 @@ return [
           'version' => '2.3.0.0',
           'reference' => '481557b130ef3790cf82b713667b43030dc9c957',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../guzzlehttp/promises',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../guzzlehttp/promises',
           'aliases' => 
           array (
           ),
@@ -251,7 +251,7 @@ return [
           'version' => '2.8.0.0',
           'reference' => '21dc724a0583619cd1652f673303492272778051',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../guzzlehttp/psr7',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../guzzlehttp/psr7',
           'aliases' => 
           array (
           ),
@@ -263,7 +263,7 @@ return [
           'version' => '1.0.5.0',
           'reference' => '4f4bbd4e7172148801e76e3decc1e559bdee34e1',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../guzzlehttp/uri-template',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../guzzlehttp/uri-template',
           'aliases' => 
           array (
           ),
@@ -275,7 +275,7 @@ return [
           'version' => '2.1.1.0',
           'reference' => 'f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../hamcrest/hamcrest-php',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../hamcrest/hamcrest-php',
           'aliases' => 
           array (
           ),
@@ -559,23 +559,11 @@ return [
           'version' => '2.1.1.0',
           'reference' => '4d7aa5dab42e2a76d99559706022885de0e18e1a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../jean85/pretty-package-versions',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../jean85/pretty-package-versions',
           'aliases' => 
           array (
           ),
           'dev_requirement' => true,
-        ),
-        'jerome/fetch-php' => 
-        array (
-          'pretty_version' => '3.2.3',
-          'version' => '3.2.3.0',
-          'reference' => 'f440cfd4d2fecc844dd87d870632845f8e2aab13',
-          'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../jerome/fetch-php',
-          'aliases' => 
-          array (
-          ),
-          'dev_requirement' => false,
         ),
         'jerome/filterable' => 
         array (
@@ -583,19 +571,7 @@ return [
           'version' => '2.1.0.0',
           'reference' => 'd5e35d7f19cdb375fa695532224340e61cd01ae8',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../jerome/filterable',
-          'aliases' => 
-          array (
-          ),
-          'dev_requirement' => false,
-        ),
-        'jerome/matrix' => 
-        array (
-          'pretty_version' => '3.3.0',
-          'version' => '3.3.0.0',
-          'reference' => 'c484cc6d012dae0497dc223f0c596410ff1d7eb1',
-          'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../jerome/matrix',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../jerome/filterable',
           'aliases' => 
           array (
           ),
@@ -615,7 +591,7 @@ return [
           'version' => '11.46.1.0',
           'reference' => '5fd457f807570a962a53b403b1346efe4cc80bb8',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/framework',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/framework',
           'aliases' => 
           array (
           ),
@@ -627,7 +603,7 @@ return [
           'version' => '1.2.3.0',
           'reference' => '8cc3d575c1f0e57eeb923f366a37528c50d2385a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/pail',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/pail',
           'aliases' => 
           array (
           ),
@@ -639,7 +615,7 @@ return [
           'version' => '1.25.1.0',
           'reference' => '5016e263f95d97670d71b9a987bd8996ade6d8d9',
           'type' => 'project',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/pint',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/pint',
           'aliases' => 
           array (
           ),
@@ -651,7 +627,7 @@ return [
           'version' => '0.3.7.0',
           'reference' => 'a1891d362714bc40c8d23b0b1d7090f022ea27cc',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/prompts',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/prompts',
           'aliases' => 
           array (
           ),
@@ -663,7 +639,7 @@ return [
           'version' => '2.0.6.0',
           'reference' => '038ce42edee619599a1debb7e81d7b3759492819',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/serializable-closure',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/serializable-closure',
           'aliases' => 
           array (
           ),
@@ -675,7 +651,7 @@ return [
           'version' => '2.10.1.0',
           'reference' => '22177cc71807d38f2810c6204d8f7183d88a57d3',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../laravel/tinker',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../laravel/tinker',
           'aliases' => 
           array (
           ),
@@ -687,7 +663,7 @@ return [
           'version' => '2.7.1.0',
           'reference' => '10732241927d3971d28e7ea7b5712721fa2296ca',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/commonmark',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/commonmark',
           'aliases' => 
           array (
           ),
@@ -699,7 +675,7 @@ return [
           'version' => '1.2.0.0',
           'reference' => '754b3604fb2984c71f4af4a9cbe7b57f346ec1f3',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/config',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/config',
           'aliases' => 
           array (
           ),
@@ -711,7 +687,7 @@ return [
           'version' => '3.30.1.0',
           'reference' => 'c139fd65c1f796b926f4aec0df37f6caa959a8da',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/flysystem',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/flysystem',
           'aliases' => 
           array (
           ),
@@ -723,7 +699,7 @@ return [
           'version' => '3.30.0.0',
           'reference' => '6691915f77c7fb69adfb87dcd550052dc184ee10',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/flysystem-local',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/flysystem-local',
           'aliases' => 
           array (
           ),
@@ -735,7 +711,7 @@ return [
           'version' => '1.16.0.0',
           'reference' => '2d6702ff215bf922936ccc1ad31007edc76451b9',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/mime-type-detection',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/mime-type-detection',
           'aliases' => 
           array (
           ),
@@ -747,7 +723,7 @@ return [
           'version' => '7.5.1.0',
           'reference' => '81fb5145d2644324614cc532b28efd0215bda430',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/uri',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/uri',
           'aliases' => 
           array (
           ),
@@ -759,7 +735,7 @@ return [
           'version' => '7.5.0.0',
           'reference' => '08cfc6c4f3d811584fb09c37e2849e6a7f9b0742',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../league/uri-interfaces',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../league/uri-interfaces',
           'aliases' => 
           array (
           ),
@@ -771,7 +747,7 @@ return [
           'version' => '1.6.12.0',
           'reference' => '1f4efdd7d3beafe9807b08156dfcb176d18f1699',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../mockery/mockery',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../mockery/mockery',
           'aliases' => 
           array (
           ),
@@ -783,7 +759,7 @@ return [
           'version' => '3.9.0.0',
           'reference' => '10d85740180ecba7896c87e06a166e0c95a0e3b6',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../monolog/monolog',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../monolog/monolog',
           'aliases' => 
           array (
           ),
@@ -803,7 +779,7 @@ return [
           'version' => '1.13.4.0',
           'reference' => '07d290f0c47959fd5eed98c95ee5602db07e0b6a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../myclabs/deep-copy',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../myclabs/deep-copy',
           'aliases' => 
           array (
           ),
@@ -815,7 +791,7 @@ return [
           'version' => '3.10.3.0',
           'reference' => '8e3643dcd149ae0fe1d2ff4f2c8e4bbfad7c165f',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nesbot/carbon',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nesbot/carbon',
           'aliases' => 
           array (
           ),
@@ -827,7 +803,7 @@ return [
           'version' => '1.3.3.0',
           'reference' => '2befc2f42d7c715fd9d95efc31b1081e5d765004',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nette/schema',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nette/schema',
           'aliases' => 
           array (
           ),
@@ -839,7 +815,7 @@ return [
           'version' => '4.0.8.0',
           'reference' => 'c930ca4e3cf4f17dcfb03037703679d2396d2ede',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nette/utils',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nette/utils',
           'aliases' => 
           array (
           ),
@@ -851,7 +827,7 @@ return [
           'version' => '5.6.2.0',
           'reference' => '3a454ca033b9e06b63282ce19562e892747449bb',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nikic/php-parser',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nikic/php-parser',
           'aliases' => 
           array (
           ),
@@ -863,7 +839,7 @@ return [
           'version' => '8.8.2.0',
           'reference' => '60207965f9b7b7a4ce15a0f75d57f9dadb105bdb',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nunomaduro/collision',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nunomaduro/collision',
           'aliases' => 
           array (
           ),
@@ -875,7 +851,7 @@ return [
           'version' => '2.3.2.0',
           'reference' => 'eb61920a53057a7debd718a5b89c2178032b52c0',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../nunomaduro/termwind',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../nunomaduro/termwind',
           'aliases' => 
           array (
           ),
@@ -887,7 +863,7 @@ return [
           'version' => '9.2.2.0',
           'reference' => '002d948834c0899e511f5ac0381669363d7881e5',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/canvas',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/canvas',
           'aliases' => 
           array (
           ),
@@ -899,7 +875,7 @@ return [
           'version' => '9.1.1.0',
           'reference' => 'a8ebfa6c2e50f8c6597c489b4dfaf9af6789f62a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/canvas-core',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/canvas-core',
           'aliases' => 
           array (
           ),
@@ -911,7 +887,7 @@ return [
           'version' => '1.2.17.0',
           'reference' => '371ce2882ee3f5bf826b36e75d461e51c9cd76c2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/sidekick',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/sidekick',
           'aliases' => 
           array (
           ),
@@ -923,7 +899,7 @@ return [
           'version' => '9.15.0.0',
           'reference' => 'd0181240f93688448d4ae3b5479ec5ed70a87a47',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/testbench',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/testbench',
           'aliases' => 
           array (
           ),
@@ -935,7 +911,7 @@ return [
           'version' => '9.17.0.0',
           'reference' => 'a5b4d56a40536fde50a72e20ce43abaa76f8de2f',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/testbench-core',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/testbench-core',
           'aliases' => 
           array (
           ),
@@ -947,7 +923,7 @@ return [
           'version' => '9.13.5.0',
           'reference' => '1da2ea95089ed3516bda6f8e9cd57c81290004bf',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../orchestra/workbench',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../orchestra/workbench',
           'aliases' => 
           array (
           ),
@@ -959,7 +935,7 @@ return [
           'version' => '3.8.4.0',
           'reference' => '72cf695554420e21858cda831d5db193db102574',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../pestphp/pest',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../pestphp/pest',
           'aliases' => 
           array (
           ),
@@ -971,7 +947,7 @@ return [
           'version' => '3.0.0.0',
           'reference' => 'e79b26c65bc11c41093b10150c1341cc5cdbea83',
           'type' => 'composer-plugin',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../pestphp/pest-plugin',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../pestphp/pest-plugin',
           'aliases' => 
           array (
           ),
@@ -983,7 +959,7 @@ return [
           'version' => '3.1.1.0',
           'reference' => 'db7bd9cb1612b223e16618d85475c6f63b9c8daa',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../pestphp/pest-plugin-arch',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../pestphp/pest-plugin-arch',
           'aliases' => 
           array (
           ),
@@ -995,7 +971,7 @@ return [
           'version' => '3.2.0.0',
           'reference' => '6801be82fd92b96e82dd72e563e5674b1ce365fc',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../pestphp/pest-plugin-laravel',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../pestphp/pest-plugin-laravel',
           'aliases' => 
           array (
           ),
@@ -1007,7 +983,7 @@ return [
           'version' => '3.0.5.0',
           'reference' => 'e10dbdc98c9e2f3890095b4fe2144f63a5717e08',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../pestphp/pest-plugin-mutate',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../pestphp/pest-plugin-mutate',
           'aliases' => 
           array (
           ),
@@ -1019,7 +995,7 @@ return [
           'version' => '2.0.4.0',
           'reference' => '54750ef60c58e43759730615a392c31c80e23176',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phar-io/manifest',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phar-io/manifest',
           'aliases' => 
           array (
           ),
@@ -1031,7 +1007,7 @@ return [
           'version' => '3.2.1.0',
           'reference' => '4f7fd7836c6f332bb2933569e566a0d6c4cbed74',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phar-io/version',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phar-io/version',
           'aliases' => 
           array (
           ),
@@ -1043,7 +1019,7 @@ return [
           'version' => '2.2.0.0',
           'reference' => '1d01c49d4ed62f25aa84a747ad35d5a16924662b',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpdocumentor/reflection-common',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpdocumentor/reflection-common',
           'aliases' => 
           array (
           ),
@@ -1055,7 +1031,7 @@ return [
           'version' => '5.6.3.0',
           'reference' => '94f8051919d1b0369a6bcc7931d679a511c03fe9',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpdocumentor/reflection-docblock',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpdocumentor/reflection-docblock',
           'aliases' => 
           array (
           ),
@@ -1067,7 +1043,7 @@ return [
           'version' => '1.10.0.0',
           'reference' => '679e3ce485b99e84c775d28e2e96fade9a7fb50a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpdocumentor/type-resolver',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpdocumentor/type-resolver',
           'aliases' => 
           array (
           ),
@@ -1079,7 +1055,7 @@ return [
           'version' => '1.9.4.0',
           'reference' => '638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpoption/phpoption',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpoption/phpoption',
           'aliases' => 
           array (
           ),
@@ -1091,7 +1067,7 @@ return [
           'version' => '2.3.0.0',
           'reference' => '1e0cd5370df5dd2e556a36b9c62f62e555870495',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpstan/phpdoc-parser',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpstan/phpdoc-parser',
           'aliases' => 
           array (
           ),
@@ -1103,7 +1079,7 @@ return [
           'version' => '1.12.32.0',
           'reference' => '2770dcdf5078d0b0d53f94317e06affe88419aa8',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpstan/phpstan',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpstan/phpstan',
           'aliases' => 
           array (
           ),
@@ -1115,7 +1091,7 @@ return [
           'version' => '11.0.11.0',
           'reference' => '4f7722aa9a7b76aa775e2d9d4e95d1ea16eeeef4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/php-code-coverage',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/php-code-coverage',
           'aliases' => 
           array (
           ),
@@ -1127,7 +1103,7 @@ return [
           'version' => '5.1.0.0',
           'reference' => '118cfaaa8bc5aef3287bf315b6060b1174754af6',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/php-file-iterator',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/php-file-iterator',
           'aliases' => 
           array (
           ),
@@ -1139,7 +1115,7 @@ return [
           'version' => '5.0.1.0',
           'reference' => 'c1ca3814734c07492b3d4c5f794f4b0995333da2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/php-invoker',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/php-invoker',
           'aliases' => 
           array (
           ),
@@ -1151,7 +1127,7 @@ return [
           'version' => '4.0.1.0',
           'reference' => '3e0404dc6b300e6bf56415467ebcb3fe4f33e964',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/php-text-template',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/php-text-template',
           'aliases' => 
           array (
           ),
@@ -1163,7 +1139,7 @@ return [
           'version' => '7.0.1.0',
           'reference' => '3b415def83fbcb41f991d9ebf16ae4ad8b7837b3',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/php-timer',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/php-timer',
           'aliases' => 
           array (
           ),
@@ -1175,7 +1151,7 @@ return [
           'version' => '11.5.33.0',
           'reference' => '5965e9ff57546cb9137c0ff6aa78cb7442b05cf6',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../phpunit/phpunit',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../phpunit/phpunit',
           'aliases' => 
           array (
           ),
@@ -1187,7 +1163,7 @@ return [
           'version' => '1.0.0.0',
           'reference' => 'e41a24703d4560fd0acb709162f73b8adfc3aa0d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/clock',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/clock',
           'aliases' => 
           array (
           ),
@@ -1207,7 +1183,7 @@ return [
           'version' => '2.0.2.0',
           'reference' => 'c71ecc56dfe541dbd90c5360474fbc405f8d5963',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/container',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/container',
           'aliases' => 
           array (
           ),
@@ -1227,7 +1203,7 @@ return [
           'version' => '1.0.0.0',
           'reference' => 'dbefd12671e8a14ec7f180cab83036ed26714bb0',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/event-dispatcher',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/event-dispatcher',
           'aliases' => 
           array (
           ),
@@ -1247,7 +1223,7 @@ return [
           'version' => '1.0.3.0',
           'reference' => 'bb5906edc1c324c9a05aa0873d40117941e5fa90',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/http-client',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/http-client',
           'aliases' => 
           array (
           ),
@@ -1267,7 +1243,7 @@ return [
           'version' => '1.1.0.0',
           'reference' => '2b4765fddfe3b508ac62f829e852b1501d3f6e8a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/http-factory',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/http-factory',
           'aliases' => 
           array (
           ),
@@ -1287,7 +1263,7 @@ return [
           'version' => '2.0.0.0',
           'reference' => '402d35bcb92c70c026d1a6a9883f06b2ead23d71',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/http-message',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/http-message',
           'aliases' => 
           array (
           ),
@@ -1307,7 +1283,7 @@ return [
           'version' => '3.0.2.0',
           'reference' => 'f16e1d5863e37f8d8c2a01719f5b34baa2b714d3',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/log',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/log',
           'aliases' => 
           array (
           ),
@@ -1328,7 +1304,7 @@ return [
           'version' => '3.0.0.0',
           'reference' => '764e0b3939f5ca87cb904f570ef9be2d78a07865',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psr/simple-cache',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psr/simple-cache',
           'aliases' => 
           array (
           ),
@@ -1348,7 +1324,7 @@ return [
           'version' => '0.12.14.0',
           'reference' => '95c29b3756a23855a30566b745d218bee690bef2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../psy/psysh',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../psy/psysh',
           'aliases' => 
           array (
           ),
@@ -1360,7 +1336,7 @@ return [
           'version' => '3.0.3.0',
           'reference' => '120b605dfeb996808c31b6477290a714d356e822',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../ralouphie/getallheaders',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../ralouphie/getallheaders',
           'aliases' => 
           array (
           ),
@@ -1372,7 +1348,7 @@ return [
           'version' => '2.1.1.0',
           'reference' => '344572933ad0181accbf4ba763e85a0306a8c5e2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../ramsey/collection',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../ramsey/collection',
           'aliases' => 
           array (
           ),
@@ -1384,31 +1360,7 @@ return [
           'version' => '4.9.1.0',
           'reference' => '81f941f6f729b1e3ceea61d9d014f8b6c6800440',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../ramsey/uuid',
-          'aliases' => 
-          array (
-          ),
-          'dev_requirement' => false,
-        ),
-        'react/event-loop' => 
-        array (
-          'pretty_version' => 'v1.5.0',
-          'version' => '1.5.0.0',
-          'reference' => 'bbe0bd8c51ffc05ee43f1729087ed3bdf7d53354',
-          'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../react/event-loop',
-          'aliases' => 
-          array (
-          ),
-          'dev_requirement' => false,
-        ),
-        'react/promise' => 
-        array (
-          'pretty_version' => 'v3.3.0',
-          'version' => '3.3.0.0',
-          'reference' => '23444f53a813a3296c1368bb104793ce8d88f04a',
-          'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../react/promise',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../ramsey/uuid',
           'aliases' => 
           array (
           ),
@@ -1428,7 +1380,7 @@ return [
           'version' => '3.0.2.0',
           'reference' => '15c5dd40dc4f38794d383bb95465193f5e0ae180',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/cli-parser',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/cli-parser',
           'aliases' => 
           array (
           ),
@@ -1440,7 +1392,7 @@ return [
           'version' => '3.0.3.0',
           'reference' => '54391c61e4af8078e5b276ab082b6d3c54c9ad64',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/code-unit',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/code-unit',
           'aliases' => 
           array (
           ),
@@ -1452,7 +1404,7 @@ return [
           'version' => '4.0.1.0',
           'reference' => '183a9b2632194febd219bb9246eee421dad8d45e',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/code-unit-reverse-lookup',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/code-unit-reverse-lookup',
           'aliases' => 
           array (
           ),
@@ -1464,7 +1416,7 @@ return [
           'version' => '6.3.2.0',
           'reference' => '85c77556683e6eee4323e4c5468641ca0237e2e8',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/comparator',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/comparator',
           'aliases' => 
           array (
           ),
@@ -1476,7 +1428,7 @@ return [
           'version' => '4.0.1.0',
           'reference' => 'ee41d384ab1906c68852636b6de493846e13e5a0',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/complexity',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/complexity',
           'aliases' => 
           array (
           ),
@@ -1488,7 +1440,7 @@ return [
           'version' => '6.0.2.0',
           'reference' => 'b4ccd857127db5d41a5b676f24b51371d76d8544',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/diff',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/diff',
           'aliases' => 
           array (
           ),
@@ -1500,7 +1452,7 @@ return [
           'version' => '7.2.1.0',
           'reference' => 'a5c75038693ad2e8d4b6c15ba2403532647830c4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/environment',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/environment',
           'aliases' => 
           array (
           ),
@@ -1512,7 +1464,7 @@ return [
           'version' => '6.3.2.0',
           'reference' => '70a298763b40b213ec087c51c739efcaa90bcd74',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/exporter',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/exporter',
           'aliases' => 
           array (
           ),
@@ -1524,7 +1476,7 @@ return [
           'version' => '7.0.2.0',
           'reference' => '3be331570a721f9a4b5917f4209773de17f747d7',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/global-state',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/global-state',
           'aliases' => 
           array (
           ),
@@ -1536,7 +1488,7 @@ return [
           'version' => '3.0.1.0',
           'reference' => 'd36ad0d782e5756913e42ad87cb2890f4ffe467a',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/lines-of-code',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/lines-of-code',
           'aliases' => 
           array (
           ),
@@ -1548,7 +1500,7 @@ return [
           'version' => '6.0.1.0',
           'reference' => 'f5b498e631a74204185071eb41f33f38d64608aa',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/object-enumerator',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/object-enumerator',
           'aliases' => 
           array (
           ),
@@ -1560,7 +1512,7 @@ return [
           'version' => '4.0.1.0',
           'reference' => '6e1a43b411b2ad34146dee7524cb13a068bb35f9',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/object-reflector',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/object-reflector',
           'aliases' => 
           array (
           ),
@@ -1572,7 +1524,7 @@ return [
           'version' => '6.0.3.0',
           'reference' => 'f6458abbf32a6c8174f8f26261475dc133b3d9dc',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/recursion-context',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/recursion-context',
           'aliases' => 
           array (
           ),
@@ -1584,7 +1536,7 @@ return [
           'version' => '5.1.3.0',
           'reference' => 'f77d2d4e78738c98d9a68d2596fe5e8fa380f449',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/type',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/type',
           'aliases' => 
           array (
           ),
@@ -1596,7 +1548,7 @@ return [
           'version' => '5.0.2.0',
           'reference' => 'c687e3387b99f5b03b6caa64c74b63e2936ff874',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../sebastian/version',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../sebastian/version',
           'aliases' => 
           array (
           ),
@@ -1608,7 +1560,7 @@ return [
           'version' => '1.92.7.0',
           'reference' => 'f09a799850b1ed765103a4f0b4355006360c49a5',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../spatie/laravel-package-tools',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../spatie/laravel-package-tools',
           'aliases' => 
           array (
           ),
@@ -1628,7 +1580,7 @@ return [
           'version' => '1.0.5.0',
           'reference' => 'd8334211a140ce329c13726d4a715adbddd0a163',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../staabm/side-effects-detector',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../staabm/side-effects-detector',
           'aliases' => 
           array (
           ),
@@ -1640,7 +1592,7 @@ return [
           'version' => '7.3.0.0',
           'reference' => 'b81435fbd6648ea425d1ee96a2d8e68f4ceacd24',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/clock',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/clock',
           'aliases' => 
           array (
           ),
@@ -1652,7 +1604,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => 'cdb80fa5869653c83cfe1a9084a673b6daf57ea7',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/console',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/console',
           'aliases' => 
           array (
           ),
@@ -1664,7 +1616,7 @@ return [
           'version' => '7.3.0.0',
           'reference' => '601a5ce9aaad7bf10797e3663faefce9e26c24e2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/css-selector',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/css-selector',
           'aliases' => 
           array (
           ),
@@ -1676,7 +1628,7 @@ return [
           'version' => '3.6.0.0',
           'reference' => '63afe740e99a13ba87ec199bb07bbdee937a5b62',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/deprecation-contracts',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/deprecation-contracts',
           'aliases' => 
           array (
           ),
@@ -1688,7 +1640,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => '99f81bc944ab8e5dae4f21b4ca9972698bbad0e4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/error-handler',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/error-handler',
           'aliases' => 
           array (
           ),
@@ -1700,7 +1652,7 @@ return [
           'version' => '7.3.3.0',
           'reference' => 'b7dc69e71de420ac04bc9ab830cf3ffebba48191',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/event-dispatcher',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/event-dispatcher',
           'aliases' => 
           array (
           ),
@@ -1712,7 +1664,7 @@ return [
           'version' => '3.6.0.0',
           'reference' => '59eb412e93815df44f05f342958efa9f46b1e586',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/event-dispatcher-contracts',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/event-dispatcher-contracts',
           'aliases' => 
           array (
           ),
@@ -1732,7 +1684,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => '9f696d2f1e340484b4683f7853b273abff94421f',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/finder',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/finder',
           'aliases' => 
           array (
           ),
@@ -1744,7 +1696,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => 'ce31218c7cac92eab280762c4375fb70a6f4f897',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/http-foundation',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/http-foundation',
           'aliases' => 
           array (
           ),
@@ -1756,7 +1708,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => '24fd3f123532e26025f49f1abefcc01a69ef15ab',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/http-kernel',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/http-kernel',
           'aliases' => 
           array (
           ),
@@ -1768,7 +1720,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => 'fd497c45ba9c10c37864e19466b090dcb60a50ba',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/mailer',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/mailer',
           'aliases' => 
           array (
           ),
@@ -1780,7 +1732,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => 'b1b828f69cbaf887fa835a091869e55df91d0e35',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/mime',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/mime',
           'aliases' => 
           array (
           ),
@@ -1792,7 +1744,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => 'a3cc8b044a6ea513310cbd48ef7333b384945638',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-ctype',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-ctype',
           'aliases' => 
           array (
           ),
@@ -1804,7 +1756,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '380872130d3a5dd3ace2f4010d95125fde5d5c70',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-intl-grapheme',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-intl-grapheme',
           'aliases' => 
           array (
           ),
@@ -1816,7 +1768,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '9614ac4d8061dc257ecc64cba1b140873dce8ad3',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-intl-idn',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-intl-idn',
           'aliases' => 
           array (
           ),
@@ -1828,7 +1780,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '3833d7255cc303546435cb650316bff708a1c75c',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-intl-normalizer',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-intl-normalizer',
           'aliases' => 
           array (
           ),
@@ -1840,7 +1792,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '6d857f4d76bd4b343eac26d6b539585d2bc56493',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-mbstring',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-mbstring',
           'aliases' => 
           array (
           ),
@@ -1852,7 +1804,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '0cc9dd0f17f61d8131e7df6b84bd344899fe2608',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-php80',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-php80',
           'aliases' => 
           array (
           ),
@@ -1864,7 +1816,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '17f6f9a6b1735c0f163024d959f700cfbc5155e5',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-php83',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-php83',
           'aliases' => 
           array (
           ),
@@ -1876,7 +1828,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => 'd8ced4d875142b6a7426000426b8abc631d6b191',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-php84',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-php84',
           'aliases' => 
           array (
           ),
@@ -1888,7 +1840,7 @@ return [
           'version' => '1.33.0.0',
           'reference' => '21533be36c24be3f4b1669c4725c7d1d2bab4ae2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/polyfill-uuid',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/polyfill-uuid',
           'aliases' => 
           array (
           ),
@@ -1900,7 +1852,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => 'f24f8f316367b30810810d4eb30c543d7003ff3b',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/process',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/process',
           'aliases' => 
           array (
           ),
@@ -1912,7 +1864,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => '8dc648e159e9bac02b703b9fbd937f19ba13d07c',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/routing',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/routing',
           'aliases' => 
           array (
           ),
@@ -1924,7 +1876,7 @@ return [
           'version' => '3.6.0.0',
           'reference' => 'f021b05a130d35510bd6b25fe9053c2a8a15d5d4',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/service-contracts',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/service-contracts',
           'aliases' => 
           array (
           ),
@@ -1936,7 +1888,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => 'f96476035142921000338bad71e5247fbc138872',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/string',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/string',
           'aliases' => 
           array (
           ),
@@ -1948,7 +1900,7 @@ return [
           'version' => '7.3.4.0',
           'reference' => 'ec25870502d0c7072d086e8ffba1420c85965174',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/translation',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/translation',
           'aliases' => 
           array (
           ),
@@ -1960,7 +1912,7 @@ return [
           'version' => '3.6.0.0',
           'reference' => 'df210c7a2573f1913b2d17cc95f90f53a73d8f7d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/translation-contracts',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/translation-contracts',
           'aliases' => 
           array (
           ),
@@ -1980,7 +1932,7 @@ return [
           'version' => '7.3.1.0',
           'reference' => 'a69f69f3159b852651a6bf45a9fdd149520525bb',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/uid',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/uid',
           'aliases' => 
           array (
           ),
@@ -1992,7 +1944,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => '476c4ae17f43a9a36650c69879dcf5b1e6ae724d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/var-dumper',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/var-dumper',
           'aliases' => 
           array (
           ),
@@ -2004,7 +1956,7 @@ return [
           'version' => '7.3.5.0',
           'reference' => '90208e2fc6f68f613eae7ca25a2458a931b1bacc',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../symfony/yaml',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../symfony/yaml',
           'aliases' => 
           array (
           ),
@@ -2016,7 +1968,7 @@ return [
           'version' => '0.8.5.0',
           'reference' => 'cf6fb197b676ba716837c886baca842e4db29005',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../ta-tikoma/phpunit-architecture-test',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../ta-tikoma/phpunit-architecture-test',
           'aliases' => 
           array (
           ),
@@ -2028,7 +1980,7 @@ return [
           'version' => '1.2.3.0',
           'reference' => '737eda637ed5e28c3413cb1ebe8bb52cbf1ca7a2',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../theseer/tokenizer',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../theseer/tokenizer',
           'aliases' => 
           array (
           ),
@@ -2040,7 +1992,7 @@ return [
           'version' => '2.3.0.0',
           'reference' => '0d72ac1c00084279c1816675284073c5a337c20d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../tijsverkoyen/css-to-inline-styles',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../tijsverkoyen/css-to-inline-styles',
           'aliases' => 
           array (
           ),
@@ -2052,7 +2004,7 @@ return [
           'version' => '5.6.2.0',
           'reference' => '24ac4c74f91ee2c193fa1aaa5c249cb0822809af',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../vlucas/phpdotenv',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../vlucas/phpdotenv',
           'aliases' => 
           array (
           ),
@@ -2064,7 +2016,7 @@ return [
           'version' => '2.0.3.0',
           'reference' => 'b1d923f88091c6bf09699efcd7c8a1b1bfd7351d',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../voku/portable-ascii',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../voku/portable-ascii',
           'aliases' => 
           array (
           ),
@@ -2076,7 +2028,7 @@ return [
           'version' => '1.12.1.0',
           'reference' => '9be6926d8b485f55b9229203f962b51ed377ba68',
           'type' => 'library',
-          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/composer/../webmozart/assert',
+          'install_path' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/composer/../webmozart/assert',
           'aliases' => 
           array (
           ),
@@ -2087,10 +2039,10 @@ return [
   ),
   'executedFilesHashes' => 
   array (
-    'phar:///Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/Attribute.php' => 'eaf9127f074e9c7ebc65043ec4050f9fed60c2bb',
-    'phar:///Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionAttribute.php' => '0b4b78277eb6545955d2ce5e09bff28f1f8052c8',
-    'phar:///Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionIntersectionType.php' => 'a3e6299b87ee5d407dae7651758edfa11a74cb11',
-    'phar:///Users/jerome/Projects/cerberus-iam/laravel-iam/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionUnionType.php' => '1b349aa997a834faeafe05fa21bc31cae22bf2e2',
+    'phar:///Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/Attribute.php' => 'eaf9127f074e9c7ebc65043ec4050f9fed60c2bb',
+    'phar:///Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionAttribute.php' => '0b4b78277eb6545955d2ce5e09bff28f1f8052c8',
+    'phar:///Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionIntersectionType.php' => 'a3e6299b87ee5d407dae7651758edfa11a74cb11',
+    'phar:///Users/jerome/Projects/cerberus-iam/laravel-sdk/vendor/phpstan/phpstan/phpstan.phar/stubs/runtime/ReflectionUnionType.php' => '1b349aa997a834faeafe05fa21bc31cae22bf2e2',
   ),
   'phpExtensions' => 
   array (
@@ -2166,15 +2118,15 @@ return [
 	'projectExtensionFiles' => array (
 ),
 	'errorsCallback' => static function (): array { return array (
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property CerberusIAM\\Auth\\CerberusGuard::$provider (Illuminate\\Contracts\\Auth\\UserProvider) does not accept Illuminate\\Contracts\\Auth\\UserProvider|null.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'line' => 63,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
        'nodeLine' => 63,
@@ -2187,13 +2139,13 @@ return [
     1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Return type (void) of method CerberusIAM\\Auth\\CerberusGuard::setUser() should be compatible with return type ($this(Illuminate\\Contracts\\Auth\\Guard)) of method Illuminate\\Contracts\\Auth\\Guard::setUser()',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 105,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 142,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 105,
+       'nodeLine' => 142,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'method.childReturnType',
        'metadata' => 
@@ -2203,13 +2155,13 @@ return [
     2 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Return type (void) of method CerberusIAM\\Auth\\CerberusGuard::setUser() should be compatible with return type ($this(Illuminate\\Contracts\\Auth\\Guard)) of method Illuminate\\Contracts\\Auth\\Guard::setUser()',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 105,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 142,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 105,
+       'nodeLine' => 142,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'method.childReturnType',
        'metadata' => 
@@ -2218,47 +2170,47 @@ return [
     )),
     3 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method CerberusIAM\\Auth\\CerberusGuard::attemptWhen() has parameter $remember with no type specified.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 156,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 156,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.parameter',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Cannot access property $cookies on Illuminate\\Http\\Request|null.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 208,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 338,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 208,
+       'nodeLine' => 338,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.nonObject',
        'metadata' => 
       array (
       ),
     )),
-    5 => 
+    4 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $sessionToken of method CerberusIAM\\Contracts\\IamClient::logoutSession() expects string, float|int<min, -1>|int<1, max>|string|true given.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 212,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 342,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 212,
+       'nodeLine' => 342,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
+       'identifier' => 'argument.type',
+       'metadata' => 
+      array (
+      ),
+    )),
+    5 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Parameter #1 $name of static method Illuminate\\Support\\Facades\\Cookie::forget() expects string, string|null given.',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 343,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 343,
+       'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
        'identifier' => 'argument.type',
        'metadata' => 
       array (
@@ -2266,62 +2218,30 @@ return [
     )),
     6 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $name of static method Illuminate\\Support\\Facades\\Cookie::forget() expects string, string|null given.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 213,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 213,
-       'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-    7 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method CerberusIAM\\Auth\\CerberusGuard::setRequest() has no return type specified.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 241,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 241,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.return',
-       'metadata' => 
-      array (
-      ),
-    )),
-    8 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Cannot access property $cookies on Illuminate\\Http\\Request|null.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 288,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 461,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 288,
+       'nodeLine' => 461,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.nonObject',
        'metadata' => 
       array (
       ),
     )),
-    9 => 
+    7 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $sessionToken of method CerberusIAM\\Contracts\\IamClient::getCurrentUserFromSession() expects string, float|int<min, -1>|int<1, max>|string|true given.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-       'line' => 294,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+       'line' => 467,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 294,
+       'nodeLine' => 467,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -2329,18 +2249,85 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php' => 
+  array (
+    0 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::getAuthIdentifierName().',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'line' => 43,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 43,
+       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
+       'identifier' => 'method.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    1 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::getAuthIdentifierName().',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'line' => 59,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 59,
+       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
+       'identifier' => 'method.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    2 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::getRememberToken().',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'line' => 66,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 66,
+       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
+       'identifier' => 'method.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    3 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::setRememberToken().',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'line' => 83,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 83,
+       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
+       'identifier' => 'method.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+  ),
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $code of method CerberusIAM\\Auth\\CerberusGuard::loginFromAuthorizationCode() expects string, array|string given.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php',
-       'line' => 54,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php',
+       'line' => 73,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 54,
+       'nodeLine' => 73,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -2350,13 +2337,13 @@ return [
     1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #2 $state of method CerberusIAM\\Auth\\CerberusGuard::loginFromAuthorizationCode() expects string, array|string given.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php',
-       'line' => 54,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php',
+       'line' => 73,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 54,
+       'nodeLine' => 73,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -2364,15 +2351,15 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Middleware/EnsureCerberusAuthenticated.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Illuminate\\Contracts\\Auth\\Guard::redirectToCerberus().',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Middleware/EnsureCerberusAuthenticated.php',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php',
        'line' => 49,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Middleware/EnsureCerberusAuthenticated.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
        'nodeLine' => 49,
@@ -2383,18 +2370,18 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Cannot access offset \'router\' on Illuminate\\Contracts\\Foundation\\Application.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 105,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+       'line' => 116,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 105,
+       'nodeLine' => 116,
        'nodeType' => 'PhpParser\\Node\\Expr\\ArrayDimFetch',
        'identifier' => 'offsetAccess.nonOffsetAccessible',
        'metadata' => 
@@ -2404,13 +2391,13 @@ return [
     1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Illuminate\\Contracts\\Foundation\\Application::routesAreCached().',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 108,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+       'line' => 119,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 108,
+       'nodeLine' => 119,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2420,13 +2407,13 @@ return [
     2 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Illuminate\\Contracts\\Auth\\Factory::provider().',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 124,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+       'line' => 135,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 124,
+       'nodeLine' => 135,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2434,18 +2421,18 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method CerberusIAM\\Contracts\\IamClient::url().',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
-       'line' => 90,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+       'line' => 95,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 90,
+       'nodeLine' => 95,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2453,50 +2440,15 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Offset 0 does not exist on array{}.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-       'line' => 67,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 67,
-       'nodeType' => 'PhpParser\\Node\\Expr\\ArrayDimFetch',
-       'identifier' => 'offsetAccess.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Offset 1 does not exist on array{}.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-       'line' => 72,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 72,
-       'nodeType' => 'PhpParser\\Node\\Expr\\ArrayDimFetch',
-       'identifier' => 'offsetAccess.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Offset \'access_token\' does not exist on array<string, mixed>|null.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
        'line' => 99,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
        'nodeLine' => 99,
@@ -2507,15 +2459,15 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property PHPUnit\\Framework\\TestCase::$app.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php',
        'line' => 16,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
        'nodeLine' => 16,
@@ -2526,18 +2478,18 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method PHPUnit\\Framework\\TestCase::get().',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
-       'line' => 63,
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
+       'line' => 64,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 63,
+       'nodeLine' => 64,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2545,39 +2497,20 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Offset 0 does not exist on array{}.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
-       'line' => 57,
+       'message' => 'Parameter #1 $string of function parse_str expects string, string|false given.',
+       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
+       'line' => 32,
        'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
+       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 57,
-       'nodeType' => 'PhpParser\\Node\\Expr\\ArrayDimFetch',
-       'identifier' => 'offsetAccess.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Support/FetchStub.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Function Fetch\\fetch() has no return type specified.',
-       'file' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Support/FetchStub.php',
-       'line' => 19,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Support/FetchStub.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 19,
-       'nodeType' => 'PHPStan\\Node\\InFunctionNode',
-       'identifier' => 'missingType.return',
+       'nodeLine' => 32,
+       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
+       'identifier' => 'argument.type',
        'metadata' => 
       array (
       ),
@@ -2593,265 +2526,253 @@ return [
 	'collectedDataCallback' => static function (): array { return array (
 ); },
 	'dependencies' => array (
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php' => 
   array (
-    'fileHash' => '5ae33bf339fea099231ae8afbdb99cba17bd5845',
+    'fileHash' => '880932f27b7b34bda8e92b485c406fd1f40711f0',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
-      4 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUser.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUser.php' => 
   array (
-    'fileHash' => '17a9ce3c3607a968ea6bf02487ba9e905e75a49f',
+    'fileHash' => '9dc4cc6ea06f333327a3e5c37b73149236392591',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUserProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/MiddlewareTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUserProvider.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/MiddlewareTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUserProvider.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUserProvider.php' => 
   array (
     'fileHash' => '4221d01041c865f0c4037c6bb5530208ba0e77d7',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/IamClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php' => 
+  array (
+    'fileHash' => '97512b9a9e6ce5488a3ceffe06393689c36605de',
+    'dependentFiles' => 
+    array (
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+    ),
+  ),
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/IamClient.php' => 
   array (
     'fileHash' => '89866d137fd4f2a21e67666cb6161bcba58cceb2',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUserProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Facades/CerberusIam.php',
-      4 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Clients/CerberusClient.php',
-      5 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      6 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
-      7 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-      8 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
-      9 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php',
-      10 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/MiddlewareTest.php',
-      11 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
-      12 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
-      13 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Fixtures/FakeIamClient.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUserProvider.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Facades/CerberusIam.php',
+      4 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Clients/CerberusClient.php',
+      5 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      6 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+      7 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusClientTest.php',
+      8 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
+      9 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php',
+      10 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/MiddlewareTest.php',
+      11 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
+      12 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
+      13 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Fixtures/FakeIamClient.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/OAuthStateStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/OAuthStateStore.php' => 
   array (
-    'fileHash' => '34b71481404244ce1300099c50caebb4ba5ca426',
+    'fileHash' => '0f16b154c9162cb6ab02839f969b1a4365dfd35d',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionOAuthStateStore.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionOAuthStateStore.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/TokenStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/TokenStore.php' => 
   array (
     'fileHash' => 'a6b8fa2688c9c9c99647ec2127028437026db439',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionTokenStore.php',
-      4 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionTokenStore.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/UserRepository.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/UserRepository.php' => 
   array (
     'fileHash' => '2273ed5588581f5afcc1a7bc0be363b95214fcc7',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
-      4 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Facades/CerberusIam.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Facades/CerberusIam.php' => 
   array (
     'fileHash' => '0db7aff93a41b1f2346962ec73e5bb71974314d7',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Filters/UserDirectoryFilter.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Filters/UserDirectoryFilter.php' => 
   array (
     'fileHash' => '672948e893cd46e934388578f1d3d6ec350497d8',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryFilterTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryFilterTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Clients/CerberusClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Clients/CerberusClient.php' => 
   array (
-    'fileHash' => '871f4ed86c54e95f0fa350e2033d520d02c14a5d',
+    'fileHash' => '4aba1e4c534b800d1b168406ea3afdf5bdc604b4',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php',
-      4 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusClientTest.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
   array (
-    'fileHash' => 'bf01066b0df03764f252bc0ba77c738d8fcddf32',
+    'fileHash' => 'cbd228432390eacec40027ca5c16b958e65b19d5',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Middleware/EnsureCerberusAuthenticated.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php' => 
   array (
     'fileHash' => 'f382857a7e1ef54cacb84550dc2b8cb61b9d2806',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/MiddlewareTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/MiddlewareTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
   array (
-    'fileHash' => '5a8a2de663d5d6d85c89cbe0d7be86e6d28426bb',
+    'fileHash' => '6d7d0c6426e4e7c86b87721fc6f13c69b911168c',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/TestCase.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/TestCase.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
   array (
-    'fileHash' => '79399ef4a299b375f9440eef55be3613a635795e',
+    'fileHash' => '83ea66febbdb4efc3aa15a961f36910ceffb87fb',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionOAuthStateStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionOAuthStateStore.php' => 
   array (
-    'fileHash' => '015fc35a787297b02bc1e30f999715999bb27fb8',
+    'fileHash' => '926f4cf944aabf5c62cc2b4957507cfddffc6836',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionTokenStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionTokenStore.php' => 
   array (
     'fileHash' => '810722d849d96072fb6167a7139bd6bd53cd47e7',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/CerberusIamServiceProvider.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusClientTest.php' => 
   array (
-    'fileHash' => 'caa230927879a031d3b3f60e2b93cf6ef1f2ca79',
+    'fileHash' => '79b5ecb105a7f56dcbdae860e0953bf0bc6f4727',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php' => 
   array (
     'fileHash' => '47abfa4d27bccf703ab492f7dcd6c4bc9cb3e793',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ConfigTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ConfigTest.php' => 
   array (
     'fileHash' => 'bd09736fe2c1febb52c283023b89c897f6b09cde',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/MiddlewareTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/MiddlewareTest.php' => 
   array (
     'fileHash' => '2700321f0d7de478a3f6e4e36dacd27e5448916c',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php' => 
   array (
-    'fileHash' => 'e5a64da56516cda3ef3fdb30fc515e6e23433737',
+    'fileHash' => '93fcfce42a0b137e465b8ccf4fceac236695bb90',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryFilterTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryFilterTest.php' => 
   array (
     'fileHash' => 'ad657c4d9ed941595c274c55cd5a88857bda3ebc',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php' => 
   array (
-    'fileHash' => '69a0ccf14eea292d84fffeb838c9a58b6f37683b',
+    'fileHash' => '5e54f4599091ca8291434558b0899f1bb1976711',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Fixtures/FakeIamClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Fixtures/FakeIamClient.php' => 
   array (
     'fileHash' => '490c7a48f2474d5d1d39e6a082997e5bc544742a',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/MiddlewareTest.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/ServiceProviderTest.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php',
+      1 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/MiddlewareTest.php',
+      2 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/ServiceProviderTest.php',
+      3 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Pest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Pest.php' => 
   array (
     'fileHash' => 'a6464520d14770de4bc6458ad5a7aa98034b070a',
     'dependentFiles' => 
     array (
     ),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Support/FetchStub.php' => 
-  array (
-    'fileHash' => '318023d055c44cbd7a8d87811b516e62e1efac2a',
-    'dependentFiles' => 
-    array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Clients/CerberusClient.php',
-      1 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php',
-      2 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php',
-      3 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php',
-    ),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/TestCase.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/TestCase.php' => 
   array (
     'fileHash' => '9f6966dde655317f8d0a1272a05d9e359b132809',
     'dependentFiles' => 
     array (
-      0 => '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Pest.php',
+      0 => '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Pest.php',
     ),
   ),
 ),
 	'exportedNodesCallback' => static function (): array { return array (
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusGuard.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusGuard.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -3100,7 +3021,37 @@ return [
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'check',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Determine if the current user is authenticated.
+     *
+     * @return bool True if a user is authenticated, false otherwise
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3118,7 +3069,37 @@ return [
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'guest',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Determine if the current user is a guest (not authenticated).
+     *
+     * @return bool True if no user is authenticated, false otherwise
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3136,7 +3117,40 @@ return [
         5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'user',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the currently authenticated user.
+     *
+     * Attempts to resolve the user from stored OAuth tokens or session cookies.
+     * Returns null if no authenticated user is found.
+     *
+     * @return Authenticatable|null The authenticated user or null
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3154,7 +3168,37 @@ return [
         6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'id',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the ID of the currently authenticated user.
+     *
+     * @return mixed The user ID or null if not authenticated
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3172,7 +3216,41 @@ return [
         7 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'validate',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Validate the given credentials (not supported for OAuth).
+     *
+     * This method exists for interface compatibility but always returns
+     * the current authentication status since OAuth doesn\'t use passwords.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored for OAuth authentication
+     * @return bool True if authenticated, false otherwise
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3201,7 +3279,37 @@ return [
         8 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'setUser',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Set the current authenticated user.
+     *
+     * @param  Authenticatable  $user  The user to set as authenticated
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3230,7 +3338,37 @@ return [
         9 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'hasUser',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Determine if a user has been set on this guard instance.
+     *
+     * @return bool True if a user is set, false otherwise
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3248,7 +3386,39 @@ return [
         10 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'viaRemember',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Determine if the user was authenticated via "remember me" cookie.
+     *
+     * Cerberus IAM does not support Laravel\'s remember-me functionality.
+     *
+     * @return bool Always returns false
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3266,7 +3436,41 @@ return [
         11 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'login',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log a user into the application.
+     *
+     * Sets the given user as the currently authenticated user.
+     * The remember parameter is ignored as OAuth handles session persistence.
+     *
+     * @param  Authenticatable  $user  The user to authenticate
+     * @param  bool  $remember  Ignored for OAuth authentication
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3306,7 +3510,41 @@ return [
         12 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'loginUsingId',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log a user into the application by their ID.
+     *
+     * Retrieves the user by ID from the user provider and authenticates them.
+     *
+     * @param  mixed  $id  The user ID
+     * @param  bool  $remember  Ignored for OAuth authentication
+     * @return Authenticatable|null The authenticated user or null if not found
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3346,7 +3584,41 @@ return [
         13 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'once',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log a user into the application for a single request.
+     *
+     * For OAuth authentication, this behaves the same as checking current authentication
+     * since OAuth sessions are managed externally.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored for OAuth authentication
+     * @return bool True if authenticated, false otherwise
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3375,7 +3647,38 @@ return [
         14 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'onceUsingId',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log a user into the application for a single request by their ID.
+     *
+     * @param  mixed  $id  The user ID
+     * @return Authenticatable|null The authenticated user or null if not found
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3404,7 +3707,44 @@ return [
         15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'attempt',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Attempt to authenticate a user using the given credentials.
+     *
+     * Password-based authentication is not supported. This method throws an exception
+     * directing users to use OAuth flow instead.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored - password auth not supported
+     * @param  bool  $remember  Ignored - password auth not supported
+     * @return bool Never returns - always throws exception
+     *
+     * @throws BadMethodCallException Always thrown as password auth is disabled
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3444,7 +3784,45 @@ return [
         16 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'attemptWhen',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Attempt to authenticate a user with conditions using the given credentials.
+     *
+     * Delegates to the attempt method. Callbacks are ignored since password
+     * authentication is not supported.
+     *
+     * @param  array<string, mixed>  $credentials  Ignored - password auth not supported
+     * @param  array<callable>  $callbacks  Ignored - password auth not supported
+     * @param  bool  $remember  Ignored - password auth not supported
+     * @return bool Never returns - always throws exception
+     *
+     * @throws BadMethodCallException Always thrown as password auth is disabled
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3495,7 +3873,45 @@ return [
         17 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'loginFromAuthorizationCode',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Complete OAuth authentication using an authorization code.
+     *
+     * Exchanges the authorization code for tokens, validates the OAuth state,
+     * retrieves the user profile, and authenticates the user.
+     *
+     * @param  string  $code  The authorization code from the OAuth callback
+     * @param  string  $state  The state parameter for CSRF protection
+     * @param  string|null  $codeVerifier  The PKCE code verifier (optional if stored)
+     * @return Authenticatable The authenticated user instance
+     *
+     * @throws RuntimeException When state validation fails or user profile cannot be retrieved
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3546,7 +3962,38 @@ return [
         18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'logout',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log the current user out of the application.
+     *
+     * Revokes OAuth tokens, clears stored tokens, logs out the session,
+     * and clears the authenticated user from the guard.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3564,7 +4011,41 @@ return [
         19 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'redirectToCerberus',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Redirect the user to the Cerberus IAM authorization endpoint.
+     *
+     * Generates OAuth state and PKCE parameters, stores them securely,
+     * and returns a redirect response to initiate the OAuth flow.
+     *
+     * @param  string|null  $returnTo  Optional URL to redirect to after authentication
+     * @return Response Redirect response to the Cerberus authorization URL
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3593,7 +4074,37 @@ return [
         20 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getTokenStore',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the token store instance used by this guard.
+     *
+     * @return TokenStore The token storage implementation
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3611,7 +4122,38 @@ return [
         21 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'setRequest',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Set the current HTTP request instance.
+     *
+     * @param  Request  $request  The HTTP request instance
+     * @return $this
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -3640,7 +4182,40 @@ return [
         22 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'resolveUserFromStoredTokens',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Attempt to resolve the authenticated user from stored OAuth tokens.
+     *
+     * Checks for valid stored tokens, refreshes expired tokens if possible,
+     * and hydrates the user from the stored or fetched profile data.
+     *
+     * @return Authenticatable|null The authenticated user or null if tokens are invalid
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -3658,7 +4233,40 @@ return [
         23 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'resolveUserFromSessionCookie',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Attempt to resolve the authenticated user from a session cookie.
+     *
+     * Checks for a valid session cookie and retrieves the user profile
+     * from the session-based authentication endpoint.
+     *
+     * @return Authenticatable|null The authenticated user or null if session is invalid
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -3676,7 +4284,41 @@ return [
         24 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'retrieveUserFromAccessToken',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve user information using an access token.
+     *
+     * Fetches the user profile from the OAuth userinfo endpoint
+     * using the provided access token.
+     *
+     * @param  string|null  $accessToken  The access token for authentication
+     * @return Authenticatable|null The user instance or null if token is invalid
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -3703,6 +4345,70 @@ return [
           ),
         )),
         25 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'hydrateUser',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Create a user instance from profile data.
+     *
+     * This method handles both database-backed (Eloquent) and stateless authentication.
+     * For database-backed mode, it syncs the user to the local database.
+     * For stateless mode, it creates a CerberusUser value object.
+     *
+     * @param  array<string, mixed>  $profile  The user profile data from Cerberus.
+     * @return Authenticatable The user instance.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'profile',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        26 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'normalizeTokenPayload',
            'phpDoc' => 
@@ -3762,10 +4468,42 @@ return [
           array (
           ),
         )),
-        26 => 
+        27 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'defaultScopes',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the default OAuth scopes for authentication.
+     *
+     * Returns the standard OpenID Connect scopes required for user authentication.
+     *
+     * @return array<string> Array of default scope strings
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'badmethodcallexception' => 'BadMethodCallException',
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
+              'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
+              'guardhelpers' => 'Illuminate\\Auth\\GuardHelpers',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'statefulguard' => 'Illuminate\\Contracts\\Auth\\StatefulGuard',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'redirectresponse' => 'Illuminate\\Http\\RedirectResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -3786,7 +4524,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUser.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUser.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -3796,14 +4534,20 @@ return [
          'phpDocString' => '/**
  * Cerberus User
  *
- * This class represents a user authenticated via Cerberus IAM,
- * implementing Laravel\'s Authenticatable interface.
+ * This class represents a user authenticated via Cerberus IAM.
+ * It\'s a stateless value object that extends Laravel\'s Fluent class
+ * and uses the same traits as Laravel\'s default User model.
+ *
+ * @extends \\Illuminate\\Support\\Fluent<string, mixed>
  */',
          'namespace' => 'CerberusIAM\\Auth',
          'uses' => 
         array (
-          'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-          'arr' => 'Illuminate\\Support\\Arr',
+          'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+          'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+          'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+          'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+          'fluent' => 'Illuminate\\Support\\Fluent',
         ),
          'constUses' => 
         array (
@@ -3811,13 +4555,16 @@ return [
       )),
        'abstract' => false,
        'final' => false,
-       'extends' => NULL,
+       'extends' => 'Illuminate\\Support\\Fluent',
        'implements' => 
       array (
         0 => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+        1 => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
       ),
        'usedTraits' => 
       array (
+        0 => 'Illuminate\\Auth\\Authenticatable',
+        1 => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
       ),
        'traitUseAdaptations' => 
       array (
@@ -3828,10 +4575,29 @@ return [
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
-            0 => 'attributes',
+            0 => 'primaryKey',
           ),
-           'phpDoc' => NULL,
-           'type' => 'array',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * The primary key for the user.
+     *
+     * @var string
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'type' => NULL,
            'public' => false,
            'private' => false,
            'static' => false,
@@ -3842,51 +4608,6 @@ return [
         )),
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => '__construct',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Create a new Cerberus user instance.
-     *
-     * @param  array<string, mixed>  $attributes  The user attributes.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'attributes',
-               'type' => 'array',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'fromProfile',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -3896,13 +4617,16 @@ return [
      * This method maps the profile data from Cerberus to user attributes.
      *
      * @param  array<string, mixed>  $payload  The profile data from Cerberus.
-     * @return self The Cerberus user instance.
+     * @return CerberusUser The Cerberus user instance.
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
             array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
             ),
              'constUses' => 
             array (
@@ -3914,7 +4638,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => true,
-           'returnType' => 'self',
+           'returnType' => 'CerberusIAM\\Auth\\CerberusUser',
            'parameters' => 
           array (
             0 => 
@@ -3933,7 +4657,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getAuthIdentifierName',
            'phpDoc' => 
@@ -3941,13 +4665,16 @@ return [
              'phpDocString' => '/**
      * Get the name of the unique identifier for the user.
      *
-     * @return string The identifier name.
+     * @return string The name of the identifier field
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
             array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
             ),
              'constUses' => 
             array (
@@ -3960,6 +4687,43 @@ return [
            'final' => false,
            'static' => false,
            'returnType' => 'string',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'getAuthIdentifier',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed The user\'s unique identifier
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'mixed',
            'parameters' => 
           array (
           ),
@@ -3969,19 +4733,24 @@ return [
         )),
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getAuthIdentifier',
+           'name' => 'getAuthPassword',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Get the unique identifier for the user.
+     * Get the password for the user.
      *
-     * @return mixed The user identifier.
+     * OAuth users don\'t have passwords stored locally.
+     *
+     * @return string|null Always returns null for OAuth users
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
             array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
             ),
              'constUses' => 
             array (
@@ -3993,7 +4762,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => 'mixed',
+           'returnType' => '?string',
            'parameters' => 
           array (
           ),
@@ -4003,19 +4772,23 @@ return [
         )),
         5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getAuthPassword',
+           'name' => 'hasRole',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Get the password for the user (not applicable for OAuth).
+     * Determine if the user has a specific role.
      *
-     * @return string|null Always returns null.
+     * @param  string  $role  The role name to check
+     * @return bool True if the user has the role, false otherwise
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
             array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
             ),
              'constUses' => 
             array (
@@ -4027,195 +4800,12 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => '?string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        6 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getAuthPasswordName',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Get the password column name (not applicable for OAuth).
-     *
-     * @return string The password column name.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        7 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getRememberToken',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Get the remember token (not supported).
-     *
-     * @return string|null Always returns null.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => '?string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        8 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'setRememberToken',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Set the remember token (not supported).
-     *
-     * @param  string  $value  The token value.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'void',
+           'returnType' => 'bool',
            'parameters' => 
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'value',
-               'type' => NULL,
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        9 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getRememberTokenName',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Get the remember token column name.
-     *
-     * @return string The remember token column name.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        10 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getAttribute',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Get an attribute from the user.
-     *
-     * @param  string  $key  The attribute key.
-     * @param  mixed  $default  The default value if not found.
-     * @return mixed The attribute value.
-     */',
-             'namespace' => 'CerberusIAM\\Auth',
-             'uses' => 
-            array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'mixed',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'key',
+               'name' => 'role',
                'type' => 'string',
                'byRef' => false,
                'variadic' => false,
@@ -4224,37 +4814,30 @@ return [
               array (
               ),
             )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'default',
-               'type' => '?mixed',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => true,
-               'attributes' => 
-              array (
-              ),
-            )),
           ),
            'attributes' => 
           array (
           ),
         )),
-        11 => 
+        6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'toArray',
+           'name' => 'hasPermission',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Convert the user to an array.
+     * Determine if the user has a specific permission.
      *
-     * @return array<string, mixed> The user attributes.
+     * @param  string  $permission  The permission name to check
+     * @return bool True if the user has the permission, false otherwise
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
             array (
-              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
-              'arr' => 'Illuminate\\Support\\Arr',
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
             ),
              'constUses' => 
             array (
@@ -4266,7 +4849,55 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => 'array',
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'permission',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'organisation',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the user\'s organisation.
+     *
+     * @return array<string, mixed>|null The organisation data or null if not available
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'authenticatable' => 'Illuminate\\Auth\\Authenticatable',
+              'authorizablecontract' => 'Illuminate\\Contracts\\Auth\\Access\\Authorizable',
+              'authenticatablecontract' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'authorizable' => 'Illuminate\\Foundation\\Auth\\Access\\Authorizable',
+              'fluent' => 'Illuminate\\Support\\Fluent',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?array',
            'parameters' => 
           array (
           ),
@@ -4280,7 +4911,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Auth/CerberusUserProvider.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/CerberusUserProvider.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -4712,7 +5343,545 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/IamClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'CerberusIAM\\Auth\\EloquentCerberusUserProvider',
+       'phpDoc' => 
+      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+         'phpDocString' => '/**
+ * Eloquent Cerberus User Provider
+ *
+ * This provider syncs users from Cerberus IAM to a local Eloquent model,
+ * allowing for better performance and integration with Laravel\'s ecosystem.
+ */',
+         'namespace' => 'CerberusIAM\\Auth',
+         'uses' => 
+        array (
+          'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+          'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+          'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+        ),
+         'constUses' => 
+        array (
+        ),
+      )),
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Auth\\UserProvider',
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Create a new Eloquent Cerberus user provider instance.
+     *
+     * @param  IamClient  $client  The IAM client for API communication.
+     * @param  string  $model  The Eloquent model class name.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'client',
+               'type' => 'CerberusIAM\\Contracts\\IamClient',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'model',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'retrieveById',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve a user by their unique identifier.
+     *
+     * @param  mixed  $identifier  The user identifier.
+     * @return \\Illuminate\\Contracts\\Auth\\Authenticatable|null The user instance, or null if not found.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?Illuminate\\Contracts\\Auth\\Authenticatable',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'identifier',
+               'type' => NULL,
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'retrieveByToken',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve a user by their remember token.
+     *
+     * @param  mixed  $identifier  The user identifier.
+     * @param  string  $token  The remember token.
+     * @return \\Illuminate\\Contracts\\Auth\\Authenticatable|null The user instance, or null if not found.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?Illuminate\\Contracts\\Auth\\Authenticatable',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'identifier',
+               'type' => NULL,
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => NULL,
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'updateRememberToken',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Update the remember token for a user.
+     *
+     * @param  \\Illuminate\\Contracts\\Auth\\Authenticatable  $user  The user instance.
+     * @param  string  $token  The remember token.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => NULL,
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'retrieveByCredentials',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve a user by credentials (not supported).
+     *
+     * @param  array<string, mixed>  $credentials  The credentials.
+     * @return Authenticatable|null Always returns null.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?Illuminate\\Contracts\\Auth\\Authenticatable',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'credentials',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        5 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'validateCredentials',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Validate user credentials (not supported).
+     *
+     * @param  Authenticatable  $user  The user instance.
+     * @param  array<string, mixed>  $credentials  The credentials.
+     * @return bool Always returns false.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'credentials',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        6 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'rehashPasswordIfRequired',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Rehash the user\'s password if required (not applicable).
+     *
+     * @param  Authenticatable  $user  The user instance.
+     * @param  array<string, mixed>  $credentials  The credentials.
+     * @param  bool  $force  Whether to force rehashing.
+     * @return bool Always returns false.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'credentials',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'force',
+               'type' => 'bool',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'syncUser',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Sync a user from Cerberus IAM to the local database.
+     *
+     * This method creates or updates a local user record based on data from Cerberus.
+     *
+     * @param  array<string, mixed>  $profile  The user profile from Cerberus.
+     * @return \\Illuminate\\Contracts\\Auth\\Authenticatable The synced user instance.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'profile',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        8 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'createModel',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Create a new instance of the model.
+     *
+     * @return \\Illuminate\\Database\\Eloquent\\Model The model instance.
+     */',
+             'namespace' => 'CerberusIAM\\Auth',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'authenticatable' => 'Illuminate\\Contracts\\Auth\\Authenticatable',
+              'userprovider' => 'Illuminate\\Contracts\\Auth\\UserProvider',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Database\\Eloquent\\Model',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/IamClient.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedInterfaceNode::__set_state(array(
@@ -5228,7 +6397,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/OAuthStateStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/OAuthStateStore.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedInterfaceNode::__set_state(array(
@@ -5267,6 +6436,7 @@ return [
      *
      * @param  string  $state  The OAuth state parameter for CSRF protection.
      * @param  string|null  $codeVerifier  The PKCE code verifier for security.
+     * @param  string|null  $guardName  The name of the guard initiating the OAuth flow.
      */',
              'namespace' => 'CerberusIAM\\Contracts',
              'uses' => 
@@ -5307,6 +6477,17 @@ return [
               array (
               ),
             )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'guardName',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
@@ -5323,7 +6504,7 @@ return [
      * This method retrieves the stored state and code verifier, then removes them
      * from storage to prevent reuse.
      *
-     * @return array{state: string|null, code_verifier: string|null} The state and code verifier.
+     * @return array{state: string|null, code_verifier: string|null, guard_name: string|null} The state, code verifier, and guard name.
      */',
              'namespace' => 'CerberusIAM\\Contracts',
              'uses' => 
@@ -5350,7 +6531,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/TokenStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/TokenStore.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedInterfaceNode::__set_state(array(
@@ -5491,7 +6672,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Contracts/UserRepository.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Contracts/UserRepository.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedInterfaceNode::__set_state(array(
@@ -5617,7 +6798,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Facades/CerberusIam.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Facades/CerberusIam.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -5710,7 +6891,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Filters/UserDirectoryFilter.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Filters/UserDirectoryFilter.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -6211,7 +7392,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Clients/CerberusClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Clients/CerberusClient.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -6221,13 +7402,14 @@ return [
          'phpDocString' => '/**
  * Cerberus IAM HTTP Client
  *
- * This class implements the IamClient interface, providing HTTP-based communication
- * with the Cerberus IAM service for authentication, authorization, and user management.
+ * Implements the IamClient contract by delegating HTTP requests to Laravel\'s HTTP client.
  */',
          'namespace' => 'CerberusIAM\\Http\\Clients',
          'uses' => 
         array (
           'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+          'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+          'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
           'arr' => 'Illuminate\\Support\\Arr',
           'carbon' => 'Illuminate\\Support\\Carbon',
           'str' => 'Illuminate\\Support\\Str',
@@ -6258,24 +7440,7 @@ return [
           array (
             0 => 'baseUrl',
           ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * The base URL of the Cerberus IAM service.
-     */',
-             'namespace' => 'CerberusIAM\\Http\\Clients',
-             'uses' => 
-            array (
-              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
-              'arr' => 'Illuminate\\Support\\Arr',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'str' => 'Illuminate\\Support\\Str',
-              'runtimeexception' => 'RuntimeException',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'type' => 'string',
            'public' => false,
            'private' => false,
@@ -6286,22 +7451,42 @@ return [
           ),
         )),
         1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'http',
+          ),
+           'phpDoc' => NULL,
+           'type' => 'Illuminate\\Http\\Client\\Factory',
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Create a new Cerberus client instance.
+     * Create a new Cerberus IAM HTTP client instance.
      *
-     * @param  string  $baseUrl  The base URL of the Cerberus IAM service.
-     * @param  string|null  $sessionCookie  The name of the session cookie for session-based requests.
-     * @param  array  $oauthConfig  The OAuth configuration including client_id, client_secret, redirect_uri, scopes.
-     * @param  array  $httpConfig  Additional HTTP client configuration like timeout and retry settings.
+     * @param  string  $baseUrl  The base URL for the Cerberus IAM API
+     * @param  string|null  $sessionCookie  The name of the session cookie for session-based authentication
+     * @param  string|null  $organisationSlug  The organisation slug for admin operations
+     * @param  array<string, mixed>  $oauthConfig  OAuth2 configuration including client_id, client_secret, redirect_uri, scopes
+     * @param  array<string, mixed>  $httpConfig  HTTP client configuration including timeout and retry settings
+     * @param  HttpFactory|null  $http  HTTP client factory (optional, defaults to new instance)
      */',
              'namespace' => 'CerberusIAM\\Http\\Clients',
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6375,25 +7560,38 @@ return [
               array (
               ),
             )),
+            5 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'http',
+               'type' => '?Illuminate\\Http\\Client\\Factory',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
           ),
         )),
-        2 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'sessionCookieName',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Get the name of the session cookie.
+     * Get the name of the session cookie used for authentication.
      *
-     * @return string|null The session cookie name, or null if not configured.
+     * @return string|null The session cookie name or null if not configured
      */',
              'namespace' => 'CerberusIAM\\Http\\Clients',
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6417,26 +7615,28 @@ return [
           array (
           ),
         )),
-        3 => 
+        4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'buildAuthorizationUrl',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Build the authorization URL for OAuth flow.
+     * Build the OAuth2 authorization URL for initiating the login flow.
      *
-     * This method constructs the OAuth authorization URL with all necessary parameters
-     * including state, code challenge, and scopes.
+     * Constructs the authorization URL with PKCE code challenge, state parameter,
+     * and optional return URL for post-login redirection.
      *
-     * @param  string  $state  The OAuth state parameter for CSRF protection.
-     * @param  string  $codeVerifier  The PKCE code verifier.
-     * @param  string|null  $returnTo  Optional return URL after authorization.
-     * @return string The complete authorization URL.
+     * @param  string  $state  The OAuth2 state parameter for CSRF protection
+     * @param  string  $codeVerifier  The PKCE code verifier for secure code exchange
+     * @param  string|null  $returnTo  Optional URL to redirect to after successful authentication
+     * @return string The complete authorization URL
      */',
              'namespace' => 'CerberusIAM\\Http\\Clients',
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6493,20 +7693,22 @@ return [
           array (
           ),
         )),
-        4 => 
+        5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'generateCodeVerifier',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Generate a code verifier for PKCE.
+     * Generate a cryptographically secure random string for PKCE code verifier.
      *
-     * @return string The generated code verifier.
+     * @return string A 64-character random string suitable for PKCE
      */',
              'namespace' => 'CerberusIAM\\Http\\Clients',
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6530,22 +7732,30 @@ return [
           array (
           ),
         )),
-        5 => 
+        6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'exchangeAuthorizationCode',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Exchange authorization code for tokens.
+     * Exchange an authorization code for access and refresh tokens.
      *
-     * @param  string  $code  The authorization code from the OAuth callback.
-     * @param  string|null  $codeVerifier  The PKCE code verifier.
-     * @return array<string, mixed> The token response.
+     * Performs the OAuth2 token exchange using the authorization code
+     * received from the authorization callback, optionally validating
+     * with PKCE code verifier.
+     *
+     * @param  string  $code  The authorization code from the OAuth2 callback
+     * @param  string|null  $codeVerifier  The PKCE code verifier (optional but recommended)
+     * @return array<string, mixed> The token response containing access_token, refresh_token, etc.
+     *
+     * @throws RuntimeException When the token exchange fails
      */',
              'namespace' => 'CerberusIAM\\Http\\Clients',
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6591,10 +7801,37 @@ return [
           array (
           ),
         )),
-        6 => 
+        7 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'refreshAccessToken',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Refresh an access token using a refresh token.
+     *
+     * Exchanges a valid refresh token for a new access token and optionally
+     * a new refresh token, maintaining the user\'s authenticated session.
+     *
+     * @param  string  $refreshToken  The refresh token to exchange
+     * @return array<string, mixed> The token response with new access_token and refresh_token
+     *
+     * @throws RuntimeException When the token refresh fails
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6620,10 +7857,35 @@ return [
           array (
           ),
         )),
-        7 => 
+        8 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getUserInfo',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve user information using an access token.
+     *
+     * Fetches the authenticated user\'s profile information from the
+     * OAuth2 userinfo endpoint using the provided access token.
+     *
+     * @param  string  $accessToken  The access token for authentication
+     * @return array<string, mixed>|null The user information or null if request fails
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6649,10 +7911,35 @@ return [
           array (
           ),
         )),
-        8 => 
+        9 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getCurrentUserFromSession',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve the current user\'s profile using a session token.
+     *
+     * Fetches user profile information from the session-based authentication
+     * endpoint using the session cookie for authentication.
+     *
+     * @param  string  $sessionToken  The session token from the user\'s session
+     * @return array<string, mixed>|null The user profile data or null if not authenticated
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6678,10 +7965,34 @@ return [
           array (
           ),
         )),
-        9 => 
+        10 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'logoutSession',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Log out the user by invalidating their session.
+     *
+     * Sends a logout request to invalidate the user\'s session token,
+     * effectively ending their authenticated session.
+     *
+     * @param  string  $sessionToken  The session token to invalidate
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6707,10 +8018,35 @@ return [
           array (
           ),
         )),
-        10 => 
+        11 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'revokeTokens',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Revoke access and/or refresh tokens.
+     *
+     * Invalidates the specified tokens by sending them to the OAuth2
+     * revocation endpoint, preventing further use of these tokens.
+     *
+     * @param  string|null  $accessToken  The access token to revoke
+     * @param  string|null  $refreshToken  The refresh token to revoke
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6747,10 +8083,35 @@ return [
           array (
           ),
         )),
-        11 => 
+        12 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getUserById',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retrieve a user by their ID using client credentials.
+     *
+     * Fetches user information from the admin API using client credentials
+     * authentication. Requires organisation slug to be configured.
+     *
+     * @param  string  $id  The user ID to look up
+     * @return array<string, mixed>|null The user data or null if not found or access denied
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6776,10 +8137,37 @@ return [
           array (
           ),
         )),
-        12 => 
+        13 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'tokenRequest',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Perform a token request to the OAuth2 token endpoint.
+     *
+     * Handles various OAuth2 token flows (authorization code, refresh token,
+     * client credentials) by sending the appropriate payload to the token endpoint.
+     *
+     * @param  array<string, mixed>  $body  The request body parameters
+     * @return array<string, mixed> The token response
+     *
+     * @throws RuntimeException When the token request fails
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -6805,57 +8193,29 @@ return [
           array (
           ),
         )),
-        13 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'generateCodeChallenge',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => false,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'string',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'verifier',
-               'type' => 'string',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
         14 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'clientCredentialsHeader',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => false,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => '?string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        15 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'url',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Build a full URL for a given path.
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -6881,23 +8241,79 @@ return [
           array (
           ),
         )),
-        16 => 
+        15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'applyDefaults',
-           'phpDoc' => NULL,
+           'name' => 'http',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Prepare a base HTTP request with common configuration.
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => 'array',
+           'returnType' => 'Illuminate\\Http\\Client\\PendingRequest',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        16 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'generateCodeChallenge',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Generate a PKCE code challenge from a code verifier.
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'string',
            'parameters' => 
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'options',
-               'type' => 'array',
+               'name' => 'verifier',
+               'type' => 'string',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -6927,6 +8343,8 @@ return [
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -6948,7 +8366,31 @@ return [
         18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getClientCredentialsAccessToken',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get an access token using client credentials flow.
+     *
+     * Obtains an access token for machine-to-machine authentication using
+     * the configured client credentials. Tokens are cached until expiry.
+     *
+     * @return string|null The access token or null if client credentials not configured
+     */',
+             'namespace' => 'CerberusIAM\\Http\\Clients',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'carbon' => 'Illuminate\\Support\\Carbon',
+              'str' => 'Illuminate\\Support\\Str',
+              'runtimeexception' => 'RuntimeException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => false,
            'private' => false,
@@ -6978,6 +8420,8 @@ return [
              'uses' => 
             array (
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'arr' => 'Illuminate\\Support\\Arr',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'str' => 'Illuminate\\Support\\Str',
@@ -7018,7 +8462,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Http/Controllers/CerberusCallbackController.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -7120,7 +8564,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Middleware/EnsureCerberusAuthenticated.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -7299,7 +8743,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Providers/CerberusIamServiceProvider.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -7318,6 +8762,7 @@ return [
         array (
           'cerberusguard' => 'CerberusIAM\\Auth\\CerberusGuard',
           'cerberususerprovider' => 'CerberusIAM\\Auth\\CerberusUserProvider',
+          'eloquentcerberususerprovider' => 'CerberusIAM\\Auth\\EloquentCerberusUserProvider',
           'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
           'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
           'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
@@ -7330,6 +8775,7 @@ return [
           'authfactory' => 'Illuminate\\Contracts\\Auth\\Factory',
           'configrepository' => 'Illuminate\\Contracts\\Config\\Repository',
           'container' => 'Illuminate\\Contracts\\Container\\Container',
+          'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
@@ -7367,6 +8813,7 @@ return [
             array (
               'cerberusguard' => 'CerberusIAM\\Auth\\CerberusGuard',
               'cerberususerprovider' => 'CerberusIAM\\Auth\\CerberusUserProvider',
+              'eloquentcerberususerprovider' => 'CerberusIAM\\Auth\\EloquentCerberusUserProvider',
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
               'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
               'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
@@ -7379,6 +8826,7 @@ return [
               'authfactory' => 'Illuminate\\Contracts\\Auth\\Factory',
               'configrepository' => 'Illuminate\\Contracts\\Config\\Repository',
               'container' => 'Illuminate\\Contracts\\Container\\Container',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
@@ -7418,6 +8866,7 @@ return [
             array (
               'cerberusguard' => 'CerberusIAM\\Auth\\CerberusGuard',
               'cerberususerprovider' => 'CerberusIAM\\Auth\\CerberusUserProvider',
+              'eloquentcerberususerprovider' => 'CerberusIAM\\Auth\\EloquentCerberusUserProvider',
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
               'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
               'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
@@ -7430,6 +8879,7 @@ return [
               'authfactory' => 'Illuminate\\Contracts\\Auth\\Factory',
               'configrepository' => 'Illuminate\\Contracts\\Config\\Repository',
               'container' => 'Illuminate\\Contracts\\Container\\Container',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
@@ -7480,6 +8930,7 @@ return [
             array (
               'cerberusguard' => 'CerberusIAM\\Auth\\CerberusGuard',
               'cerberususerprovider' => 'CerberusIAM\\Auth\\CerberusUserProvider',
+              'eloquentcerberususerprovider' => 'CerberusIAM\\Auth\\EloquentCerberusUserProvider',
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
               'oauthstatestore' => 'CerberusIAM\\Contracts\\OAuthStateStore',
               'tokenstore' => 'CerberusIAM\\Contracts\\TokenStore',
@@ -7492,6 +8943,7 @@ return [
               'authfactory' => 'Illuminate\\Contracts\\Auth\\Factory',
               'configrepository' => 'Illuminate\\Contracts\\Config\\Repository',
               'container' => 'Illuminate\\Contracts\\Container\\Container',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
@@ -7530,7 +8982,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Repositories/UserDirectoryRepository.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -7549,7 +9001,10 @@ return [
           'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
           'userrepository' => 'CerberusIAM\\Contracts\\UserRepository',
           'userdirectoryfilter' => 'CerberusIAM\\Filters\\UserDirectoryFilter',
+          'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+          'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
           'request' => 'Illuminate\\Http\\Request',
+          'arr' => 'Illuminate\\Support\\Arr',
           'invalidargumentexception' => 'InvalidArgumentException',
         ),
          'constUses' => 
@@ -7587,7 +9042,10 @@ return [
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
               'userrepository' => 'CerberusIAM\\Contracts\\UserRepository',
               'userdirectoryfilter' => 'CerberusIAM\\Filters\\UserDirectoryFilter',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
               'invalidargumentexception' => 'InvalidArgumentException',
             ),
              'constUses' => 
@@ -7610,6 +9068,28 @@ return [
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'http',
+               'type' => 'Illuminate\\Http\\Client\\Factory',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'httpConfig',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
                'attributes' => 
               array (
               ),
@@ -7645,7 +9125,10 @@ return [
               'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
               'userrepository' => 'CerberusIAM\\Contracts\\UserRepository',
               'userdirectoryfilter' => 'CerberusIAM\\Filters\\UserDirectoryFilter',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
               'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
               'invalidargumentexception' => 'InvalidArgumentException',
             ),
              'constUses' => 
@@ -7721,13 +9204,53 @@ return [
           array (
           ),
         )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'request',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Prepare a base HTTP request with common configuration.
+     *
+     * @return PendingRequest The configured HTTP request instance.
+     */',
+             'namespace' => 'CerberusIAM\\Repositories',
+             'uses' => 
+            array (
+              'iamclient' => 'CerberusIAM\\Contracts\\IamClient',
+              'userrepository' => 'CerberusIAM\\Contracts\\UserRepository',
+              'userdirectoryfilter' => 'CerberusIAM\\Filters\\UserDirectoryFilter',
+              'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
+              'pendingrequest' => 'Illuminate\\Http\\Client\\PendingRequest',
+              'request' => 'Illuminate\\Http\\Request',
+              'arr' => 'Illuminate\\Support\\Arr',
+              'invalidargumentexception' => 'InvalidArgumentException',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\Client\\PendingRequest',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
       ),
        'attributes' => 
       array (
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionOAuthStateStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionOAuthStateStore.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -7776,6 +9299,7 @@ return [
      * @param  Session  $session  The Laravel session instance.
      * @param  string  $stateKey  The session key for storing the state.
      * @param  string  $codeVerifierKey  The session key for storing the code verifier.
+     * @param  string  $guardNameKey  The session key for storing the guard name.
      */',
              'namespace' => 'CerberusIAM\\Support\\Stores',
              'uses' => 
@@ -7829,6 +9353,17 @@ return [
               array (
               ),
             )),
+            3 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'guardNameKey',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
@@ -7847,6 +9382,7 @@ return [
      *
      * @param  string  $state  The OAuth state parameter.
      * @param  string|null  $codeVerifier  The PKCE code verifier.
+     * @param  string|null  $guardName  The name of the guard initiating the OAuth flow.
      */',
              'namespace' => 'CerberusIAM\\Support\\Stores',
              'uses' => 
@@ -7889,6 +9425,17 @@ return [
               array (
               ),
             )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'guardName',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
@@ -7905,7 +9452,7 @@ return [
      * This method pulls the state and code verifier from the session,
      * removing them to prevent reuse.
      *
-     * @return array{state: string|null, code_verifier: string|null} The state and code verifier.
+     * @return array{state: string|null, code_verifier: string|null, guard_name: string|null} The state, code verifier, and guard name.
      */',
              'namespace' => 'CerberusIAM\\Support\\Stores',
              'uses' => 
@@ -7937,7 +9484,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/src/Support/Stores/SessionTokenStore.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/src/Support/Stores/SessionTokenStore.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -8155,138 +9702,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusClientTest.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'CerberusIAM\\Tests\\Feature\\StubResponse',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => NULL,
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => '__construct',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'ok',
-               'type' => 'bool',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'payload',
-               'type' => 'array',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            2 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'text',
-               'type' => 'string',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => true,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'successful',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'bool',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'json',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'array',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'text',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/CerberusGuardTest.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Feature/CerberusGuardTest.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
@@ -8333,138 +9749,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Feature/UserDirectoryRepositoryTest.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'CerberusIAM\\Tests\\Feature\\RepositoryStubResponse',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => NULL,
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => '__construct',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'ok',
-               'type' => 'bool',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'payload',
-               'type' => 'array',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            2 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'text',
-               'type' => 'string',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => true,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'successful',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'bool',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'json',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'array',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'text',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'string',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Fixtures/FakeIamClient.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/Fixtures/FakeIamClient.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -9283,120 +10568,7 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/Support/FetchStub.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'CerberusIAM\\Tests\\Support\\FetchStub',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => NULL,
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'requests',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @var array<int, array<string, mixed>> */',
-             'namespace' => 'CerberusIAM\\Tests\\Support',
-             'uses' => 
-            array (
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'array',
-           'public' => true,
-           'private' => false,
-           'static' => true,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'queue',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @var array<int, object> */',
-             'namespace' => 'CerberusIAM\\Tests\\Support',
-             'uses' => 
-            array (
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'array',
-           'public' => true,
-           'private' => false,
-           'static' => true,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
-       'name' => 'Fetch\\fetch',
-       'phpDoc' => NULL,
-       'byRef' => false,
-       'returnType' => NULL,
-       'parameters' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-           'name' => 'url',
-           'type' => 'string',
-           'byRef' => false,
-           'variadic' => false,
-           'hasDefault' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-           'name' => 'options',
-           'type' => 'array',
-           'byRef' => false,
-           'variadic' => false,
-           'hasDefault' => true,
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  '/Users/jerome/Projects/cerberus-iam/laravel-iam/tests/TestCase.php' => 
+  '/Users/jerome/Projects/cerberus-iam/laravel-sdk/tests/TestCase.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
