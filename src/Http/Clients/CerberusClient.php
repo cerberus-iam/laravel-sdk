@@ -82,8 +82,6 @@ class CerberusClient implements IamClient
             $query['return_to'] = $returnTo;
         }
 
-        unset($body['client_secret']);
-
         return $this->url('/oauth2/authorize').'?'.http_build_query($query);
     }
 
