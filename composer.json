@@ -68,7 +68,7 @@
     "test:coverage": "pest --coverage",
     "lint": "pint",
     "lint:test": "pint --test",
-    "analyse": "phpstan analyse",
+    "analyse": "phpstan analyse --memory-limit=512M",
     "ci": [
       "@lint:test",
       "@analyse",

@@ -5,9 +5,9 @@ parameters:
         - tests
     tmpDir: .phpstan.cache
     treatPhpDocTypesAsCertain: false
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+        - identifier: missingType.iterableValue
         # Laravel specific ignores
         - '#Call to an undefined method.*#'
         - '#Access to an undefined property.*#'

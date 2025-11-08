@@ -98,7 +98,7 @@ it('retrieves users by ID through the user provider', function () {
     expect($user)->toBeInstanceOf(Illuminate\Contracts\Auth\Authenticatable::class);
 
     // Assert user properties (PHPStan knows $user is not null after the above check)
-    /* @var \Illuminate\Contracts\Auth\Authenticatable $user */
+    /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
     expect($user->getAuthIdentifier())->toBe('user-123');
     expect($user->getAuthIdentifierName())->toBe('id');
 });

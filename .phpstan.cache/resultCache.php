@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1762587264,
+	'lastFullAnalysisTime' => 1762589959,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
   'phpVersion' => 80413,
-  'projectConfig' => '{parameters: {level: 8, paths: [/Users/jerome/Projects/apps/laravel-sdk/src, /Users/jerome/Projects/apps/laravel-sdk/tests], tmpDir: /Users/jerome/Projects/apps/laravel-sdk/.phpstan.cache, treatPhpDocTypesAsCertain: false, checkMissingIterableValueType: false, excludePaths: {analyseAndScan: [/Users/jerome/Projects/apps/laravel-sdk/vendor/*, /Users/jerome/Projects/apps/laravel-sdk/.phpstan.cache/*], analyse: []}}}',
+  'projectConfig' => '{parameters: {level: 8, paths: [/Users/jerome/Projects/apps/laravel-sdk/src, /Users/jerome/Projects/apps/laravel-sdk/tests], tmpDir: /Users/jerome/Projects/apps/laravel-sdk/.phpstan.cache, treatPhpDocTypesAsCertain: false, excludePaths: {analyseAndScan: [/Users/jerome/Projects/apps/laravel-sdk/vendor/*, /Users/jerome/Projects/apps/laravel-sdk/.phpstan.cache/*], analyse: []}}}',
   'analysedPaths' => 
   array (
     0 => '/Users/jerome/Projects/apps/laravel-sdk/src',
@@ -2392,12 +2392,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Cannot access offset \'router\' on Illuminate\\Contracts\\Foundation\\Application.',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 113,
+       'line' => 114,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 113,
+       'nodeLine' => 114,
        'nodeType' => 'PhpParser\\Node\\Expr\\ArrayDimFetch',
        'identifier' => 'offsetAccess.nonOffsetAccessible',
        'metadata' => 
@@ -2408,12 +2408,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Illuminate\\Contracts\\Foundation\\Application::routesAreCached().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 116,
+       'line' => 117,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 116,
+       'nodeLine' => 117,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2424,12 +2424,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Illuminate\\Contracts\\Auth\\Factory::provider().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
-       'line' => 132,
+       'line' => 133,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 132,
+       'nodeLine' => 133,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2440,6 +2440,22 @@ return [
   '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
   array (
     0 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Method CerberusIAM\\Repositories\\UserDirectoryRepository::__construct() has parameter $httpConfig with no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+       'line' => 32,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 32,
+       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method CerberusIAM\\Contracts\\IamClient::url().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php',
@@ -2500,12 +2516,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Pest\\PendingCalls\\TestCall|Pest\\Support\\HigherOrderTapProxy::group().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
-       'line' => 9,
+       'line' => 8,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 9,
+       'nodeLine' => 8,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2516,12 +2532,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Pest\\PendingCalls\\TestCall|Pest\\Support\\HigherOrderTapProxy::group().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
-       'line' => 31,
+       'line' => 30,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 31,
+       'nodeLine' => 30,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2581,30 +2597,14 @@ return [
     )),
     3 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $array of static method Illuminate\\Support\\Arr::get() expects array|ArrayAccess, array<string, mixed>|null given.',
-       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php',
-       'line' => 41,
-       'canBeIgnored' => true,
-       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 41,
-       'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Pest\\PendingCalls\\TestCall|Pest\\Support\\HigherOrderTapProxy::group().',
        'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php',
-       'line' => 50,
+       'line' => 54,
        'canBeIgnored' => true,
        'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 50,
+       'nodeLine' => 54,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -2650,192 +2650,127 @@ return [
       ),
     )),
   ),
+  '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php' => 
+  array (
+    0 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$userinfoResponses type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 20,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 20,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    1 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$sessionProfiles type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 25,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 25,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    2 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$tokenResponses type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 30,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 30,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    3 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$refreshResponses type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 35,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 35,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    4 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$revocations type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 40,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 40,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    5 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$logoutCalls type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 45,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 45,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+    6 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Property CerberusIAM\\Tests\\Fixtures\\FakeIamClient::$userByIdResponses type has no value type specified in iterable type array.',
+       'file' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'line' => 50,
+       'canBeIgnored' => true,
+       'filePath' => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
+       'traitFilePath' => NULL,
+       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
+       'nodeLine' => 50,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.iterableValue',
+       'metadata' => 
+      array (
+      ),
+    )),
+  ),
 ); },
 	'locallyIgnoredErrorsCallback' => static function (): array { return array (
 ); },
 	'linesToIgnore' => array (
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusGuard.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusUser.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusUserProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/IamClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/OAuthStateStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/TokenStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/UserRepository.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Facades/CerberusIam.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Filters/UserDirectoryFilter.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Http/Clients/CerberusClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Support/Stores/SessionOAuthStateStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Support/Stores/SessionTokenStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/CerberusClientTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/CerberusGuardTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ConfigTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/MiddlewareTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ServiceProviderTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/UserDirectoryFilterTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/TestCase.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/bootstrap.php' => 
-  array (
-  ),
 ),
 	'unmatchedLineIgnores' => array (
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusGuard.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusUser.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusUserProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/EloquentCerberusUserProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/IamClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/OAuthStateStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/TokenStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/UserRepository.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Facades/CerberusIam.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Filters/UserDirectoryFilter.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Http/Clients/CerberusClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Middleware/EnsureCerberusAuthenticated.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Repositories/UserDirectoryRepository.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Support/Stores/SessionOAuthStateStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/src/Support/Stores/SessionTokenStore.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/CerberusClientTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/CerberusGuardTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ConfigTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/MiddlewareTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ServiceProviderTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/UserDirectoryFilterTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/TestCase.php' => 
-  array (
-  ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/bootstrap.php' => 
-  array (
-  ),
 ),
 	'collectedDataCallback' => static function (): array { return array (
 ); },
@@ -2853,7 +2788,7 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusUser.php' => 
   array (
-    'fileHash' => '9dc4cc6ea06f333327a3e5c37b73149236392591',
+    'fileHash' => '22b5f4be9887907ce4e6e0a3512c5301f703dea3',
     'dependentFiles' => 
     array (
       0 => '/Users/jerome/Projects/apps/laravel-sdk/src/Auth/CerberusGuard.php',
@@ -2899,7 +2834,7 @@ return [
       13 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ServiceProviderTest.php',
       14 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/UserDirectoryRepositoryTest.php',
       15 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Fixtures/FakeIamClient.php',
-      16 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php',
+      16 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Support/helpers.php',
     ),
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/src/Contracts/OAuthStateStore.php' => 
@@ -2962,7 +2897,7 @@ return [
       3 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
       4 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php',
       5 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ServiceProviderTest.php',
-      6 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php',
+      6 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Support/helpers.php',
     ),
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/src/Http/Controllers/CerberusCallbackController.php' => 
@@ -2983,7 +2918,7 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/src/Providers/CerberusIamServiceProvider.php' => 
   array (
-    'fileHash' => '9cc2df0c676a17ef7ee6a489b85af5bbaec72332',
+    'fileHash' => 'a20f71b0da1a70e9f5f3a907635d89d264384a73',
     'dependentFiles' => 
     array (
       0 => '/Users/jerome/Projects/apps/laravel-sdk/tests/TestCase.php',
@@ -3019,7 +2954,7 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/CerberusClientTest.php' => 
   array (
-    'fileHash' => 'fa28b5b890508854f960d89b6b72683c9a2dcdd9',
+    'fileHash' => 'eae830a55981ef93e15ec41d0d9a1fb8172df832',
     'dependentFiles' => 
     array (
     ),
@@ -3040,14 +2975,14 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php' => 
   array (
-    'fileHash' => '227211fbaff2606b315c023ef39aa9f90046878d',
+    'fileHash' => 'f6fb5ce11d9dd0f2f4756ec48ae0da96c52e166a',
     'dependentFiles' => 
     array (
     ),
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusLiveApiTest.php' => 
   array (
-    'fileHash' => '4e6cb60ca40a55026aa051b233822e6d4ef20e5c',
+    'fileHash' => '6adeb326d9fd89ab660a0979823c0fba4fbb891f',
     'dependentFiles' => 
     array (
     ),
@@ -3061,7 +2996,7 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/ServiceProviderTest.php' => 
   array (
-    'fileHash' => 'e0eb9ea69848542faa01e51ed6149481a39bd1c7',
+    'fileHash' => 'e1c891f78ab18e8ffdebf048a275f773c7efb355',
     'dependentFiles' => 
     array (
     ),
@@ -3093,7 +3028,14 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php' => 
   array (
-    'fileHash' => '01e624c45c9a0e0c43d6054b4f3b06c711c36f2d',
+    'fileHash' => '3d1f80dd334d97c0c54eb649497c847bd630a08a',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  '/Users/jerome/Projects/apps/laravel-sdk/tests/Support/helpers.php' => 
+  array (
+    'fileHash' => '8a664c86f9ab0db1ec558b18ece5a4c075a6c515',
     'dependentFiles' => 
     array (
       0 => '/Users/jerome/Projects/apps/laravel-sdk/tests/Feature/Integration/CerberusClientTokenRequestTest.php',
@@ -3110,7 +3052,7 @@ return [
   ),
   '/Users/jerome/Projects/apps/laravel-sdk/tests/bootstrap.php' => 
   array (
-    'fileHash' => '2569ae04c8ba3bea63abda862d8dcd30364c0678',
+    'fileHash' => '242d477dc47482371db5444f23e269b1fec41e62',
     'dependentFiles' => 
     array (
     ),
@@ -4821,7 +4763,7 @@ return [
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Cerberus User
+ * Cerberus User.
  *
  * This class represents a user authenticated via Cerberus IAM.
  * It\'s a stateless value object that extends Laravel\'s Fluent class
@@ -4905,8 +4847,8 @@ return [
      *
      * This method maps the profile data from Cerberus to user attributes.
      *
-     * @param  array<string, mixed>  $payload  The profile data from Cerberus.
-     * @return CerberusUser The Cerberus user instance.
+     * @param  array<string, mixed>  $payload  the profile data from Cerberus
+     * @return CerberusUser the Cerberus user instance
      */',
              'namespace' => 'CerberusIAM\\Auth',
              'uses' => 
@@ -10902,27 +10844,38 @@ return [
       ),
     )),
   ),
-  '/Users/jerome/Projects/apps/laravel-sdk/tests/Pest.php' => 
+  '/Users/jerome/Projects/apps/laravel-sdk/tests/Support/helpers.php' => 
   array (
     0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
+       'name' => 'cerberusHelperHttpFactory',
+       'phpDoc' => NULL,
+       'byRef' => false,
+       'returnType' => 'Illuminate\\Http\\Client\\Factory',
+       'parameters' => 
+      array (
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+    1 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveConfig',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Resolve and cache live test configuration.
- *
- * @return array<string, mixed>
- */',
+     * Resolve and cache live test configuration.
+     *
+     * @return array<string, mixed>
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -10937,25 +10890,23 @@ return [
       array (
       ),
     )),
-    1 => 
+    2 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveConfigMissing',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Determine if a required configuration key is missing.
- *
- * @param  array<int, string>  $keys
- */',
+     * Determine if a required configuration key is missing.
+     *
+     * @param  array<int, string>  $keys
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -10981,23 +10932,21 @@ return [
       array (
       ),
     )),
-    2 => 
+    3 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveClient',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Instantiate a CerberusClient configured for the live API.
- */',
+     * Instantiate a CerberusClient configured for the live API.
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -11023,25 +10972,23 @@ return [
       array (
       ),
     )),
-    3 => 
+    4 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveLogin',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Perform a live login request and return session context.
- *
- * @return array<string, mixed>
- */',
+     * Perform a live login request and return session context.
+     *
+     * @return array<string, mixed>
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -11056,23 +11003,21 @@ return [
       array (
       ),
     )),
-    4 => 
+    5 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusExtractCookie',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Extract a cookie value from an HTTP response.
- */',
+     * Extract a cookie value from an HTTP response.
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -11109,25 +11054,23 @@ return [
       array (
       ),
     )),
-    5 => 
+    6 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveOrganisationSlug',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Resolve the organisation slug to use for admin endpoints.
- *
- * @param  array<string, mixed>  $login
- */',
+     * Resolve the organisation slug to use for admin endpoints.
+     *
+     * @param  array<string, mixed>  $login
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -11153,25 +11096,23 @@ return [
       array (
       ),
     )),
-    6 => 
+    7 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusNormalizeScopes',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Convert a string of scopes to an array.
- *
- * @return array<int, string>
- */',
+     * Convert a string of scopes to an array.
+     *
+     * @return array<int, string>
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
@@ -11197,23 +11138,21 @@ return [
       array (
       ),
     )),
-    7 => 
+    8 => 
     \PHPStan\Dependency\ExportedNode\ExportedFunctionNode::__set_state(array(
        'name' => 'cerberusLiveTestsEnabled',
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * Determine if live integration tests are enabled.
- */',
+     * Determine if live integration tests are enabled.
+     */',
          'namespace' => NULL,
          'uses' => 
         array (
           'cerberusclient' => 'CerberusIAM\\Http\\Clients\\CerberusClient',
-          'testcase' => 'CerberusIAM\\Tests\\TestCase',
           'httpfactory' => 'Illuminate\\Http\\Client\\Factory',
           'httpresponse' => 'Illuminate\\Http\\Client\\Response',
           'arr' => 'Illuminate\\Support\\Arr',
-          'runtimeexception' => 'RuntimeException',
         ),
          'constUses' => 
         array (
