@@ -29,10 +29,12 @@ Publishing yields `config/cerberus-iam.php` – the single source of truth for c
 ### Environment Variables
 
 ```dotenv
-CERBERUS_IAM_URL=https://api.cerberus-iam.test
-CERBERUS_IAM_CLIENT_ID=client_...
-CERBERUS_IAM_CLIENT_SECRET=secret_...
-CERBERUS_IAM_REDIRECT_URI=https://app.test/cerberus/callback
+CERBERUS_IAM_URL=https://api.cerberus-iam.com
+CERBERUS_IAM_CLIENT_ID=
+CERBERUS_IAM_CLIENT_SECRET=
+CERBERUS_IAM_USERNAME="admin@cerberus-iam.com"
+CERBERUS_IAM_PASSWORD="Password123!"
+CERBERUS_IAM_REDIRECT_URI="${APP_URL}/cerberus/callback"
 CERBERUS_IAM_SCOPES="openid profile email"
 CERBERUS_IAM_SESSION_COOKIE=cerb_sid
 CERBERUS_IAM_ORG_SLUG=cerberus-iam
@@ -40,7 +42,11 @@ CERBERUS_IAM_HTTP_TIMEOUT=10
 CERBERUS_IAM_HTTP_RETRY=true
 CERBERUS_IAM_HTTP_RETRY_ATTEMPTS=2
 CERBERUS_IAM_HTTP_RETRY_DELAY=100
+CERBERUS_IAM_PORTAL_URL=https://app.cerberus-iam.com
+CERBERUS_IAM_PROFILE_URL=
+CERBERUS_IAM_SECURITY_URL=
 CERBERUS_IAM_REDIRECT_AFTER_LOGIN=/dashboard
+CERBERUS_IAM_USER_MODEL=
 ```
 
 ### HTTP Client Customisation
@@ -116,6 +122,7 @@ Schema::create('users', function (Blueprint $table) {
 ```
 
 Your User model must:
+
 1. Implement `Illuminate\Contracts\Auth\Authenticatable` (typically via `Illuminate\Foundation\Auth\User`)
 2. Have `cerberus_id`, `name`, and `email` in the `$fillable` array
 3. Optionally include `first_name`, `last_name`, `organisation_id`, `organisation_slug`
@@ -142,6 +149,7 @@ class User extends Authenticatable
 ```
 
 When database-backed authentication is enabled:
+
 - Users are automatically created/updated in your local database on login
 - Subsequent requests retrieve the user from your database (fast)
 - User data is refreshed from Cerberus on each login
@@ -321,16 +329,42 @@ To test against a live Cerberus instance locally:
 2. Point `CERBERUS_IAM_URL` to that instance.
 3. Configure the guard in a sample Laravel app, apply the middleware, and log in.
 
+### Live Integration Tests Against <https://api.cerberus-iam.com>
+
+Pest now includes an optional `integration` group that exercises the SDK against the deployed API (`https://api.cerberus-iam.com`). Because these tests create real sessions and call privileged admin endpoints, they are skipped unless the following environment variables are defined:
+
+| Variable                      | Required        | Description                                                                  |
+| ----------------------------- | --------------- | ---------------------------------------------------------------------------- |
+| `CERBERUS_IAM_BASE_URL`       | Yes             | Base URL for the live API (`https://api.cerberus-iam.com`)                   |
+| `CERBERUS_IAM_USERNAME`       | Yes             | Email for a Cerberus account that can log in via `/v1/auth/login`            |
+| `CERBERUS_IAM_PASSWORD`       | Yes             | Password for the live test account                                           |
+| `CERBERUS_IAM_CLIENT_ID`      | For admin flows | OAuth client ID with permission to call admin endpoints                      |
+| `CERBERUS_IAM_CLIENT_SECRET`  | For admin flows | Client secret for the above OAuth client (required for client credentials)   |
+| `CERBERUS_IAM_ORG_SLUG`       | Optional        | Organisation slug to scope admin requests (falls back to the login response) |
+| `CERBERUS_IAM_SESSION_COOKIE` | Optional        | Session cookie name (defaults to `cerb_sid`)                                 |
+| `CERBERUS_IAM_SCOPES`         | Optional        | Space-delimited scopes for the OAuth client (default `openid profile email`) |
+| `CERBERUS_IAM_ADMIN_SCOPES`   | Optional        | Additional scopes for client-credential admin calls (default `users:read`)   |
+| `CERBERUS_IAM_REDIRECT_URI`   | Optional        | Redirect URI associated with the OAuth client                                |
+| `CERBERUS_IAM_TIMEOUT`        | Optional        | HTTP timeout (seconds) for the live calls, default `15`                      |
+
+Once configured, run only the live tests with:
+
+```bash
+composer test -- --group=integration
+```
+
+The tests log out sessions automatically, but they still mutate real data—use service accounts and non-production organisations wherever possible.
+
 ---
 
 ## Troubleshooting
 
-| Symptom                                                  | Likely Cause                       | Fix                                                             |
-| -------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------- |
-| Redirect loop back to Cerberus                           | callback URL mismatch              | Confirm `CERBERUS_IAM_REDIRECT_URI` matches the client settings |
-| `invalid_state` exception                                | Session not persisting             | Check session driver, domain, and ensure HTTPS in production    |
-| `Route [/cerberus/callback] not defined`                 | Routes cached without package boot | Clear route cache or define the route manually                  |
-| 401 when listing users                                   | Missing organisation slug header   | Pass `X-Org-Domain` or adjust repository call                   |
+| Symptom                                                             | Likely Cause                       | Fix                                                                          |
+| ------------------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------- |
+| Redirect loop back to Cerberus                                      | callback URL mismatch              | Confirm `CERBERUS_IAM_REDIRECT_URI` matches the client settings              |
+| `invalid_state` exception                                           | Session not persisting             | Check session driver, domain, and ensure HTTPS in production                 |
+| `Route [/cerberus/callback] not defined`                            | Routes cached without package boot | Clear route cache or define the route manually                               |
+| 401 when listing users                                              | Missing organisation slug header   | Pass `X-Org-Domain` or adjust repository call                                |
 | `Invalid text representation: invalid input syntax for type bigint` | Sessions table `user_id` is bigint | Change sessions table `user_id` column to string (see Database Requirements) |
 
 ---
