@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Support\Fluent;
 
 /**
- * Cerberus User
+ * Cerberus User.
  *
  * This class represents a user authenticated via Cerberus IAM.
  * It's a stateless value object that extends Laravel's Fluent class
@@ -21,7 +21,8 @@ use Illuminate\Support\Fluent;
  */
 class CerberusUser extends Fluent implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable;
+    use Authenticatable;
+    use Authorizable;
 
     /**
      * The primary key for the user.
@@ -35,8 +36,8 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
      *
      * This method maps the profile data from Cerberus to user attributes.
      *
-     * @param  array<string, mixed>  $payload  The profile data from Cerberus.
-     * @return CerberusUser The Cerberus user instance.
+     * @param  array<string, mixed>  $payload  the profile data from Cerberus
+     * @return CerberusUser the Cerberus user instance
      */
     public static function fromProfile(array $payload): CerberusUser
     {
@@ -45,9 +46,9 @@ class CerberusUser extends Fluent implements AuthenticatableContract, Authorizab
         return new self([
             'id' => $payload['id'] ?? $payload['sub'] ?? null,
             'email' => $payload['email'] ?? null,
-            'name' => $payload['name'] ?? trim(($payload['firstName'] ?? '').' '.($payload['lastName'] ?? '')),
-            'first_name' => $payload['firstName'] ?? null,
-            'last_name' => $payload['lastName'] ?? null,
+            'name' => $payload['name'] ?? trim(($payload['given_name'] ?? '').' '.($payload['family_name'] ?? '')),
+            'first_name' => $payload['given_name'] ?? null,
+            'last_name' => $payload['family_name'] ?? null,
             'organisation' => [
                 'id' => $organisation['id'] ?? null,
                 'slug' => $organisation['slug'] ?? null,

@@ -43,7 +43,7 @@ it('registers the cerberus guard', function () {
 // Test the OAuth callback handling
 it('handles the OAuth callback route', function () {
     // Create a fake IAM client for testing
-    $fake = new \CerberusIAM\Tests\Fixtures\FakeIamClient;
+    $fake = new CerberusIAM\Tests\Fixtures\FakeIamClient;
     $fake->tokenResponses['code-xyz'] = [
         'access_token' => 'token-xyz',
         'refresh_token' => 'refresh-xyz',
@@ -73,15 +73,15 @@ it('handles the OAuth callback route', function () {
 // Test that the user provider can retrieve users by ID
 it('retrieves users by ID through the user provider', function () {
     // Create a fake IAM client for testing
-    $fake = new \CerberusIAM\Tests\Fixtures\FakeIamClient;
+    $fake = new CerberusIAM\Tests\Fixtures\FakeIamClient;
 
     // Set up a mock response for getUserById
     $fake->userByIdResponses['user-123'] = [
         'id' => 'user-123',
         'email' => 'test@example.com',
         'name' => 'Test User',
-        'firstName' => 'Test',
-        'lastName' => 'User',
+        'given_name' => 'Test',
+        'family_name' => 'User',
     ];
 
     // Replace the IAM client with the fake
@@ -95,10 +95,10 @@ it('retrieves users by ID through the user provider', function () {
 
     // Assert that a user was returned
     expect($user)->not->toBeNull();
-    expect($user)->toBeInstanceOf(\Illuminate\Contracts\Auth\Authenticatable::class);
+    expect($user)->toBeInstanceOf(Illuminate\Contracts\Auth\Authenticatable::class);
 
     // Assert user properties (PHPStan knows $user is not null after the above check)
-    /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+    /* @var \Illuminate\Contracts\Auth\Authenticatable $user */
     expect($user->getAuthIdentifier())->toBe('user-123');
     expect($user->getAuthIdentifierName())->toBe('id');
 });
