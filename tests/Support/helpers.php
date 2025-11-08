@@ -5,14 +5,14 @@ use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Client\Response as HttpResponse;
 use Illuminate\Support\Arr;
 
-if (!function_exists('cerberusHelperHttpFactory')) {
+if (! function_exists('cerberusHelperHttpFactory')) {
     function cerberusHelperHttpFactory(): HttpFactory
     {
         return app(HttpFactory::class);
     }
 }
 
-if (!function_exists('cerberusLiveConfig')) {
+if (! function_exists('cerberusLiveConfig')) {
     /**
      * Resolve and cache live test configuration.
      *
@@ -22,7 +22,7 @@ if (!function_exists('cerberusLiveConfig')) {
     {
         static $config;
 
-        if (null !== $config) {
+        if ($config !== null) {
             return $config;
         }
 
@@ -44,11 +44,11 @@ if (!function_exists('cerberusLiveConfig')) {
     }
 }
 
-if (!function_exists('cerberusLiveConfigMissing')) {
+if (! function_exists('cerberusLiveConfigMissing')) {
     /**
      * Determine if a required configuration key is missing.
      *
-     * @param array<int, string> $keys
+     * @param  array<int, string>  $keys
      */
     function cerberusLiveConfigMissing(array $keys): bool
     {
@@ -64,7 +64,7 @@ if (!function_exists('cerberusLiveConfigMissing')) {
     }
 }
 
-if (!function_exists('cerberusLiveClient')) {
+if (! function_exists('cerberusLiveClient')) {
     /**
      * Instantiate a CerberusClient configured for the live API.
      */
@@ -90,7 +90,7 @@ if (!function_exists('cerberusLiveClient')) {
     }
 }
 
-if (!function_exists('cerberusLiveLogin')) {
+if (! function_exists('cerberusLiveLogin')) {
     /**
      * Perform a live login request and return session context.
      *
@@ -118,12 +118,12 @@ if (!function_exists('cerberusLiveLogin')) {
 
         $sessionToken = cerberusExtractCookie($response, (string) $config['session_cookie']);
 
-        if (!$sessionToken) {
+        if (! $sessionToken) {
             throw new RuntimeException('Cerberus login response did not return the expected session cookie.');
         }
 
         $tokens = $payload['tokens'] ?? ($payload['token'] ?? []);
-        if (!is_array($tokens)) {
+        if (! is_array($tokens)) {
             $tokens = [];
         }
 
@@ -136,7 +136,7 @@ if (!function_exists('cerberusLiveLogin')) {
     }
 }
 
-if (!function_exists('cerberusExtractCookie')) {
+if (! function_exists('cerberusExtractCookie')) {
     /**
      * Extract a cookie value from an HTTP response.
      */
@@ -158,11 +158,11 @@ if (!function_exists('cerberusExtractCookie')) {
     }
 }
 
-if (!function_exists('cerberusLiveOrganisationSlug')) {
+if (! function_exists('cerberusLiveOrganisationSlug')) {
     /**
      * Resolve the organisation slug to use for admin endpoints.
      *
-     * @param array<string, mixed> $login
+     * @param  array<string, mixed>  $login
      */
     function cerberusLiveOrganisationSlug(array $login): ?string
     {
@@ -170,7 +170,7 @@ if (!function_exists('cerberusLiveOrganisationSlug')) {
     }
 }
 
-if (!function_exists('cerberusNormalizeScopes')) {
+if (! function_exists('cerberusNormalizeScopes')) {
     /**
      * Convert a string of scopes to an array.
      *
@@ -180,7 +180,7 @@ if (!function_exists('cerberusNormalizeScopes')) {
     {
         $value = trim((string) $value);
 
-        if ('' === $value) {
+        if ($value === '') {
             return [];
         }
 
@@ -188,7 +188,7 @@ if (!function_exists('cerberusNormalizeScopes')) {
     }
 }
 
-if (!function_exists('cerberusLiveTestsEnabled')) {
+if (! function_exists('cerberusLiveTestsEnabled')) {
     /**
      * Determine if live integration tests are enabled.
      */
