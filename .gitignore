@@ -42,5 +42,6 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env.*
 docs
 notes.md
