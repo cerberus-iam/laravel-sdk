@@ -11,6 +11,7 @@ use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
 
 /**
@@ -21,6 +22,8 @@ use InvalidArgumentException;
  */
 class UserDirectoryRepository implements UserRepository
 {
+    protected HttpFactory $http;
+
     /**
      * Create a new user directory repository instance.
      *
@@ -28,9 +31,13 @@ class UserDirectoryRepository implements UserRepository
      */
     public function __construct(
         protected IamClient $client,
-        protected HttpFactory $http,
+        ?HttpFactory $http = null,
         protected array $httpConfig = []
-    ) {}
+    ) {
+        $this->http = $http
+            ?? Http::getFacadeRoot()
+            ?? app(HttpFactory::class);
+    }
 
     /**
      * List users for a given organisation.

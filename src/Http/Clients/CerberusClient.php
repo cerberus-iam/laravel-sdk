@@ -9,11 +9,12 @@ use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
 
 /**
- * Cerberus IAM HTTP Client
+ * Cerberus IAM HTTP Client.
  *
  * Implements the IamClient contract by delegating HTTP requests to Laravel's HTTP client.
  */
@@ -39,10 +40,12 @@ class CerberusClient implements IamClient
         protected ?string $organisationSlug,
         protected array $oauthConfig,
         protected array $httpConfig = [],
-        ?HttpFactory $http = null
+        ?HttpFactory $http = null,
     ) {
         $this->baseUrl = rtrim($baseUrl, '/');
-        $this->http = $http ?? new HttpFactory;
+        $this->http = $http
+            ?? Http::getFacadeRoot()
+            ?? app(HttpFactory::class);
     }
 
     /**
@@ -104,9 +107,9 @@ class CerberusClient implements IamClient
      *
      * @param  string  $code  The authorization code from the OAuth2 callback
      * @param  string|null  $codeVerifier  The PKCE code verifier (optional but recommended)
-     * @return array<string, mixed> The token response containing access_token, refresh_token, etc.
+     * @return array<string, mixed> the token response containing access_token, refresh_token, etc
      *
-     * @throws RuntimeException When the token exchange fails
+     * @throws \RuntimeException When the token exchange fails
      */
     public function exchangeAuthorizationCode(string $code, ?string $codeVerifier = null): array
     {
@@ -132,7 +135,7 @@ class CerberusClient implements IamClient
      * @param  string  $refreshToken  The refresh token to exchange
      * @return array<string, mixed> The token response with new access_token and refresh_token
      *
-     * @throws RuntimeException When the token refresh fails
+     * @throws \RuntimeException When the token refresh fails
      */
     public function refreshAccessToken(string $refreshToken): array
     {
@@ -278,21 +281,27 @@ class CerberusClient implements IamClient
      * @param  array<string, mixed>  $body  The request body parameters
      * @return array<string, mixed> The token response
      *
-     * @throws RuntimeException When the token request fails
+     * @throws \RuntimeException When the token request fails
      */
     protected function tokenRequest(array $body): array
     {
-        $headers = [];
         $clientId = $this->oauthConfig['client_id'] ?? null;
         $clientSecret = $this->oauthConfig['client_secret'] ?? null;
+        $authMethod = $this->oauthConfig['token_endpoint_auth_method'] ?? 'client_secret_post';
 
         if ($clientId) {
             $body['client_id'] = $clientId;
         }
 
+        $headers = [];
+
         if ($clientSecret) {
-            // Confidential client: authenticate via HTTP Basic instead of sending the secret in the form body
-            $headers['Authorization'] = 'Basic '.base64_encode(sprintf('%s:%s', $clientId, $clientSecret));
+            if ($authMethod === 'client_secret_basic') {
+                $headers['Authorization'] = 'Basic '.base64_encode("$clientId:$clientSecret");
+            } else {
+                // client_secret_post (default in Cerberus)
+                $body['client_secret'] = $clientSecret;
+            }
         }
 
         $response = $this->http()

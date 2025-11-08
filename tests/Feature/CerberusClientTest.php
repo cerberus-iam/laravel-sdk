@@ -3,6 +3,7 @@
 namespace CerberusIAM\Tests\Feature;
 
 use CerberusIAM\Http\Clients\CerberusClient;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
 it('fetches a user by id using client credentials', function () {
@@ -26,8 +27,7 @@ it('fetches a user by id using client credentials', function () {
             'redirect_uri' => 'https://app.test/callback',
             'scopes' => ['users:read'],
         ],
-        [],
-        app(\Illuminate\Http\Client\Factory::class)
+        []
     );
 
     $user = $client->getUserById('user-123');
@@ -40,9 +40,12 @@ it('fetches a user by id using client credentials', function () {
     Http::assertSentCount(2);
 
     Http::assertSent(function ($request) {
+        $payload = $request->data();
+
         return $request->url() === 'https://cerb.test/oauth2/token'
             && $request->method() === 'POST'
-            && str_starts_with($request->header('Authorization')[0] ?? '', 'Basic ');
+            && Arr::get($payload, 'client_id') === 'client-id'
+            && Arr::get($payload, 'client_secret') === 'top-secret';
     });
 
     Http::assertSent(function ($request) {

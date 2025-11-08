@@ -8,9 +8,10 @@ use CerberusIAM\Contracts\IamClient;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Database\Eloquent\Model;
+use RuntimeException;
 
 /**
- * Eloquent Cerberus User Provider
+ * Eloquent Cerberus User Provider.
  *
  * This provider syncs users from Cerberus IAM to a local Eloquent model,
  * allowing for better performance and integration with Laravel's ecosystem.
@@ -20,41 +21,44 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Create a new Eloquent Cerberus user provider instance.
      *
-     * @param  IamClient  $client  The IAM client for API communication.
-     * @param  string  $model  The Eloquent model class name.
+     * @param  IamClient  $client  the IAM client for API communication
+     * @param  string  $model  the Eloquent model class name
      */
     public function __construct(
         protected IamClient $client,
-        protected string $model
+        protected string $model,
     ) {}
 
     /**
      * Retrieve a user by their unique identifier.
      *
-     * @param  mixed  $identifier  The user identifier.
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null The user instance, or null if not found.
+     * @param  mixed  $identifier  the user identifier
+     * @return Authenticatable|null the user instance, or null if not found
      */
-    public function retrieveById($identifier): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function retrieveById($identifier): ?Authenticatable
     {
         $model = $this->createModel();
 
-        /** @var \Illuminate\Contracts\Auth\Authenticatable|null */
-        return $model->newQuery()
+        /** @var Authenticatable|null $user */
+        $user = $model->newQuery()
             ->where($model->getAuthIdentifierName(), $identifier)
             ->first();
+
+        return $user;
     }
 
     /**
      * Retrieve a user by their remember token.
      *
-     * @param  mixed  $identifier  The user identifier.
-     * @param  string  $token  The remember token.
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null The user instance, or null if not found.
+     * @param  mixed  $identifier  the user identifier
+     * @param  string  $token  the remember token
+     * @return Authenticatable|null the user instance, or null if not found
      */
-    public function retrieveByToken($identifier, $token): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function retrieveByToken($identifier, $token): ?Authenticatable
     {
         $model = $this->createModel();
 
+        /** @var Authenticatable|null $retrievedModel */
         $retrievedModel = $model->newQuery()
             ->where($model->getAuthIdentifierName(), $identifier)
             ->first();
@@ -65,7 +69,6 @@ class EloquentCerberusUserProvider implements UserProvider
 
         $rememberToken = $retrievedModel->getRememberToken();
 
-        /** @var \Illuminate\Contracts\Auth\Authenticatable|null */
         return $rememberToken && hash_equals($rememberToken, $token)
             ? $retrievedModel
             : null;
@@ -74,12 +77,12 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Update the remember token for a user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user  The user instance.
-     * @param  string  $token  The remember token.
+     * @param  Authenticatable  $user  the user instance
+     * @param  string  $token  the remember token
      */
-    public function updateRememberToken(\Illuminate\Contracts\Auth\Authenticatable $user, $token): void
+    public function updateRememberToken(Authenticatable $user, $token): void
     {
-        /** @var \Illuminate\Database\Eloquent\Model $user */
+        /* @var \Illuminate\Database\Eloquent\Model $user */
         $user->setRememberToken($token);
 
         $timestamps = $user->timestamps;
@@ -94,8 +97,8 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Retrieve a user by credentials (not supported).
      *
-     * @param  array<string, mixed>  $credentials  The credentials.
-     * @return Authenticatable|null Always returns null.
+     * @param  array<string, mixed>  $credentials  the credentials
+     * @return Authenticatable|null always returns null
      */
     public function retrieveByCredentials(array $credentials): ?Authenticatable
     {
@@ -106,9 +109,9 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Validate user credentials (not supported).
      *
-     * @param  Authenticatable  $user  The user instance.
-     * @param  array<string, mixed>  $credentials  The credentials.
-     * @return bool Always returns false.
+     * @param  Authenticatable  $user  the user instance
+     * @param  array<string, mixed>  $credentials  the credentials
+     * @return bool always returns false
      */
     public function validateCredentials(Authenticatable $user, array $credentials): bool
     {
@@ -119,10 +122,10 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Rehash the user's password if required (not applicable).
      *
-     * @param  Authenticatable  $user  The user instance.
-     * @param  array<string, mixed>  $credentials  The credentials.
-     * @param  bool  $force  Whether to force rehashing.
-     * @return bool Always returns false.
+     * @param  Authenticatable  $user  the user instance
+     * @param  array<string, mixed>  $credentials  the credentials
+     * @param  bool  $force  whether to force rehashing
+     * @return bool always returns false
      */
     public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false): bool
     {
@@ -135,10 +138,10 @@ class EloquentCerberusUserProvider implements UserProvider
      *
      * This method creates or updates a local user record based on data from Cerberus.
      *
-     * @param  array<string, mixed>  $profile  The user profile from Cerberus.
-     * @return \Illuminate\Contracts\Auth\Authenticatable The synced user instance.
+     * @param  array<string, mixed>  $profile  the user profile from Cerberus
+     * @return Authenticatable the synced user instance
      */
-    public function syncUser(array $profile): \Illuminate\Contracts\Auth\Authenticatable
+    public function syncUser(array $profile): Authenticatable
     {
         $model = $this->createModel();
 
@@ -146,13 +149,14 @@ class EloquentCerberusUserProvider implements UserProvider
         $userId = $profile['id'] ?? $profile['sub'] ?? null;
 
         if (! $userId) {
-            throw new \RuntimeException('User profile must contain an id or sub field');
+            throw new RuntimeException('User profile must contain an id or sub field');
         }
 
         // Prepare user data for local storage
         $userData = [
+            'id' => $userId,
             'email' => $profile['email'] ?? null,
-            'name' => $profile['name'] ?? trim(($profile['firstName'] ?? '').' '.($profile['lastName'] ?? '')),
+            'name' => $profile['name'] ?? trim(($profile['given_name'] ?? '').' '.($profile['family_name'] ?? '')),
             'cerberus_id' => $userId,
         ];
 
@@ -160,11 +164,11 @@ class EloquentCerberusUserProvider implements UserProvider
         $fillable = $model->getFillable();
 
         if (in_array('first_name', $fillable)) {
-            $userData['first_name'] = $profile['firstName'] ?? null;
+            $userData['first_name'] = $profile['given_name'] ?? null;
         }
 
         if (in_array('last_name', $fillable)) {
-            $userData['last_name'] = $profile['lastName'] ?? null;
+            $userData['last_name'] = $profile['family_name'] ?? null;
         }
 
         if (in_array('organisation_id', $fillable)) {
@@ -176,7 +180,7 @@ class EloquentCerberusUserProvider implements UserProvider
         }
 
         // Use updateOrCreate to sync the user
-        /** @var \Illuminate\Contracts\Auth\Authenticatable */
+        /** @var Authenticatable */
         $user = $model->newQuery()->updateOrCreate(
             ['cerberus_id' => $userId],
             $userData
@@ -188,13 +192,13 @@ class EloquentCerberusUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return \Illuminate\Database\Eloquent\Model The model instance.
+     * @return Model the model instance
      */
-    protected function createModel(): \Illuminate\Database\Eloquent\Model
+    protected function createModel(): Model
     {
         $class = '\\'.ltrim($this->model, '\\');
 
-        /** @var \Illuminate\Database\Eloquent\Model $instance */
+        /** @var Model $instance */
         $instance = new $class;
 
         return $instance;

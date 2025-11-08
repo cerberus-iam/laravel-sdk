@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CerberusIAM\Auth;
 
-use BadMethodCallException;
 use CerberusIAM\Contracts\IamClient;
 use CerberusIAM\Contracts\OAuthStateStore;
 use CerberusIAM\Contracts\TokenStore;
@@ -18,11 +17,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
-use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Cerberus Authentication Guard
+ * Cerberus Authentication Guard.
  *
  * This class implements Laravel's StatefulGuard interface, providing OAuth-based
  * authentication using the Cerberus IAM service.
@@ -43,13 +41,13 @@ class CerberusGuard implements StatefulGuard
     /**
      * Create a new Cerberus guard instance.
      *
-     * @param  string  $name  The name of the guard.
-     * @param  IamClient  $client  The IAM client for API communication.
-     * @param  UserProvider|null  $provider  The user provider for retrieving users.
-     * @param  TokenStore  $tokens  The store for OAuth tokens.
-     * @param  OAuthStateStore  $stateStore  The store for OAuth state and code verifier.
-     * @param  Request  $request  The current HTTP request.
-     * @param  array<string, mixed>  $config  The guard configuration options.
+     * @param  string  $name  the name of the guard
+     * @param  IamClient  $client  the IAM client for API communication
+     * @param  UserProvider|null  $provider  the user provider for retrieving users
+     * @param  TokenStore  $tokens  the store for OAuth tokens
+     * @param  OAuthStateStore  $stateStore  the store for OAuth state and code verifier
+     * @param  Request  $request  the current HTTP request
+     * @param  array<string, mixed>  $config  the guard configuration options
      */
     public function __construct(
         protected string $name,
@@ -58,7 +56,7 @@ class CerberusGuard implements StatefulGuard
         protected TokenStore $tokens,
         protected OAuthStateStore $stateStore,
         Request $request,
-        array $config = []
+        array $config = [],
     ) {
         $this->provider = $provider;
         $this->request = $request;
@@ -240,11 +238,11 @@ class CerberusGuard implements StatefulGuard
      * @param  bool  $remember  Ignored - password auth not supported
      * @return bool Never returns - always throws exception
      *
-     * @throws BadMethodCallException Always thrown as password auth is disabled
+     * @throws \BadMethodCallException Always thrown as password auth is disabled
      */
     public function attempt(array $credentials = [], $remember = false): bool
     {
-        throw new BadMethodCallException('Password-based authentication is disabled. Redirect to Cerberus for sign-in.');
+        throw new \BadMethodCallException('Password-based authentication is disabled. Redirect to Cerberus for sign-in.');
     }
 
     /**
@@ -258,7 +256,7 @@ class CerberusGuard implements StatefulGuard
      * @param  bool  $remember  Ignored - password auth not supported
      * @return bool Never returns - always throws exception
      *
-     * @throws BadMethodCallException Always thrown as password auth is disabled
+     * @throws \BadMethodCallException Always thrown as password auth is disabled
      */
     public function attemptWhen(array $credentials, array $callbacks, $remember = false): bool
     {
@@ -276,7 +274,7 @@ class CerberusGuard implements StatefulGuard
      * @param  string|null  $codeVerifier  The PKCE code verifier (optional if stored)
      * @return Authenticatable The authenticated user instance
      *
-     * @throws RuntimeException When state validation fails or user profile cannot be retrieved
+     * @throws \RuntimeException When state validation fails or user profile cannot be retrieved
      */
     public function loginFromAuthorizationCode(string $code, string $state, ?string $codeVerifier = null): Authenticatable
     {
@@ -284,7 +282,7 @@ class CerberusGuard implements StatefulGuard
         $expected = $this->stateStore->pullState();
 
         if (! $expected['state'] || ! hash_equals($expected['state'], $state)) {
-            throw new RuntimeException('Invalid Cerberus OAuth state.');
+            throw new \RuntimeException('Invalid Cerberus OAuth state.');
         }
 
         // Use provided code verifier or the stored one
@@ -297,7 +295,7 @@ class CerberusGuard implements StatefulGuard
         $profile = $this->client->getUserInfo($tokenPayload['access_token'] ?? null);
 
         if (! $profile) {
-            throw new RuntimeException('Unable to resolve user profile from Cerberus.');
+            throw new \RuntimeException('Unable to resolve user profile from Cerberus.');
         }
 
         // Normalize and store the tokens with user profile
@@ -496,8 +494,8 @@ class CerberusGuard implements StatefulGuard
      * For database-backed mode, it syncs the user to the local database.
      * For stateless mode, it creates a CerberusUser value object.
      *
-     * @param  array<string, mixed>  $profile  The user profile data from Cerberus.
-     * @return Authenticatable The user instance.
+     * @param  array<string, mixed>  $profile  the user profile data from Cerberus
+     * @return Authenticatable the user instance
      */
     protected function hydrateUser(array $profile): Authenticatable
     {

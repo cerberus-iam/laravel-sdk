@@ -16,7 +16,7 @@ it('merges default configuration', function () {
     $client = $this->app->make(CerberusClient::class);
 
     // Verify the base URL is set to the default localhost
-    expect($client->url('/health'))->toBe('http://localhost:4000/health');
+    expect($client->url('/health'))->toBe(env('CERBERUS_IAM_URL', 'http://localhost:4000').'/health');
     // Verify the session cookie name is set to the default
     expect($client->sessionCookieName())->toBe('cerb_sid');
 });

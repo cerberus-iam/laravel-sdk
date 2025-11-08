@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 
 require __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/Support/helpers.php';
 
 $projectRoot = dirname(__DIR__);
 

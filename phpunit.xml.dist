@@ -5,11 +5,8 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+        <testsuite name="Cerberus IAM Test Suite">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <source>
@@ -25,9 +22,24 @@
         <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
         <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         <env name="MAIL_MAILER" value="array"/>
-        <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
+
+        <!-- Cerberus IAM -->
+        <env name="CERBERUS_IAM_URL" value="https://api.cerberus-iam.com"/>
+        <env name="CERBERUS_IAM_USERNAME" value="admin@cerberus-iam.com"/>
+        <env name="CERBERUS_IAM_REDIRECT_URI" value="https://api.cerberus-iam.com/cerberus/callback"/>
+        <env name="CERBERUS_IAM_SCOPES" value="openid profile email"/>
+        <env name="CERBERUS_IAM_SESSION_COOKIE" value="cerb_sid"/>
+        <env name="CERBERUS_IAM_ORG_SLUG" value="cerberus-iam"/>
+        <env name="CERBERUS_IAM_HTTP_TIMEOUT" value="10"/>
+        <env name="CERBERUS_IAM_HTTP_RETRY" value="true"/>
+        <env name="CERBERUS_IAM_HTTP_RETRY_ATTEMPTS" value="2"/>
+        <env name="CERBERUS_IAM_HTTP_RETRY_DELAY" value="100"/>
+        <env name="CERBERUS_IAM_PORTAL_URL" value="https://app.cerberus-iam.com"/>
+        <env name="CERBERUS_IAM_PROFILE_URL" value=""/>
+        <env name="CERBERUS_IAM_SECURITY_URL" value=""/>
+        <env name="CERBERUS_IAM_REDIRECT_AFTER_LOGIN" value="/dashboard"/>
+        <env name="CERBERUS_IAM_USER_MODEL" value=""/>
     </php>
 </phpunit>

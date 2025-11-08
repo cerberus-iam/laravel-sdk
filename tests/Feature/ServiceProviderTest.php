@@ -63,8 +63,8 @@ it('handles the OAuth callback route', function () {
     // Make a GET request to the callback route
     $response = $this->get('/cerberus/callback?code=code-xyz&state=state-xyz');
 
-    // Assert that it redirects to the home page
-    $response->assertRedirect('/');
+    // Assert that it redirects to the configured landing page
+    $response->assertRedirect(config('cerberus-iam.redirect_after_login'));
 
     // Assert that the user is authenticated with the correct ID
     expect(Auth::guard('cerberus')->user()?->getAuthIdentifier())->toBe('usr_789');
